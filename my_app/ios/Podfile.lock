@@ -69,6 +69,8 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - path_provider_ios (0.0.1):
+    - Flutter
   - PromisesObjC (2.1.1)
 
 DEPENDENCIES:
@@ -77,6 +79,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `9.6.0`)
   - Flutter (from `Flutter`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -103,6 +106,8 @@ EXTERNAL SOURCES:
     :tag: 9.6.0
   Flutter:
     :path: Flutter
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -124,8 +129,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
 
-PODFILE CHECKSUM: 788c1005b8ab1247929e8d1c1d0d21d3d5327161
+PODFILE CHECKSUM: f85876c3a0077216df40b94fd76912556e297ae7
 
 COCOAPODS: 1.11.3
