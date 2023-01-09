@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:my_app/route.dart';
+import 'firebase_options.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,32 +16,34 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // final Future<FirebaseApp> user_information = Firebase.initializeApp();
+  final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder(
-    //   future: user_information,
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasError) {
-    //       return Text(snapshot.error.toString());
-    //     } else if (snapshot.connectionState == ConnectionState.done) {
-    //       return MaterialApp(
-    //         routes: RouteHolder,
-    //       );
-    //     }
-    //     return Text("Loading");
-    //   },
-    // );
-    return MaterialApp(
-      routes: RouteHolder,
+    return FutureBuilder(
+      future: firebaseInitialization,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            routes: routeHolder,
+          );
+        }
+        return Text("Loading");
+      },
     );
+    // return MaterialApp(
+    //   routes: RouteHolder,
+    // );
   }
 }
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({Key? key}) : super(key: key);
-  
+
 //   // This widget is the root of your application.
 //   @override
 //   Widget build(BuildContext context) {
@@ -147,7 +151,6 @@ class _MyAppState extends State<MyApp> {
 //   }
 // }
 
-
 /*
 
 class MyWidget extends StatelessWidget {
@@ -176,3 +179,31 @@ class _MyWidgetState extends State<MyWidget> {
 }
 
  */
+
+//Stateful and stateless widget
+
+/*
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+*/

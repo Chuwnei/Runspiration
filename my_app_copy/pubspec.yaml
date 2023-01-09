@@ -12,10 +12,14 @@ dependencies:
   flutter:
     sdk: flutter
 
+  pedometer: ^3.0.0
   cupertino_icons: ^1.0.5
+  health: ^4.4.0
   firebase_core: ^1.24.0
+  firebase_core_platform_interface: 4.5.1
   cloud_firestore: ^3.5.1
   firebase_auth: ^3.11.2
+  syncfusion_flutter_charts: ^20.3.61
   # google_sign_in: 5.3.3
   # sign_in_with_apple: 4.0.0
   # crypto: 3.0.1
@@ -38,7 +42,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/
-    - assets/thumbnails/
+  # assets:
+  #   - assets/
+  #   - assets/thumbnails/
   #   - assets/congrats.gif
