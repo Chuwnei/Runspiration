@@ -50,7 +50,7 @@ class Login extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       Authentication().signin(email, password);
-                      Navigator.pushNamed(context, '/mainscreen');
+                      // Navigator.pushNamed(context, '/mainscreen');
                     },
                     child: const Text("Sign In"),
                   ),
