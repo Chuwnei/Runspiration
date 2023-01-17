@@ -18,7 +18,6 @@ class _signupState extends State<SignUp> {
   String password = '';
   String confirm = '';
   bool match = false;
-
   void check_password(String password, String confirm) {
     if (password == confirm) {
       match = true;
