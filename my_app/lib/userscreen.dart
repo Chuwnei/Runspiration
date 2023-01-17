@@ -58,16 +58,18 @@ class _UserScreenState extends State<UserScreen> {
                           children: [
                             Column(
                               children: [
-                                Text("Calories"),
+                                Text("Calories",
+                                    style: GoogleFonts.comicNeue()),
                                 Text("100",
-                                    style: TextStyle(
+                                    style: GoogleFonts.comicNeue(
                                         fontSize: 45, color: Colors.red))
                               ],
                             ),
                             Column(children: [
-                              Text("Active Time"),
+                              Text("Active Time",
+                                  style: GoogleFonts.comicNeue()),
                               Text("1m",
-                                  style: TextStyle(
+                                  style: GoogleFonts.comicNeue(
                                       fontSize: 45, color: Colors.purple))
                             ]),
                           ]),
@@ -105,7 +107,9 @@ class _UserScreenState extends State<UserScreen> {
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.green)),
                               TextButton(
-                                  onPressed: () {}, child: const Text("Edit")),
+                                  onPressed: () {},
+                                  child: Text("Edit",
+                                      style: GoogleFonts.comicNeue())),
                             ],
                           )))
                         ]),
@@ -116,18 +120,22 @@ class _UserScreenState extends State<UserScreen> {
                         children: [
                           Column(
                             children: [
-                              Text("Session Count"),
+                              Text("Session Count",
+                                  style: GoogleFonts.comicNeue()),
                               Text(
                                 "250",
-                                style: TextStyle(
+                                style: GoogleFonts.comicNeue(
                                     fontSize: 45, color: Colors.green),
                               )
                             ],
                           ),
                           Column(
                             children: [
-                              Text("Average Pace"),
-                              Text("3:07 / km", style: TextStyle(fontSize: 45))
+                              Text("Average Pace",
+                                  style: GoogleFonts.comicNeue()),
+                              Text("3:07 / km",
+                                  style: GoogleFonts.comicNeue(
+                                      fontSize: 45, color: Colors.blue))
                             ],
                           )
                         ],
@@ -138,17 +146,22 @@ class _UserScreenState extends State<UserScreen> {
                         children: [
                           Column(
                             children: [
-                              Text("Average Distance"),
+                              Text("Average Distance",
+                                  style: GoogleFonts.comicNeue()),
                               Text(
                                 "5km",
-                                style: TextStyle(fontSize: 45),
+                                style: GoogleFonts.comicNeue(
+                                    fontSize: 45, color: Colors.amber),
                               )
                             ],
                           ),
                           Column(
                             children: [
-                              Text("Fastest Pace"),
-                              Text("3:00 / km", style: TextStyle(fontSize: 45))
+                              Text("Fastest Pace",
+                                  style: GoogleFonts.comicNeue()),
+                              Text("3:00 / km",
+                                  style: GoogleFonts.comicNeue(
+                                      fontSize: 45, color: Colors.orange))
                             ],
                           )
                         ],
@@ -167,12 +180,7 @@ class _UserScreenState extends State<UserScreen> {
                             setState(() {
                               _buttonPressed = 'Start a run';
                             });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RunScreen(),
-                              ),
-                            );
+                            Navigator.pushNamed(context, "/runscreen");
                           },
                         ),
                         IconButton(
@@ -184,7 +192,7 @@ class _UserScreenState extends State<UserScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => UnionScreen(),
+                                builder: (context) => ProfileScreen(),
                               ),
                             );
                           },
@@ -223,21 +231,21 @@ class UserStats {
   final Color color;
 }
 
-class RunScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Start a run'),
-      ),
-      body: Center(
-        child: Text('This is the run screen'),
-      ),
-    );
-  }
-}
+// class RunScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Start a run'),
+//       ),
+//       body: Center(
+//         child: Text('This is the run screen'),
+//       ),
+//     );
+//   }
+// }
 
-class UnionScreen extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
