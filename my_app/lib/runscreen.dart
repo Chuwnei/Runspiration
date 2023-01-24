@@ -42,8 +42,9 @@ class RunScreen extends StatelessWidget {
                 style: TextButton.styleFrom(
                     padding:
                         EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
-                child:
-                    Text("Start", style: GoogleFonts.comicNeue(fontSize: 50)),
+                child: Text("Start",
+                    style: GoogleFonts.comicNeue(
+                        fontSize: 50, color: Colors.white)),
               ),
             ],
           )),
@@ -63,32 +64,72 @@ class Session extends StatefulWidget {
 class _SessionState extends State<Session> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(children: [
-      Text("Timer"),
-      Row(
-        children: [Text("Km"), Text("Cal")],
-      ),
-      Row(
-        children: [Text("Current Pace:"), Text("Average Pace:")],
-      ),
-      Text("Random sentence"),
-      Row(
-        children: [
-          ElevatedButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
-            child: Text("Start", style: GoogleFonts.comicNeue(fontSize: 50)),
+    return Scaffold(
+        body: Container(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+          Text("00:00:00",
+              style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Km:",
+                  style:
+                      GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
+              Text("Cal:",
+                  style:
+                      GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
-            child: Text("Start", style: GoogleFonts.comicNeue(fontSize: 50)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Current Pace:",
+                style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+              ),
+              Text(
+                "Average Pace:",
+                style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+              )
+            ],
           ),
-        ],
-      )
-    ]));
+          Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                child:
+                    Text("Pause", style: GoogleFonts.comicNeue(fontSize: 50)),
+              ),
+              SizedBox(
+                width: 50,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // log workout here too...
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/homescreen', (route) => false);
+                },
+                style: TextButton.styleFrom(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                child:
+                    Text(" End ", style: GoogleFonts.comicNeue(fontSize: 50)),
+              ),
+            ],
+          )
+        ])));
   }
 }

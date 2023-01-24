@@ -3,6 +3,7 @@ import 'package:my_app/backend_services/auth.dart';
 import 'package:my_app/login/drawer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/shared/loading.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -189,12 +190,13 @@ class _UserScreenState extends State<UserScreen> {
                             setState(() {
                               _buttonPressed = 'Union';
                             });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProfileScreen(),
-                              ),
-                            );
+                            Navigator.pushNamed(context, "/profilescreen");
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => ProfileScreen(),
+                            //   ),
+                            // );
                           },
                         ),
                         IconButton(
@@ -218,7 +220,7 @@ class _UserScreenState extends State<UserScreen> {
           } else if (snapshot.hasError) {
             return const Text("Something went wrong!");
           } else {
-            return const Text("Loading");
+            return const LoadingScreen();
           }
         });
   }
@@ -245,19 +247,19 @@ class UserStats {
 //   }
 // }
 
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Union'),
-      ),
-      body: Center(
-        child: Text('This is the union screen'),
-      ),
-    );
-  }
-}
+// class ProfileScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Union'),
+//       ),
+//       body: Center(
+//         child: Text('This is the union screen'),
+//       ),
+//     );
+//   }
+// }
 
 class CryptoAccountScreen extends StatelessWidget {
   @override

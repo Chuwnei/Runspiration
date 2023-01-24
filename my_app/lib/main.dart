@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:my_app/route.dart';
 import 'firebase_options.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,13 @@ class _MyAppState extends State<MyApp> {
         } else if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             routes: routeHolder,
+            theme: ThemeData(
+              textTheme: const TextTheme(
+                  headline1: TextStyle(
+                fontSize: 50,
+                color: Colors.blue,
+              )),
+            ),
           );
         }
         return Text("Loading");
