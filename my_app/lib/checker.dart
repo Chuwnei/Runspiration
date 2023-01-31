@@ -23,6 +23,7 @@ class Checker extends StatelessWidget {
           if (snapshot.hasData) {
             // if the user is already logged in
             // return const Home();
+            Authentication().updateData();
             return UserScreen(); // centual page
           } else {
             return Login();

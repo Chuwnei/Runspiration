@@ -98,7 +98,7 @@ class _SessionState extends State<Session> {
             ],
           ),
           Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
             style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
           ),
           Row(

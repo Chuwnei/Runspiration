@@ -4,6 +4,7 @@ import 'package:my_app/login/drawer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/shared/loading.dart';
+import 'package:my_app/backend_services/auth.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -34,6 +35,7 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print("HOME: ${Authentication().user_data}");
     return FutureBuilder<String>(
         future: _calculation,
         builder: (context, snapshot) {
