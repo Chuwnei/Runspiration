@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timer_builder/timer_builder.dart';
 
 class RunScreen extends StatelessWidget {
   const RunScreen({super.key});
@@ -69,6 +70,9 @@ class _SessionState extends State<Session> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+          TimerBuilder.periodic(Duration(seconds: 1), builder: (context) {
+            return Text("${DateTime.now()}");
+          }),
           Text("00:00:00",
               style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
           Row(

@@ -4,6 +4,7 @@ import 'package:my_app/backend_services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/login/login.dart';
 import 'package:my_app/userscreen.dart';
+import 'package:my_app/shared/loading.dart';
 
 class Checker extends StatelessWidget {
   const Checker({super.key});
@@ -15,7 +16,7 @@ class Checker extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // loading state
-            return Text("loading");
+            return const LoadingScreen();
           }
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());

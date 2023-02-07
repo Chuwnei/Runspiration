@@ -20,6 +20,7 @@ dependencies:
   cloud_firestore: ^3.5.1
   firebase_auth: ^3.11.2
   syncfusion_flutter_charts: ^20.3.61
+  timer_builder: ^2.0.0
   # google_sign_in: 5.3.3
   # sign_in_with_apple: 4.0.0
   # crypto: 3.0.1

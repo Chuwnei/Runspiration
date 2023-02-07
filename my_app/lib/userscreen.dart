@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/shared/loading.dart';
 import 'package:my_app/backend_services/auth.dart';
+import 'package:my_app/shared/singleton.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -19,6 +20,11 @@ class _UserScreenState extends State<UserScreen> {
 
   late List<UserStats> _chartData;
   String _buttonPressed = 'Home';
+
+  Singleton _singleton = Singleton();
+
+  TextEditingController goalcontroller = TextEditingController();
+  int goal = 0;
 
   @override
   void initState() {
@@ -93,7 +99,8 @@ class _UserScreenState extends State<UserScreen> {
                                     data.progress,
                                 pointColorMapper: (UserStats data, _) =>
                                     data.color,
-                                maximumValue: 20)
+                                maximumValue:
+                                    _singleton.userData!["goal_for_running"])
                           ])),
                           Center(
                               child: Container(
@@ -103,14 +110,16 @@ class _UserScreenState extends State<UserScreen> {
                               SizedBox(
                                 height: 125,
                               ),
-                              const Text("Current: 10",
+                              Text(
+                                  "Current: ${_singleton.userData!["progress_in_km"]}",
                                   style: TextStyle(
                                       fontSize: 30, color: Colors.blue)),
-                              const Text("Goal: 20",
+                              Text(
+                                  "Goal: ${_singleton.userData!["goal_for_running"]}",
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.green)),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => _dialogBuilder(context),
                                   child: Text("Edit",
                                       style: GoogleFonts.comicNeue())),
                             ],
@@ -126,7 +135,7 @@ class _UserScreenState extends State<UserScreen> {
                               Text("Session Count",
                                   style: GoogleFonts.comicNeue()),
                               Text(
-                                "250",
+                                _singleton.userData!["sessions"].toString(),
                                 style: GoogleFonts.comicNeue(
                                     fontSize: 45, color: Colors.green),
                               )
@@ -225,6 +234,50 @@ class _UserScreenState extends State<UserScreen> {
             return const LoadingScreen();
           }
         });
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('What do you want to change your goal to?'),
+          content: Row(
+            children: [
+              // TextField(
+              //   controller: goalcontroller,
+              //   // decoration: const InputDecoration(
+              //   //     border: OutlineInputBorder(), labelText: "0"),
+              //   onChanged: (text) {
+              //     goal = text as int;
+              //   },
+              // ),
+              Text("km"),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Confirm'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

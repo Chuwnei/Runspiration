@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_app/shared/singleton.dart';
 
 class Authentication {
   final userstream = FirebaseAuth.instance
@@ -7,7 +8,9 @@ class Authentication {
   final user = FirebaseAuth
       .instance.currentUser; //Reference to the current user if signed in
 
-  Future<Map<String, dynamic>?> updateData() async {
+  Singleton _singleton = Singleton();
+
+  Future<void> updateData() async {
     var document = FirebaseFirestore.instance
         .collection("user_data")
         .doc(user!.uid)
@@ -16,7 +19,7 @@ class Authentication {
       (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
         print("Got the save data! Their info is $data");
-        return data;
+        _singleton.userData = data;
       },
       onError: (e) => print("Error getting document: $e"),
     );

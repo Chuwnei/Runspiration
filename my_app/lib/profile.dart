@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/backend_services/auth.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -22,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
             scale: 4,
           ),
           Text(
-            "USERNAME",
+            "${Authentication().user!.email}",
             style: GoogleFonts.comicNeue(fontSize: 50),
           ),
           SizedBox(height: 80),
