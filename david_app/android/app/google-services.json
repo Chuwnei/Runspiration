@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "354943326959",
+    "project_id": "startup-namer-bdfd9",
+    "storage_bucket": "startup-namer-bdfd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354943326959:android:5e9e7b83857ad36d29d91a",
+        "android_client_info": {
+          "package_name": "com.Chunwei.Gameforcrypto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354943326959-gkh4bkkbl601irijbqqqtovk8nrvso5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmo0ddSrKeHaOWgTHQ-TbyjxYrMGSYgrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354943326959-gkh4bkkbl601irijbqqqtovk8nrvso5f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "354943326959-323klgq0u1ms1p22fj05ohtalno9b999.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Chunwei.Gameforcrypto"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354943326959:android:8f3217817f70804529d91a",
+        "android_client_info": {
+          "package_name": "com.example.david_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354943326959-gkh4bkkbl601irijbqqqtovk8nrvso5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmo0ddSrKeHaOWgTHQ-TbyjxYrMGSYgrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354943326959-gkh4bkkbl601irijbqqqtovk8nrvso5f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "354943326959-323klgq0u1ms1p22fj05ohtalno9b999.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Chunwei.Gameforcrypto"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354943326959:android:4f0508171e00270029d91a",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354943326959-gkh4bkkbl601irijbqqqtovk8nrvso5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmo0ddSrKeHaOWgTHQ-TbyjxYrMGSYgrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354943326959-gkh4bkkbl601irijbqqqtovk8nrvso5f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "354943326959-323klgq0u1ms1p22fj05ohtalno9b999.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Chunwei.Gameforcrypto"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
