@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:my_app/backend_services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/login/login.dart';
-import 'package:my_app/userscreen.dart';
+import 'package:my_app/initialization.dart';
 import 'package:my_app/shared/loading.dart';
 
 class Checker extends StatelessWidget {
@@ -25,11 +25,11 @@ class Checker extends StatelessWidget {
             // if the user is already logged in
             // return const Home();
             Authentication().updateData();
-            return UserScreen(); // centual page
+            return InitScreen(); // centual page
           } else {
             return Login();
           }
         });
-    return Login();
+    // return Login();
   }
 }

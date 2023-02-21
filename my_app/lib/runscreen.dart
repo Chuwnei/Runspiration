@@ -63,6 +63,17 @@ class Session extends StatefulWidget {
 }
 
 class _SessionState extends State<Session> {
+  final DateTime startTime = DateTime.now();
+
+  String formatTimer(Duration d) {
+    String f(int n) {
+      return n.toString().padLeft(2, '0');
+    }
+
+    d += Duration(microseconds: 999999);
+    return "${f(d.inHours)}:${f(d.inMinutes)}:${f(d.inSeconds % 60)}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,10 +82,13 @@ class _SessionState extends State<Session> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
           TimerBuilder.periodic(Duration(seconds: 1), builder: (context) {
-            return Text("${DateTime.now()}");
+            return Text(
+              formatTimer(DateTime.now().difference(startTime)),
+              style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue),
+            );
           }),
-          Text("00:00:00",
-              style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
+          // Text("00:00:00",
+          //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
