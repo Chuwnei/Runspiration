@@ -56,6 +56,18 @@ class ProfileScreen extends StatelessWidget {
               ]),
             ],
           ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2 - 10,
+            height: 50,
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/customScreen');
+                },
+                child: const Text(
+                  'Edit',
+                  style: TextStyle(fontSize: 30),
+                )), //general screen,
+          ),
         ],
       )),
     );
