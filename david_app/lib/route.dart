@@ -4,6 +4,7 @@ import 'package:david_app/checker.dart';
 import 'package:david_app/userscreen.dart';
 import 'package:david_app/runscreen.dart';
 import 'package:david_app/profile.dart';
+import 'healthtest.dart';
 
 var routeHolder = {
   '/': (context) => const Checker(),
@@ -11,5 +12,6 @@ var routeHolder = {
   '/signup': (context) => const SignUp(),
   '/homescreen': (context) => UserScreen(),
   '/runscreen': (context) => const RunScreen(),
-  '/profilescreen': (context) => const ProfileScreen()
+  '/profilescreen': (context) => const ProfileScreen(),
+  '/healthTest': (context) => const HealthTest(),
 };
