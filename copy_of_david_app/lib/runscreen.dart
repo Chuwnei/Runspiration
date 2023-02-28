@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_builder/timer_builder.dart';
+import 'package:david_app/size_config.dart';
 
 class RunScreen extends StatelessWidget {
   const RunScreen({super.key});
@@ -31,7 +32,11 @@ class RunScreen extends StatelessWidget {
                 style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.white),
               ),
               SizedBox(height: 200),
-              ElevatedButton(
+              
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 80,
+                height: 75,
+                child:ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -40,13 +45,13 @@ class RunScreen extends StatelessWidget {
                     ),
                   );
                 },
-                style: TextButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
+                // style: TextButton.styleFrom(
+                //     padding:
+                //         EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
                 child: Text("Start",
                     style: GoogleFonts.comicNeue(
                         fontSize: 50, color: Colors.white)),
-              ),
+              ))
             ],
           )),
         )
@@ -109,29 +114,35 @@ class _SessionState extends State<Session> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ElevatedButton(
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 40,
+                height: 75,
+                child: ElevatedButton(
                 onPressed: () {},
-                style: TextButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                // style: TextButton.styleFrom(
+                //     padding:
+                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
                 child:
                     Text("Pause", style: GoogleFonts.comicNeue(fontSize: 50)),
-              ),
+              )),
               SizedBox(
                 width: 50,
               ),
-              ElevatedButton(
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 40,
+                height: 75,
+                child: ElevatedButton(
                 onPressed: () {
                   // log workout here too...
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/homescreen', (route) => false);
                 },
-                style: TextButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                // style: TextButton.styleFrom(
+                //     padding:
+                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
                 child:
                     Text(" End ", style: GoogleFonts.comicNeue(fontSize: 50)),
-              ),
+              )),
             ],
           )
         ])));
