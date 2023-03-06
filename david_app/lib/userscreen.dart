@@ -36,6 +36,8 @@ class _UserScreenState extends State<UserScreen> {
     final List<UserStats> chartData = [
       UserStats(20, 10, Colors.blue),
     ];
+    print("AAAAAAA");
+    print(chartData);
     return chartData;
   }
 
@@ -65,16 +67,16 @@ class _UserScreenState extends State<UserScreen> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                                width: 250,
-                                height: 75,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, '/healthTest');
-                                    },
-                                    child: const Text('HealthTest',
-                                        style: TextStyle(fontSize: 30)))),
+                            // SizedBox(
+                            //     width: 250,
+                            //     height: 75,
+                            //     child: ElevatedButton(
+                            //         onPressed: () {
+                            //           Navigator.pushNamed(
+                            //               context, '/healthTest');
+                            //         },
+                            //         child: const Text('HealthTest',
+                            //             style: TextStyle(fontSize: 30)))),
                             Column(
                               children: [
                                 Text("Calories",

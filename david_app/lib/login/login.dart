@@ -20,7 +20,9 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Sign In", style: TextStyle(fontSize: 20)),
+                  const Text("David App",
+                      style:
+                          TextStyle(fontSize: 45, fontWeight: FontWeight.bold)),
                   const SizedBox(
                     height: 100,
                   ),
@@ -47,18 +49,24 @@ class Login extends StatelessWidget {
                     obscureText: true,
                   ),
                   const SizedBox(height: 50),
-                  ElevatedButton(
-                    onPressed: () {
-                      Authentication().signin(email, password);
-                      // Navigator.pushNamed(context, '/mainscreen');
-                    },
-                    child: const Text("Sign In"),
+                  SizedBox(
+                    height: 75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Authentication().signin(email, password);
+                        // Navigator.pushNamed(context, '/mainscreen');
+                      },
+                      child: const Text(
+                        "Sign In",
+                        style: TextStyle(fontSize: 36),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Or use google"),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {},
+                  //   child: const Text("Or use google"),
+                  // ),
                   ButtonBar(
                     alignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
