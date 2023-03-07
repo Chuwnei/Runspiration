@@ -19,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
           SizedBox(height: 40),
           Image.asset(
             'default.png',
+            // package: 'david_app/assets',
             fit: BoxFit.contain,
             scale: 4,
           ),
@@ -56,6 +57,12 @@ class ProfileScreen extends StatelessWidget {
               ]),
             ],
           ),
+          SizedBox(height: 80),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/achievementScreen');
+              },
+              child: const Text("Edit", style: TextStyle(fontSize: 36))),
         ],
       )),
     );
