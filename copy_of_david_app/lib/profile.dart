@@ -56,6 +56,12 @@ class ProfileScreen extends StatelessWidget {
               ]),
             ],
           ),
+          SizedBox(height: 80),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/achievementScreen');
+              },
+              child: const Text("Edit", style: TextStyle(fontSize: 36))),
         ],
       )),
     );

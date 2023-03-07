@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:david_app/login/login.dart';
 import 'package:david_app/userscreen.dart';
 import 'package:david_app/shared/loading.dart';
+import 'size_config.dart';
 
 class Checker extends StatelessWidget {
   const Checker({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return StreamBuilder(
         stream: Authentication().userstream,
         builder: (context, snapshot) {

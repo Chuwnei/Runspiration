@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
           return Text(snapshot.error.toString());
         } else if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             routes: routeHolder,
             theme: ThemeData(
               textTheme: const TextTheme(
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
                 fontSize: 50,
                 color: Colors.blue,
               )),
+              scaffoldBackgroundColor: Color.fromARGB(255, 245, 245, 245),
             ),
           );
         }

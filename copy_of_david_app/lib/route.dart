@@ -6,6 +6,7 @@ import 'package:david_app/runscreen.dart';
 import 'package:david_app/profile.dart';
 import 'healthtest.dart';
 import 'spinningWheel.dart';
+import 'achievements.dart';
 
 var routeHolder = {
   '/': (context) => const Checker(),
@@ -16,4 +17,5 @@ var routeHolder = {
   '/profilescreen': (context) => const ProfileScreen(),
   '/healthTest': (context) => const HealthTest(),
   // '/spinningWheelScreen': (context) => SpinningWheelScreen(),
+  '/achievementScreen': (context) => const AchievementScreen(),
 };

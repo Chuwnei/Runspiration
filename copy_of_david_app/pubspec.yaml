@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^3.11.2
   syncfusion_flutter_charts: ^20.3.61
   timer_builder: ^2.0.0
+  animated_toggle_switch: ^0.6.1
   # google_sign_in: 5.3.3
   # sign_in_with_apple: 4.0.0
   # crypto: 3.0.1
@@ -78,7 +79,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-  #   - images/a_dot_ham.jpeg
+    # - assets/default.png
+    # - assets/runner_image.jpg
+    # - assets/wheel-6-300.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
