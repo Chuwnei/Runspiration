@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'size_config.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AchievementScreen extends StatefulWidget {
   const AchievementScreen({super.key});
@@ -39,7 +40,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
           current: positive,
           first: false,
           second: true,
-          dif: 50.0,
+          dif: SizeConfig.blockSizeHorizontal! * 20,
           borderColor: Colors.transparent,
           borderWidth: 5.0,
           height: 55,
@@ -57,14 +58,22 @@ class _AchievementScreenState extends State<AchievementScreen> {
             setState(() => positive = b);
             return Future.delayed(Duration(seconds: 1));
           },
-          colorBuilder: (b) => b ? Colors.red : Colors.green,
+          colorBuilder: (b) => b ? Colors.orange : Colors.green,
           iconBuilder: (value) => value
-              ? Icon(Icons.coronavirus_rounded)
-              : Icon(Icons.tag_faces_rounded),
+              ? Icon(FontAwesomeIcons.user)
+              : Container(
+                      width: 100,
+                      height: 100,
+                      decoration: const BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle),
+                      child: Icon(FontAwesomeIcons.trophy),
+                    ),
           textBuilder: (value) => value
-              ? Center(child: Text('Oh no...'))
-              : Center(child: Text('Nice :)')),
+              ? Center(child: Text('Profile', style: TextStyle(color: Colors.black),))
+              : Center(child: Text('Achievements', style: TextStyle(color: Colors.black))),
         ),
+        SizedBox(width: SizeConfig.blockSizeHorizontal! * 30,)
       ]),
       body: Column(children: [
         SizedBox(
@@ -150,7 +159,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
           current: positive,
           first: false,
           second: true,
-          dif: 50.0,
+          dif: SizeConfig.blockSizeHorizontal! * 20,
           borderColor: Colors.transparent,
           borderWidth: 5.0,
           height: 55,
@@ -168,20 +177,94 @@ class _AchievementScreenState extends State<AchievementScreen> {
             setState(() => positive = b);
             return Future.delayed(Duration(seconds: 1));
           },
-          colorBuilder: (b) => b ? Colors.red : Colors.green,
+          colorBuilder: (b) => b ? Colors.orange : Colors.green,
           iconBuilder: (value) => value
-              ? Icon(Icons.coronavirus_rounded)
-              : Icon(Icons.tag_faces_rounded),
+              ? Icon(FontAwesomeIcons.user)
+              : const Icon(FontAwesomeIcons.trophy),
           textBuilder: (value) => value
-              ? Center(child: Text('Oh no...'))
-              : Center(child: Text('Nice :)')),
+              ? Center(child: Text('Profile', style: TextStyle(color: Colors.black)))
+              : Center(child: Text('Achievements', style: TextStyle(color: Colors.black))),
         ),
+        SizedBox(width: SizeConfig.blockSizeHorizontal! * 30,)
       ]),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-            
+          SizedBox(
+            height: SizeConfig.blockSizeVertical! * 20,
+            width: SizeConfig.blockSizeHorizontal! * 100,
+            child: Container(
+                color: Color.fromARGB(255, 115, 182, 236),
+                child: Row(
+        
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              alignment: Alignment.center,
+                children: [
+              Container(
+                  width: 120,
+                  height: 120,
+                  decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 45, 41, 43),
+                      shape: BoxShape.circle),
+                ),
+              Image.asset(
+                'default.png',
+                fit: BoxFit.contain,
+                scale: 10,
+              ),
+            ]),
+          ],
+        )),),
+        Text("100,000", style: TextStyle(fontSize: 65, fontWeight: FontWeight.bold),),
+        SizedBox(
+          width: SizeConfig.blockSizeHorizontal! * 100,
+          height: SizeConfig.blockSizeVertical! * 40,
+          child: GridView.count(
+            crossAxisCount: 3,
+            padding: const EdgeInsets.all(20.0),
+            crossAxisSpacing: 10.0,
+            children: [],
+          ),
+          // child: Container(color: Colors.green,),
+        ),
+        // 
+          SizedBox(
+            height: SizeConfig.blockSizeVertical! * 20,
+            // width: 50,
+            child:Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+                SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 40,
+                height: 75,
+                child: ElevatedButton(
+                onPressed: () {},
+                // style: TextButton.styleFrom(
+                //     padding:
+                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                child:
+                    Text("Cancel", style: GoogleFonts.comicNeue(fontSize: 50)),
+              )),
+              SizedBox(
+                width: 50,
+              ),
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 40,
+                height: 75,
+                child: ElevatedButton(
+                onPressed: () {},
+                // style: TextButton.styleFrom(
+                //     padding:
+                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                child:
+                    Text(" Save ", style: GoogleFonts.comicNeue(fontSize: 50)),
+              )),
+            ],
+        )),
         ],
       ),
     );
@@ -234,6 +317,41 @@ class AchievementEntry extends StatelessWidget {
                 )))
             ],)
         )
+    );
+  }
+}
+
+class BorderEntry extends StatelessWidget {
+  const BorderEntry({super.key, required this.imagePath, required this.description, required this.type});
+  final String imagePath;
+  final String description;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.blue,
+      child: Column(
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 45, 41, 43),
+                shape: BoxShape.circle),
+          ),
+          (type == "unlocked") ? ElevatedButton(
+            onPressed: () {},
+            child: const Text("Unlocked"),
+          ) : (type == "purchase") ? ElevatedButton(
+            onPressed: () {},
+            child: Text(description),
+          ) : ElevatedButton(
+            onPressed: () {},
+            child: Text(description),
+          ),
+        ],
+      ),
     );
   }
 }

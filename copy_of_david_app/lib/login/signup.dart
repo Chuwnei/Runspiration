@@ -87,8 +87,10 @@ class _signupState extends State<SignUp> {
                   ),
                   const SizedBox(height: 30),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Or use google"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Back"),
                   ),
                 ])));
   }
