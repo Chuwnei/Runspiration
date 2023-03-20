@@ -10,11 +10,11 @@ class RunScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Start a run'),
+        title: const Text('Start a run'),
       ),
       body: Stack(children: <Widget>[
-        Image.asset(
-          'runner_image.jpg',
+        const Image(
+          image: AssetImage('assets/runner_image.jpg'),
           fit: BoxFit.cover,
           height: double.infinity,
           width: double.infinity,
@@ -32,26 +32,25 @@ class RunScreen extends StatelessWidget {
                 style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.white),
               ),
               SizedBox(height: 200),
-              
               SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 80,
-                height: 75,
-                child:ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Session(),
-                    ),
-                  );
-                },
-                // style: TextButton.styleFrom(
-                //     padding:
-                //         EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
-                child: Text("Start",
-                    style: GoogleFonts.comicNeue(
-                        fontSize: 50, color: Colors.white)),
-              ))
+                  width: SizeConfig.blockSizeHorizontal! * 80,
+                  height: 75,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Session(),
+                        ),
+                      );
+                    },
+                    // style: TextButton.styleFrom(
+                    //     padding:
+                    //         EdgeInsets.symmetric(horizontal: 150, vertical: 30)),
+                    child: Text("Start",
+                        style: GoogleFonts.comicNeue(
+                            fontSize: 50, color: Colors.white)),
+                  ))
             ],
           )),
         )
@@ -115,34 +114,34 @@ class _SessionState extends State<Session> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 40,
-                height: 75,
-                child: ElevatedButton(
-                onPressed: () {},
-                // style: TextButton.styleFrom(
-                //     padding:
-                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                child:
-                    Text("Pause", style: GoogleFonts.comicNeue(fontSize: 50)),
-              )),
+                  width: SizeConfig.blockSizeHorizontal! * 40,
+                  height: 75,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    // style: TextButton.styleFrom(
+                    //     padding:
+                    //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                    child: Text("Pause",
+                        style: GoogleFonts.comicNeue(fontSize: 50)),
+                  )),
               SizedBox(
                 width: 50,
               ),
               SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 40,
-                height: 75,
-                child: ElevatedButton(
-                onPressed: () {
-                  // log workout here too...
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/homescreen', (route) => false);
-                },
-                // style: TextButton.styleFrom(
-                //     padding:
-                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                child:
-                    Text(" End ", style: GoogleFonts.comicNeue(fontSize: 50)),
-              )),
+                  width: SizeConfig.blockSizeHorizontal! * 40,
+                  height: 75,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // log workout here too...
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/homescreen', (route) => false);
+                    },
+                    // style: TextButton.styleFrom(
+                    //     padding:
+                    //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                    child: Text(" End ",
+                        style: GoogleFonts.comicNeue(fontSize: 50)),
+                  )),
             ],
           )
         ])));

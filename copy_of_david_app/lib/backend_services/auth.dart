@@ -25,12 +25,13 @@ class Authentication {
     );
   }
 
-  Future<void> signin(email, password) async {
+  Future signin(email, password) async {
     try {
       //Attempt to sign in a user with provided email and password
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       //updateData();
+      return null;
     } on FirebaseAuthException catch (error) {
       //Catch and log any errors that occur during the sign-in process
       print(error.message);
@@ -46,7 +47,7 @@ class Authentication {
       User? user = accountCreationAttempt.user;
       FirebaseFirestore.instance.collection("user_data").doc(user?.uid).set({
         "currency": 0,
-        "goal_for_running": 0,
+        "goal_for_running": 5,
         "progress_in_km": 0,
         "sessions": 0,
         "total_km": 0,

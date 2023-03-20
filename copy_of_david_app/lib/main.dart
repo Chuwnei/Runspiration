@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
             routes: routeHolder,
             theme: ThemeData(
               textTheme: const TextTheme(
-                  headline1: TextStyle(
+                  displayLarge: TextStyle(
                 fontSize: 50,
                 color: Colors.blue,
               )),
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
             ),
           );
         }
-        return Text("Loading");
+        return Container();
       },
     );
     // return MaterialApp(
