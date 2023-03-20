@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:david_app/size_config.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:david_app/backend_services/auth.dart';
 import 'package:david_app/login/drawer.dart';
@@ -24,7 +27,7 @@ class _UserScreenState extends State<UserScreen> {
   Singleton _singleton = Singleton();
 
   TextEditingController goalcontroller = TextEditingController();
-  int goal = 0;
+  int goal = 5;
 
   @override
   void initState() {
@@ -34,7 +37,14 @@ class _UserScreenState extends State<UserScreen> {
 
   List<UserStats> getData() {
     final List<UserStats> chartData = [
-      UserStats(20, 10, Colors.blue),
+      UserStats(
+          (_singleton.userData != null)
+              ? _singleton.userData!["goal_for_running"].toDouble()
+              : 5.0,
+          (_singleton.userData != null)
+              ? _singleton.userData!["progress_in_km"].toDouble()
+              : 0.0,
+          Colors.blue),
     ];
     return chartData;
   }
@@ -42,6 +52,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     // print("HOME: ${Authentication().user_data}");
+    _chartData = getData();
     return FutureBuilder<String>(
         future: _calculation,
         builder: (context, snapshot) {
@@ -58,44 +69,43 @@ class _UserScreenState extends State<UserScreen> {
                 ),
                 drawer: UserDrawer(elements: btnList),
                 body: Center(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            // SizedBox(
-                            //     width: 250,
-                            //     height: 75,
-                            //     child: ElevatedButton(
-                            //         onPressed: () {
-                            //           Navigator.pushNamed(
-                            //               context, '/healthTest');
-                            //         },
-                            //         child: const Text('HealthTest',
-                            //             style: TextStyle(fontSize: 30)))),
-                            Column(
-                              children: [
-                                Text("Calories",
+                    child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              // SizedBox(
+                              //     width: 250,
+                              //     height: 75,
+                              //     child: ElevatedButton(
+                              //         onPressed: () {
+                              //           Navigator.pushNamed(
+                              //               context, '/healthTest');
+                              //         },
+                              //         child: const Text('HealthTest',
+                              //             style: TextStyle(fontSize: 30)))),
+                              Column(
+                                children: [
+                                  Text("Calories",
+                                      style: GoogleFonts.comicNeue()),
+                                  Text("100",
+                                      style: GoogleFonts.comicNeue(
+                                          fontSize: 45, color: Colors.red))
+                                ],
+                              ),
+                              Column(children: [
+                                Text("Active Time",
                                     style: GoogleFonts.comicNeue()),
-                                Text("100",
+                                Text("1m",
                                     style: GoogleFonts.comicNeue(
-                                        fontSize: 45, color: Colors.red))
-                              ],
-                            ),
-                            Column(children: [
-                              Text("Active Time",
-                                  style: GoogleFonts.comicNeue()),
-                              Text("1m",
-                                  style: GoogleFonts.comicNeue(
-                                      fontSize: 45, color: Colors.purple))
+                                        fontSize: 45, color: Colors.purple))
+                              ]),
                             ]),
-                          ]),
-                      Container(
-                        child: Stack(children: <Widget>[
-                          Container(
-                              child: SfCircularChart(series: <CircularSeries>[
+                        Stack(children: <Widget>[
+                          SfCircularChart(series: <CircularSeries>[
                             // Renders radial bar chart
                             RadialBarSeries<UserStats, double>(
                                 useSeriesColor: true,
@@ -109,25 +119,29 @@ class _UserScreenState extends State<UserScreen> {
                                     data.progress,
                                 pointColorMapper: (UserStats data, _) =>
                                     data.color,
-                                maximumValue:
-                                    _singleton.userData!["goal_for_running"] +
-                                        .0)
-                          ])),
+                                maximumValue: (_singleton.userData != null &&
+                                        _singleton
+                                                .userData!["goal_for_running"] >
+                                            5) // minimum 5 km per day!
+                                    ? _singleton.userData!["goal_for_running"] +
+                                        .0
+                                    : 5.0)
+                          ]),
                           Center(
                               child: Container(
                                   child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 height: 125,
                               ),
                               Text(
                                   "Current: ${_singleton.userData!["progress_in_km"]}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 30, color: Colors.blue)),
                               Text(
                                   "Goal: ${_singleton.userData!["goal_for_running"]}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20, color: Colors.green)),
                               TextButton(
                                   onPressed: () => _dialogBuilder(context),
@@ -136,60 +150,60 @@ class _UserScreenState extends State<UserScreen> {
                             ],
                           )))
                         ]),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Session Count",
-                                  style: GoogleFonts.comicNeue()),
-                              Text(
-                                _singleton.userData!["sessions"].toString(),
-                                style: GoogleFonts.comicNeue(
-                                    fontSize: 45, color: Colors.green),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Average Pace",
-                                  style: GoogleFonts.comicNeue()),
-                              Text("3:07 / km",
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                Text("Session Count",
+                                    style: GoogleFonts.comicNeue()),
+                                Text(
+                                  _singleton.userData!["sessions"].toString(),
                                   style: GoogleFonts.comicNeue(
-                                      fontSize: 45, color: Colors.blue))
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 70),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Average Distance",
-                                  style: GoogleFonts.comicNeue()),
-                              Text(
-                                "5km",
-                                style: GoogleFonts.comicNeue(
-                                    fontSize: 45, color: Colors.amber),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Fastest Pace",
-                                  style: GoogleFonts.comicNeue()),
-                              Text("3:00 / km",
+                                      fontSize: 45, color: Colors.green),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text("Average Pace",
+                                    style: GoogleFonts.comicNeue()),
+                                Text("3:07 / km",
+                                    style: GoogleFonts.comicNeue(
+                                        fontSize: 45, color: Colors.blue))
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 70),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                Text("Average Distance",
+                                    style: GoogleFonts.comicNeue()),
+                                Text(
+                                  "5km",
                                   style: GoogleFonts.comicNeue(
-                                      fontSize: 45, color: Colors.orange))
-                            ],
-                          )
-                        ],
-                      )
-                    ])),
+                                      fontSize: 45, color: Colors.amber),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text("Fastest Pace",
+                                    style: GoogleFonts.comicNeue()),
+                                Text("3:00 / km",
+                                    style: GoogleFonts.comicNeue(
+                                        fontSize: 45, color: Colors.orange))
+                              ],
+                            )
+                          ],
+                        )
+                      ]),
+                )),
                 bottomNavigationBar: BottomAppBar(
                   shape: const CircularNotchedRectangle(),
                   child: Container(
@@ -254,16 +268,27 @@ class _UserScreenState extends State<UserScreen> {
         return AlertDialog(
           title: const Text('What do you want to change your goal to?'),
           content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // TextField(
-              //   controller: goalcontroller,
-              //   // decoration: const InputDecoration(
-              //   //     border: OutlineInputBorder(), labelText: "0"),
-              //   onChanged: (text) {
-              //     goal = text as int;
-              //   },
-              // ),
-              Text("km"),
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 50,
+                height: 50,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  controller: goalcontroller,
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder()),
+                  onChanged: (text) {
+                    goal = int.parse(text);
+                  },
+                  style: const TextStyle(fontSize: 32),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                "km",
+                style: TextStyle(fontSize: 32),
+              ),
             ],
           ),
           actions: <Widget>[
@@ -282,7 +307,11 @@ class _UserScreenState extends State<UserScreen> {
               ),
               child: const Text('Confirm'),
               onPressed: () {
-                Navigator.of(context).pop();
+                FirebaseFirestore.instance
+                    .collection('user_data')
+                    .doc(Authentication().user!.uid)
+                    .update({"goal_for_running": (goal > 5) ? goal : 5}).then(
+                        (value) => Navigator.of(context).pop());
               },
             ),
           ],
