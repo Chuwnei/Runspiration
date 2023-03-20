@@ -68,88 +68,111 @@ class _UserScreenState extends State<UserScreen> {
                   title: Text('Home Screen', style: GoogleFonts.comicNeue()),
                 ),
                 drawer: UserDrawer(elements: btnList),
-                body: Center(
-                    child: SingleChildScrollView(
+                body: SingleChildScrollView(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              // SizedBox(
-                              //     width: 250,
-                              //     height: 75,
-                              //     child: ElevatedButton(
-                              //         onPressed: () {
-                              //           Navigator.pushNamed(
-                              //               context, '/healthTest');
-                              //         },
-                              //         child: const Text('HealthTest',
-                              //             style: TextStyle(fontSize: 30)))),
-                              Column(
-                                children: [
-                                  Text("Calories",
-                                      style: GoogleFonts.comicNeue()),
-                                  Text("100",
-                                      style: GoogleFonts.comicNeue(
-                                          fontSize: 45, color: Colors.red))
-                                ],
+                        Card(
+                          color: Colors.grey.shade200,
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Column(children: [
+                              Text(
+                                "Today",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 50,
+                                    color: Colors.grey.shade800),
                               ),
-                              Column(children: [
-                                Text("Active Time",
-                                    style: GoogleFonts.comicNeue()),
-                                Text("1m",
-                                    style: GoogleFonts.comicNeue(
-                                        fontSize: 45, color: Colors.purple))
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    // SizedBox(
+                                    //     width: 250,
+                                    //     height: 75,
+                                    //     child: ElevatedButton(
+                                    //         onPressed: () {
+                                    //           Navigator.pushNamed(
+                                    //               context, '/healthTest');
+                                    //         },
+                                    //         child: const Text('HealthTest',
+                                    //             style: TextStyle(fontSize: 30)))),
+                                    Column(
+                                      children: [
+                                        Text("Calories",
+                                            style: GoogleFonts.comicNeue()),
+                                        Text("100",
+                                            style: GoogleFonts.comicNeue(
+                                                fontSize: 45,
+                                                color: Colors.red))
+                                      ],
+                                    ),
+                                    Column(children: [
+                                      Text("Active Time",
+                                          style: GoogleFonts.comicNeue()),
+                                      Text("1m",
+                                          style: GoogleFonts.comicNeue(
+                                              fontSize: 45,
+                                              color: Colors.purple))
+                                    ]),
+                                  ]),
+                              Stack(children: <Widget>[
+                                SfCircularChart(series: <CircularSeries>[
+                                  // Renders radial bar chart
+                                  RadialBarSeries<UserStats, double>(
+                                      useSeriesColor: true,
+                                      trackOpacity: 0.3,
+                                      innerRadius: '80%',
+                                      cornerStyle: CornerStyle.bothCurve,
+                                      dataSource: _chartData,
+                                      xValueMapper: (UserStats data, _) =>
+                                          data.distance,
+                                      yValueMapper: (UserStats data, _) =>
+                                          data.progress,
+                                      pointColorMapper: (UserStats data, _) =>
+                                          data.color,
+                                      maximumValue: (_singleton.userData !=
+                                                  null &&
+                                              _singleton.userData![
+                                                      "goal_for_running"] >
+                                                  5) // minimum 5 km per day!
+                                          ? _singleton.userData![
+                                                  "goal_for_running"] +
+                                              .0
+                                          : 5.0)
+                                ]),
+                                Center(
+                                    child: Container(
+                                        child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    const SizedBox(
+                                      height: 125,
+                                    ),
+                                    Text(
+                                        "Current: ${_singleton.userData!["progress_in_km"]}",
+                                        style: const TextStyle(
+                                            fontSize: 30, color: Colors.blue)),
+                                    Text(
+                                        "Goal: ${_singleton.userData!["goal_for_running"]}",
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.green)),
+                                    TextButton(
+                                        onPressed: () =>
+                                            _dialogBuilder(context),
+                                        child: Text("Edit",
+                                            style: GoogleFonts.comicNeue())),
+                                  ],
+                                )))
                               ]),
                             ]),
-                        Stack(children: <Widget>[
-                          SfCircularChart(series: <CircularSeries>[
-                            // Renders radial bar chart
-                            RadialBarSeries<UserStats, double>(
-                                useSeriesColor: true,
-                                trackOpacity: 0.3,
-                                innerRadius: '80%',
-                                cornerStyle: CornerStyle.bothCurve,
-                                dataSource: _chartData,
-                                xValueMapper: (UserStats data, _) =>
-                                    data.distance,
-                                yValueMapper: (UserStats data, _) =>
-                                    data.progress,
-                                pointColorMapper: (UserStats data, _) =>
-                                    data.color,
-                                maximumValue: (_singleton.userData != null &&
-                                        _singleton
-                                                .userData!["goal_for_running"] >
-                                            5) // minimum 5 km per day!
-                                    ? _singleton.userData!["goal_for_running"] +
-                                        .0
-                                    : 5.0)
-                          ]),
-                          Center(
-                              child: Container(
-                                  child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const SizedBox(
-                                height: 125,
-                              ),
-                              Text(
-                                  "Current: ${_singleton.userData!["progress_in_km"]}",
-                                  style: const TextStyle(
-                                      fontSize: 30, color: Colors.blue)),
-                              Text(
-                                  "Goal: ${_singleton.userData!["goal_for_running"]}",
-                                  style: const TextStyle(
-                                      fontSize: 20, color: Colors.green)),
-                              TextButton(
-                                  onPressed: () => _dialogBuilder(context),
-                                  child: Text("Edit",
-                                      style: GoogleFonts.comicNeue())),
-                            ],
-                          )))
-                        ]),
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -176,7 +199,7 @@ class _UserScreenState extends State<UserScreen> {
                             )
                           ],
                         ),
-                        SizedBox(height: 70),
+                        const SizedBox(height: 50),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -203,7 +226,7 @@ class _UserScreenState extends State<UserScreen> {
                           ],
                         )
                       ]),
-                )),
+                ),
                 bottomNavigationBar: BottomAppBar(
                   shape: const CircularNotchedRectangle(),
                   child: Container(
@@ -266,7 +289,8 @@ class _UserScreenState extends State<UserScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('What do you want to change your goal to?'),
+          title: const Text(
+              'What do you want to change your goal to?\n(5km is the minimum!)'),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

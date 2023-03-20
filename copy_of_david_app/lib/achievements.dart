@@ -85,7 +85,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 height: SizeConfig.blockSizeHorizontal! * 25,
                 width: SizeConfig.blockSizeHorizontal! * 100,
                 child: Container(
-                    color: Color.fromARGB(255, 115, 182, 236),
+                    color: const Color.fromARGB(255, 115, 182, 236),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.end,

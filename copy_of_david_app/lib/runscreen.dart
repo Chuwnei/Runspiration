@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:david_app/backend_services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_builder/timer_builder.dart';
@@ -28,10 +31,11 @@ class RunScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "asdf",
-                style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.white),
+                "Press start to begin tracking your running session! Your session details will be saved once you are done.",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.comicNeue(fontSize: 36, color: Colors.white),
               ),
-              SizedBox(height: 200),
+              const SizedBox(height: 200),
               SizedBox(
                   width: SizeConfig.blockSizeHorizontal! * 80,
                   height: 75,
@@ -67,6 +71,16 @@ class Session extends StatefulWidget {
 }
 
 class _SessionState extends State<Session> {
+  late DateTime startTime;
+  double kilometers = 5.0;
+  int calories = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    startTime = DateTime.now();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,19 +88,25 @@ class _SessionState extends State<Session> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-          TimerBuilder.periodic(Duration(seconds: 1), builder: (context) {
-            return Text("${DateTime.now()}");
+          TimerBuilder.periodic(const Duration(seconds: 1), builder: (context) {
+            Duration diff = DateTime.now().difference(startTime);
+            return Text(
+                "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${(diff.inMinutes > 9) ? "" : 0}${diff.inMinutes}:${(diff.inSeconds > 9) ? "" : 0}${diff.inSeconds}",
+                style: GoogleFonts.comicNeue(
+                    fontSize: 50,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold));
           }),
-          Text("00:00:00",
-              style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
+          // Text("00:00:00",
+          //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Km:",
+              Text("Km: $kilometers",
                   style:
                       GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
-              Text("Cal:",
+              Text("Cal: $calories",
                   style:
                       GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
             ],
@@ -113,17 +133,17 @@ class _SessionState extends State<Session> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                  width: SizeConfig.blockSizeHorizontal! * 40,
-                  height: 75,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    // style: TextButton.styleFrom(
-                    //     padding:
-                    //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                    child: Text("Pause",
-                        style: GoogleFonts.comicNeue(fontSize: 50)),
-                  )),
+              // SizedBox(
+              //     width: SizeConfig.blockSizeHorizontal! * 40,
+              //     height: 75,
+              //     child: ElevatedButton(
+              //       onPressed: () {},
+              //       // style: TextButton.styleFrom(
+              //       //     padding:
+              //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+              //       child: Text("Pause",
+              //           style: GoogleFonts.comicNeue(fontSize: 50)),
+              //     )),
               SizedBox(
                 width: 50,
               ),
@@ -133,8 +153,18 @@ class _SessionState extends State<Session> {
                   child: ElevatedButton(
                     onPressed: () {
                       // log workout here too...
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/homescreen', (route) => false);
+                      DocumentReference userData = FirebaseFirestore.instance
+                          .collection('user_data')
+                          .doc(Authentication().user!.uid);
+
+                      userData.update({
+                        "sessions": FieldValue.increment(1),
+                        "progress_in_km": FieldValue.increment(kilometers),
+                        "total_km": FieldValue.increment(kilometers)
+                      });
+
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/', (route) => false);
                     },
                     // style: TextButton.styleFrom(
                     //     padding:

@@ -25,25 +25,32 @@ class UserDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text('Drawer Header'),
+            child: Text(
+              'Options',
+              style: TextStyle(color: Colors.white, fontSize: 36),
+            ),
           ),
           ListTile(
-            title: const Text('Log out'),
+            tileColor: Colors.blue.shade50,
+            title: const Text(
+              'Logout',
+              style: TextStyle(
+                  fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
+            ),
             onTap: () async {
-              await Authentication().signout();
-              // Update the state of the app.
-              // ...
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/', (route) => false);
+              await Authentication().signout().then(
+                    (value) => Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/', (route) => false),
+                  );
             },
           ),
-          ListTile(
-            title: const Text('Item 2'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
+          // ListTile(
+          //   title: const Text('Item 2'),
+          //   onTap: () {
+          //     // Update the state of the app.
+          //     // ...
+          //   },
+          // ),
         ],
       ),
     );

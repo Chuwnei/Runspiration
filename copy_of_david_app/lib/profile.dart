@@ -19,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
         children: [
           // SizedBox(height: 40),
           Card(
+            color: const Color.fromARGB(255, 115, 182, 236),
             child: Padding(
               padding: const EdgeInsets.all(18.0),
               child: Column(children: [
