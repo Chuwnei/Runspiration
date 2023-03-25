@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:david_app/backend_services/auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UserDrawer extends StatelessWidget {
   final List<TextButton> elements;
@@ -21,20 +22,20 @@ class UserDrawer extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
             child: Text(
               'Options',
-              style: TextStyle(color: Colors.white, fontSize: 36),
+              style: GoogleFonts.comicNeue(color: Colors.white, fontSize: 36),
             ),
           ),
           ListTile(
             tileColor: Colors.blue.shade50,
-            title: const Text(
+            title: Text(
               'Logout',
-              style: TextStyle(
+              style: GoogleFonts.comicNeue(
                   fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
             ),
             onTap: () async {

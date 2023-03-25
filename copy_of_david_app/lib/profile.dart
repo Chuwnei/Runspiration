@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Profile', style: GoogleFonts.comicNeue(),),
       ),
       body: Center(
           child: Column(
@@ -50,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
                   height: SizeConfig.blockSizeHorizontal! * 20,
                   // scale: 10,
                 ),
-                Text("asdf"),
+                Text("asdf", style: GoogleFonts.comicNeue(),),
               ]),
               Column(children: [
                 Image(
@@ -60,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
                   height: SizeConfig.blockSizeHorizontal! * 20,
                   // scale: 10,
                 ),
-                Text("asdf"),
+                Text("asdf", style: GoogleFonts.comicNeue()),
               ]),
               Column(children: [
                 Image(
@@ -70,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                   height: SizeConfig.blockSizeHorizontal! * 20,
                   // scale: 10,
                 ),
-                Text("asdf"),
+                Text("asdf", style: GoogleFonts.comicNeue(),),
               ]),
             ],
           ),
@@ -79,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/achievementScreen');
               },
-              child: const Text("Edit", style: TextStyle(fontSize: 36))),
+              child: Text("Edit", style: GoogleFonts.comicNeue(fontSize: 36))),
         ],
       )),
     );

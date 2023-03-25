@@ -13,7 +13,7 @@ class RunScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Start a run'),
+        title: Text('Start a run', style: GoogleFonts.comicNeue(),),
       ),
       body: Stack(children: <Widget>[
         const Image(

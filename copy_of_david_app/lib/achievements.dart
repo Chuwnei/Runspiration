@@ -18,6 +18,14 @@ class Pair<T1, T2> {
   Pair(this.a, this.b);
 }
 
+class Triple<T1, T2, T3> {
+  final T1 a;
+  final T2 b;
+  final T3 c;
+
+  Triple(this.a, this.b, this.c);
+}
+
 class _AchievementScreenState extends State<AchievementScreen> {
   bool positive = false;
 
@@ -27,6 +35,13 @@ class _AchievementScreenState extends State<AchievementScreen> {
     Pair("assets/default.png", "This is a test."),
     Pair("assets/default.png", "This is a test."),
     Pair("assets/default.png", "This is a test."),
+  ];
+
+  final borders = [
+    Triple("assets/default.png", "This is a test.", "purchase"),
+    Triple("assets/default.png", "This is a test.", "purchase"),
+    Triple("assets/default.png", "This is a test.", "purchase"),
+    Triple("assets/default.png", "This is a test.", "purchase"),
   ];
 
   @override
@@ -70,11 +85,11 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     ? Center(
                         child: Text(
                         'Profile',
-                        style: TextStyle(color: Colors.black),
+                        style: GoogleFonts.comicNeue(color: Colors.black),
                       ))
                     : Center(
                         child: Text('Achievements',
-                            style: TextStyle(color: Colors.black))),
+                            style: GoogleFonts.comicNeue(color: Colors.black))),
               ),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal! * 30,
@@ -201,10 +216,10 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 textBuilder: (value) => value
                     ? Center(
                         child: Text('Profile',
-                            style: TextStyle(color: Colors.black)))
+                            style: GoogleFonts.comicNeue(color: Colors.black)))
                     : Center(
                         child: Text('Achievements',
-                            style: TextStyle(color: Colors.black))),
+                            style: GoogleFonts.comicNeue(color: Colors.black))),
               ),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal! * 30,
@@ -215,7 +230,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: SizeConfig.blockSizeVertical! * 20,
+                  height: SizeConfig.blockSizeVertical! * 15,
                   width: SizeConfig.blockSizeHorizontal! * 100,
                   child: Container(
                       color: Color.fromARGB(255, 115, 182, 236),
@@ -244,7 +259,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 ),
                 Text(
                   "100,000",
-                  style: TextStyle(fontSize: 65, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.comicNeue(fontSize: 65, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   width: SizeConfig.blockSizeHorizontal! * 100,
@@ -253,7 +268,10 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     crossAxisCount: 3,
                     padding: const EdgeInsets.all(20.0),
                     crossAxisSpacing: 10.0,
-                    children: [],
+                    children: borders
+                    .map((triple) => BorderEntry(
+                        imagePath: triple.a, description: triple.b, type: triple.c,))
+                    .toList(),
                   ),
                   // child: Container(color: Colors.green,),
                 ),
@@ -344,7 +362,7 @@ class AchievementEntry extends StatelessWidget {
                         child: Text(
                           description,
                           maxLines: 10,
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.comicNeue(fontSize: 20),
                         )))
               ],
             )));
@@ -365,29 +383,32 @@ class BorderEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.blue,
-      child: Column(
-        children: [
-          Container(
-            width: 20,
-            height: 20,
-            decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 45, 41, 43), shape: BoxShape.circle),
-          ),
-          (type == "unlocked")
-              ? ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Unlocked"),
-                )
-              : (type == "purchase")
-                  ? ElevatedButton(
-                      onPressed: () {},
-                      child: Text(description),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {},
-                      child: Text(description),
-                    ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 45, 41, 43), shape: BoxShape.circle),
+            ),
+            (type == "unlocked")
+                ? ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Unlocked", maxLines: 1, style: GoogleFonts.comicNeue(),),
+                  )
+                : (type == "purchase")
+                    ? ElevatedButton(
+                        onPressed: () {},
+                        child: Text(description, maxLines: 1, style: GoogleFonts.comicNeue(),),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {},
+                        child: Text(description, maxLines: 1, style: GoogleFonts.comicNeue()),
+                      ),
+          ],
+        ),
       ),
     );
   }

@@ -65,7 +65,7 @@ class _UserScreenState extends State<UserScreen> {
             return Scaffold(
                 //home screen goes here
                 appBar: AppBar(
-                  title: Text('Home Screen', style: GoogleFonts.comicNeue()),
+                  title: Text('Home', style: GoogleFonts.comicNeue()),
                 ),
                 drawer: UserDrawer(elements: btnList),
                 body: SingleChildScrollView(
@@ -80,7 +80,7 @@ class _UserScreenState extends State<UserScreen> {
                             child: Column(children: [
                               Text(
                                 "Today",
-                                style: TextStyle(
+                                style: GoogleFonts.comicNeue(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 50,
                                     color: Colors.grey.shade800),
@@ -156,11 +156,11 @@ class _UserScreenState extends State<UserScreen> {
                                     ),
                                     Text(
                                         "Current: ${_singleton.userData!["progress_in_km"]}",
-                                        style: const TextStyle(
+                                        style: GoogleFonts.comicNeue(
                                             fontSize: 30, color: Colors.blue)),
                                     Text(
                                         "Goal: ${_singleton.userData!["goal_for_running"]}",
-                                        style: const TextStyle(
+                                        style: GoogleFonts.comicNeue(
                                             fontSize: 20, color: Colors.green)),
                                     TextButton(
                                         onPressed: () =>
@@ -267,7 +267,7 @@ class _UserScreenState extends State<UserScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CryptoAccountScreen(),
+                                builder: (context) => WalletScreen(),
                               ),
                             );
                           },
@@ -290,7 +290,7 @@ class _UserScreenState extends State<UserScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-              'What do you want to change your goal to?\n(5km is the minimum!)'),
+              'What do you want to change your goal to?\n(2km is the minimum!)'),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -334,7 +334,7 @@ class _UserScreenState extends State<UserScreen> {
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(Authentication().user!.uid)
-                    .update({"goal_for_running": (goal > 5) ? goal : 5}).then(
+                    .update({"goal_for_running": (goal > 2) ? goal : 2}).then(
                         (value) => Navigator.of(context).pop());
               },
             ),
@@ -380,15 +380,61 @@ class UserStats {
 //   }
 // }
 
-class CryptoAccountScreen extends StatelessWidget {
+class WalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crypto account'),
+        title: Text('Wallet', style: GoogleFonts.comicNeue(),),
       ),
-      body: Center(
-        child: Text('This is the crypto account screen'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+                  height: SizeConfig.blockSizeVertical! * 15,
+                  width: SizeConfig.blockSizeHorizontal! * 100,
+                  child: Container(
+                      color: Color.fromARGB(255, 115, 182, 236),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Stack(alignment: Alignment.center, children: [
+                            Container(
+                              width: 120,
+                              height: 120,
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 45, 41, 43),
+                                  shape: BoxShape.circle),
+                            ),
+                            Image(
+                                image: AssetImage('assets/default.png'),
+                                fit: BoxFit.contain,
+                                width: 100,
+                                height: 100
+                                // scale: 10,
+                                ),
+                          ]),
+                        ],
+                      )),
+                ),
+                Text(
+                  "100,000",
+                  style: GoogleFonts.comicNeue(fontSize: 65, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal! * 100,
+                  height: SizeConfig.blockSizeVertical! * 40,
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    padding: const EdgeInsets.all(20.0),
+                    crossAxisSpacing: 10.0,
+                    children: [],
+                  ),
+                  // child: Container(color: Colors.green,),
+                ),
+        ],
       ),
     );
   }
