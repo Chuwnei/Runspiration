@@ -13,7 +13,10 @@ class RunScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Start a run', style: GoogleFonts.comicNeue(),),
+        title: Text(
+          'Start a run',
+          style: GoogleFonts.comicNeue(),
+        ),
       ),
       body: Stack(children: <Widget>[
         const Image(
@@ -84,96 +87,103 @@ class _SessionState extends State<Session> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-          TimerBuilder.periodic(const Duration(seconds: 1), builder: (context) {
-            Duration diff = DateTime.now().difference(startTime);
-            return Text(
-                "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${(diff.inMinutes > 9) ? "" : 0}${diff.inMinutes}:${(diff.inSeconds > 9) ? "" : 0}${diff.inSeconds}",
-                style: GoogleFonts.comicNeue(
-                    fontSize: 50,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold));
-          }),
-          // Text("00:00:00",
-          //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Km: $kilometers",
+        body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TimerBuilder.periodic(const Duration(seconds: 1),
+                builder: (context) {
+              Duration diff = DateTime.now().difference(startTime);
+              return Text(
+                  "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${(diff.inMinutes > 9) ? "" : 0}${diff.inMinutes}:${(diff.inSeconds > 9) ? "" : 0}${diff.inSeconds}",
+                  style: GoogleFonts.comicNeue(
+                      fontSize: 50,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold));
+            }),
+            // Text("00:00:00",
+            //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Km: $kilometers",
+                    style: GoogleFonts.comicNeue(
+                        fontSize: 50, color: Colors.blue)),
+                Text("Cal: $calories",
+                    style:
+                        GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Current Pace:",
                   style:
-                      GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
-              Text("Cal: $calories",
+                      GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+                ),
+                Text(
+                  "Average Pace:",
                   style:
-                      GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Current Pace:",
-                style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-              ),
-              Text(
-                "Average Pace:",
-                style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-              )
-            ],
-          ),
-          Text(
-            "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
-            style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // SizedBox(
-              //     width: SizeConfig.blockSizeHorizontal! * 40,
-              //     height: 75,
-              //     child: ElevatedButton(
-              //       onPressed: () {},
-              //       // style: TextButton.styleFrom(
-              //       //     padding:
-              //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-              //       child: Text("Pause",
-              //           style: GoogleFonts.comicNeue(fontSize: 50)),
-              //     )),
-              SizedBox(
-                width: 50,
-              ),
-              SizedBox(
-                  width: SizeConfig.blockSizeHorizontal! * 40,
-                  height: 75,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // log workout here too...
-                      DocumentReference userData = FirebaseFirestore.instance
-                          .collection('user_data')
-                          .doc(Authentication().user!.uid);
+                      GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+                )
+              ],
+            ),
+            Text(
+              "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
+              style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
+              textAlign: TextAlign.center,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // SizedBox(
+                //     width: SizeConfig.blockSizeHorizontal! * 40,
+                //     height: 75,
+                //     child: ElevatedButton(
+                //       onPressed: () {},
+                //       // style: TextButton.styleFrom(
+                //       //     padding:
+                //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                //       child: Text("Pause",
+                //           style: GoogleFonts.comicNeue(fontSize: 50)),
+                //     )),
+                // SizedBox(
+                //   width: 50,
+                // ),
+                SizedBox(
+                    width: SizeConfig.blockSizeHorizontal! * 40,
+                    height: 75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // log workout here too...
+                        DocumentReference userData = FirebaseFirestore.instance
+                            .collection('user_data')
+                            .doc(Authentication().user!.uid);
 
-                      userData.update({
-                        "sessions": FieldValue.increment(1),
-                        "progress_in_km": FieldValue.increment(kilometers),
-                        "total_km": FieldValue.increment(kilometers)
-                      });
+                        userData.update({
+                          "sessions": FieldValue.increment(1),
+                          "progress_in_km": FieldValue.increment(kilometers),
+                          "total_km": FieldValue.increment(kilometers)
+                        });
 
-                      Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/', (route) => false);
-                    },
-                    // style: TextButton.styleFrom(
-                    //     padding:
-                    //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                    child: Text(" End ",
-                        style: GoogleFonts.comicNeue(fontSize: 50)),
-                  )),
-            ],
-          )
-        ])));
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/', (route) => false);
+                      },
+                      // style: TextButton.styleFrom(
+                      //     padding:
+                      //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                      child: Text(" End ",
+                          style: GoogleFonts.comicNeue(fontSize: 50)),
+                    )),
+              ],
+            )
+          ]),
+    ));
   }
 }

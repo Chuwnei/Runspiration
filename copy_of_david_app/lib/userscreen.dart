@@ -23,6 +23,7 @@ class _UserScreenState extends State<UserScreen> {
 
   late List<UserStats> _chartData;
   String _buttonPressed = 'Home';
+  bool canEdit = true;
 
   Singleton _singleton = Singleton();
 
@@ -51,7 +52,20 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print("HOME: ${Authentication().user_data}");
+    print(Timestamp.now().seconds - _singleton.userData!["lastOnline"].seconds);
+    print(_singleton.userData!["lastOnline"].toDate().day);
+    print(Timestamp.now().toDate().day);
+
+    if (_singleton.userData!["lastOnline"].toDate().day !=
+        Timestamp.now().toDate().day) {
+      // FirebaseFirestore.instance
+      //     .collection("user_data")
+      //     .doc(Authentication().user?.uid)
+      //     .update(docData);
+
+      // Reset daily stats & reassign the lastOnline timestamp.
+    }
+
     _chartData = getData();
     return FutureBuilder<String>(
         future: _calculation,
@@ -106,7 +120,7 @@ class _UserScreenState extends State<UserScreen> {
                                       children: [
                                         Text("Calories",
                                             style: GoogleFonts.comicNeue()),
-                                        Text("100",
+                                        Text("0",
                                             style: GoogleFonts.comicNeue(
                                                 fontSize: 45,
                                                 color: Colors.red))
@@ -115,7 +129,7 @@ class _UserScreenState extends State<UserScreen> {
                                     Column(children: [
                                       Text("Active Time",
                                           style: GoogleFonts.comicNeue()),
-                                      Text("1m",
+                                      Text("0m",
                                           style: GoogleFonts.comicNeue(
                                               fontSize: 45,
                                               color: Colors.purple))
@@ -192,7 +206,7 @@ class _UserScreenState extends State<UserScreen> {
                               children: [
                                 Text("Average Pace",
                                     style: GoogleFonts.comicNeue()),
-                                Text("3:07 / km",
+                                Text("5:00 / km",
                                     style: GoogleFonts.comicNeue(
                                         fontSize: 45, color: Colors.blue))
                               ],
@@ -208,7 +222,7 @@ class _UserScreenState extends State<UserScreen> {
                                 Text("Average Distance",
                                     style: GoogleFonts.comicNeue()),
                                 Text(
-                                  "5km",
+                                  "5 km",
                                   style: GoogleFonts.comicNeue(
                                       fontSize: 45, color: Colors.amber),
                                 )
@@ -218,7 +232,7 @@ class _UserScreenState extends State<UserScreen> {
                               children: [
                                 Text("Fastest Pace",
                                     style: GoogleFonts.comicNeue()),
-                                Text("3:00 / km",
+                                Text("5:00 / km",
                                     style: GoogleFonts.comicNeue(
                                         fontSize: 45, color: Colors.orange))
                               ],
@@ -288,58 +302,103 @@ class _UserScreenState extends State<UserScreen> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-              'What do you want to change your goal to?\n(2km is the minimum!)'),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 50,
-                height: 50,
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: goalcontroller,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
-                  onChanged: (text) {
-                    goal = int.parse(text);
-                  },
-                  style: const TextStyle(fontSize: 32),
+        if (_singleton.userData!["lastEdit"].toDate().day !=
+            Timestamp.now().toDate().day) {
+          return AlertDialog(
+            title: const Text(
+                'What do you want to change your goal to?\n(2km is the minimum!)'),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal! * 50,
+                  height: 50,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: goalcontroller,
+                    decoration:
+                        const InputDecoration(border: OutlineInputBorder()),
+                    onChanged: (text) {
+                      goal = int.parse(text);
+                    },
+                    style: const TextStyle(fontSize: 32),
+                  ),
                 ),
+                const SizedBox(width: 10),
+                const Text(
+                  "km",
+                  style: TextStyle(fontSize: 32),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-              const SizedBox(width: 10),
-              const Text(
-                "km",
-                style: TextStyle(fontSize: 32),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Confirm'),
+                onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection('user_data')
+                      .doc(Authentication().user!.uid)
+                      .update({
+                    "goal_for_running": (goal > 2) ? goal : 2,
+                    "lastEdit": Timestamp.now()
+                  }).then((value) => Navigator.of(context).pop());
+                },
               ),
             ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
+          );
+        } else {
+          return AlertDialog(
+            title:
+                const Text('You are only allowed to change this once a day!'),
+            // content: Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal! * 50,
+            //       height: 50,
+            //       child: TextField(
+            //         keyboardType: TextInputType.number,
+            //         controller: goalcontroller,
+            //         decoration:
+            //             const InputDecoration(border: OutlineInputBorder()),
+            //         onChanged: (text) {
+            //           goal = int.parse(text);
+            //         },
+            //         style: const TextStyle(fontSize: 32),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     const Text(
+            //       "km",
+            //       style: TextStyle(fontSize: 32),
+            //     ),
+            //   ],
+            // ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Dismiss'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Confirm'),
-              onPressed: () {
-                FirebaseFirestore.instance
-                    .collection('user_data')
-                    .doc(Authentication().user!.uid)
-                    .update({"goal_for_running": (goal > 2) ? goal : 2}).then(
-                        (value) => Navigator.of(context).pop());
-              },
-            ),
-          ],
-        );
+            ],
+          );
+        }
       },
     );
   }
@@ -415,8 +474,9 @@ class WalletScreen extends StatelessWidget {
                             color: Color.fromARGB(255, 45, 41, 43),
                             shape: BoxShape.circle),
                       ),
-                      const Image(
-                          image: AssetImage('assets/default.png'),
+                      Image(
+                          image: AssetImage(
+                              'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
                           fit: BoxFit.contain,
                           width: 100,
                           height: 100

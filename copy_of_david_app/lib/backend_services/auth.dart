@@ -52,6 +52,7 @@ class Authentication {
         "sessions": 0,
         "total_km": 0,
         "profile": "default.png",
+        "lastOnline": Timestamp.now(),
       };
       final achievements = {
         "active": ["empty", "empty", "empty"],
