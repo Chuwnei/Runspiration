@@ -45,14 +45,28 @@ class Authentication {
           .createUserWithEmailAndPassword(
               email: user_email, password: password);
       User? user = accountCreationAttempt.user;
-      FirebaseFirestore.instance.collection("user_data").doc(user?.uid).set({
+      final docData = {
         "currency": 0,
         "goal_for_running": 2,
         "progress_in_km": 0,
         "sessions": 0,
         "total_km": 0,
-        //"total_time": 0,
-      });
+        "profile": "default.png",
+      };
+      final achievements = {
+        "active": ["empty", "empty", "empty"],
+      };
+      docData["achievements"] = achievements;
+      final borders = {
+        "active": "ID1",
+        "unlocked": ["ID1"],
+      };
+      docData["borders"] = borders;
+      FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(user?.uid)
+          .set(docData);
+
       //updateData();
     } on FirebaseAuthException catch (error) {
       //Catch and log any errors that occur during the sign-up process

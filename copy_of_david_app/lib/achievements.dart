@@ -3,6 +3,7 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'size_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:david_app/shared/singleton.dart';
 
 class AchievementScreen extends StatefulWidget {
   const AchievementScreen({super.key});
@@ -11,41 +12,50 @@ class AchievementScreen extends StatefulWidget {
   State<AchievementScreen> createState() => _AchievementScreenState();
 }
 
-class Pair<T1, T2> {
-  final T1 a;
-  final T2 b;
+// class Pair<T1, T2> {
+//   final T1 a;
+//   final T2 b;
 
-  Pair(this.a, this.b);
-}
+//   Pair(this.a, this.b);
+// }
 
-class Triple<T1, T2, T3> {
-  final T1 a;
-  final T2 b;
-  final T3 c;
+// class Triple<T1, T2, T3> {
+//   final T1 a;
+//   final T2 b;
+//   final T3 c;
 
-  Triple(this.a, this.b, this.c);
-}
+//   Triple(this.a, this.b, this.c);
+// }
 
 class _AchievementScreenState extends State<AchievementScreen> {
   bool positive = false;
+  int selection = 0;
 
-  final achievements = [
-    Pair("assets/default.png", "This is a test."),
-    Pair("assets/default.png", "This is a test."),
-    Pair("assets/default.png", "This is a test."),
-    Pair("assets/default.png", "This is a test."),
-    Pair("assets/default.png", "This is a test."),
-  ];
+  Singleton _singleton = Singleton();
 
-  final borders = [
-    Triple("assets/default.png", "This is a test.", "purchase"),
-    Triple("assets/default.png", "This is a test.", "purchase"),
-    Triple("assets/default.png", "This is a test.", "purchase"),
-    Triple("assets/default.png", "This is a test.", "purchase"),
-  ];
+  // final achievements = [
+  //   Pair("assets/achievements/ID1.png", "This is a test."),
+  //   Pair("assets/achievements/ID2.png", "This is a test."),
+  //   Pair("assets/achievements/ID3.png", "This is a test."),
+  //   Pair("assets/achievements/ID4.png", "This is a test."),
+  //   Pair("assets/achievements/ID5.png", "This is a test."),
+  // ];
+
+  // // unlocked, puchase, pending
+  // final borders = [
+  //   Triple("ID1", "This is a test.", "unlocked"),
+  //   Triple("ID2", "This is a test.", "purchase"),
+  //   Triple("ID3", "This is a test.", "pending"),
+  //   Triple("ID4", "This is a test.", "purchase"),
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    print(_singleton.userData!["achievements"]);
+    print(_singleton.userData!["achievements"]["active"].runtimeType);
+
+    List<dynamic> active = _singleton.userData!["achievements"]["active"];
+
     return !positive
         ? Scaffold(
             appBar: AppBar(actions: [
@@ -109,7 +119,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image(
-                                  image: AssetImage('assets/default.png'),
+                                  image: AssetImage(
+                                      'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][0] : "empty"}.png'),
                                   fit: BoxFit.contain,
                                   width: 75,
                                   height: 75
@@ -120,7 +131,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image(
-                                  image: AssetImage('assets/default.png'),
+                                  image: AssetImage(
+                                      'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][1] : "empty"}.png'),
                                   fit: BoxFit.contain,
                                   width: 75,
                                   height: 75
@@ -131,7 +143,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image(
-                                  image: AssetImage('assets/default.png'),
+                                  image: AssetImage(
+                                      'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][2] : "empty"}.png'),
                                   fit: BoxFit.contain,
                                   width: 75,
                                   height: 75
@@ -143,7 +156,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
               ),
               Expanded(
                   child: ListView(
-                children: achievements
+                children: _singleton.achievements
                     .map((pair) => AchievementEntry(
                         imagePath: pair.a, description: pair.b))
                     .toList(),
@@ -247,7 +260,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                   shape: BoxShape.circle),
                             ),
                             Image(
-                                image: AssetImage('assets/default.png'),
+                                image: AssetImage(
+                                    'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
                                 fit: BoxFit.contain,
                                 width: 100,
                                 height: 100
@@ -259,7 +273,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 ),
                 Text(
                   "100,000",
-                  style: GoogleFonts.comicNeue(fontSize: 65, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.comicNeue(
+                      fontSize: 65, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   width: SizeConfig.blockSizeHorizontal! * 100,
@@ -268,10 +283,13 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     crossAxisCount: 3,
                     padding: const EdgeInsets.all(20.0),
                     crossAxisSpacing: 10.0,
-                    children: borders
-                    .map((triple) => BorderEntry(
-                        imagePath: triple.a, description: triple.b, type: triple.c,))
-                    .toList(),
+                    children: _singleton.borders
+                        .map((triple) => BorderEntry(
+                              color: triple.a,
+                              description: triple.b,
+                              type: triple.c,
+                            ))
+                        .toList(),
                   ),
                   // child: Container(color: Colors.green,),
                 ),
@@ -330,54 +348,59 @@ class AchievementEntry extends StatelessWidget {
         height: 150,
         child: Card(
             color: const Color.fromARGB(255, 219, 219, 219),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image(
-                    image: AssetImage(imagePath),
-                    fit: BoxFit.contain,
-                    width: 75,
-                    height: 75
-                    // scale: 10,
-                    ),
-                const SizedBox(
-                  width: 20,
-                ),
-                SizedBox(
-                  width: 1,
-                  height: 140,
-                  child: Container(
-                    color: Color.fromARGB(125, 34, 34, 34),
+            child: InkWell(
+              onTap: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image(
+                      image: AssetImage(imagePath),
+                      fit: BoxFit.contain,
+                      width: 75,
+                      height: 75
+                      // scale: 10,
+                      ),
+                  const SizedBox(
+                    width: 20,
                   ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                SizedBox(
-                    width: SizeConfig.blockSizeHorizontal! * 60,
-                    height: 250,
-                    child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          description,
-                          maxLines: 10,
-                          style: GoogleFonts.comicNeue(fontSize: 20),
-                        )))
-              ],
+                  SizedBox(
+                    width: 1,
+                    height: 140,
+                    child: Container(
+                      color: const Color.fromARGB(125, 34, 34, 34),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  SizedBox(
+                      width: SizeConfig.blockSizeHorizontal! * 60,
+                      height: 250,
+                      child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            description,
+                            maxLines: 10,
+                            style: GoogleFonts.comicNeue(fontSize: 20),
+                          )))
+                ],
+              ),
             )));
   }
 }
 
 class BorderEntry extends StatelessWidget {
-  const BorderEntry(
+  BorderEntry(
       {super.key,
-      required this.imagePath,
+      required this.color,
       required this.description,
       required this.type});
-  final String imagePath;
+  final String color;
   final String description;
   final String type;
+
+  final _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
@@ -386,26 +409,37 @@ class BorderEntry extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 50,
-              height: 50,
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 45, 41, 43), shape: BoxShape.circle),
+              width: SizeConfig.blockSizeHorizontal! * 10,
+              height: SizeConfig.blockSizeHorizontal! * 10,
+              decoration: BoxDecoration(
+                  color: _singleton.borderColors[color],
+                  shape: BoxShape.circle),
             ),
             (type == "unlocked")
                 ? ElevatedButton(
                     onPressed: () {},
-                    child: Text("Unlocked", maxLines: 1, style: GoogleFonts.comicNeue(),),
+                    child: Text(
+                      "Select",
+                      maxLines: 1,
+                      style: GoogleFonts.comicNeue(),
+                    ),
                   )
                 : (type == "purchase")
                     ? ElevatedButton(
                         onPressed: () {},
-                        child: Text(description, maxLines: 1, style: GoogleFonts.comicNeue(),),
+                        child: Text(
+                          description,
+                          maxLines: 1,
+                          style: GoogleFonts.comicNeue(),
+                        ),
                       )
                     : ElevatedButton(
                         onPressed: () {},
-                        child: Text(description, maxLines: 1, style: GoogleFonts.comicNeue()),
+                        child: Text(description,
+                            maxLines: 1, style: GoogleFonts.comicNeue()),
                       ),
           ],
         ),

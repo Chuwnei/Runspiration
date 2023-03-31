@@ -1,3 +1,20 @@
+import 'dart:ui';
+
+class Pair<T1, T2> {
+  final T1 a;
+  final T2 b;
+
+  Pair(this.a, this.b);
+}
+
+class Triple<T1, T2, T3> {
+  final T1 a;
+  final T2 b;
+  final T3 c;
+
+  Triple(this.a, this.b, this.c);
+}
+
 class Singleton {
   static final Singleton _instance = Singleton._internal();
 
@@ -7,23 +24,42 @@ class Singleton {
   // initialize our variables
   Singleton._internal() {
     // _example = 0;
-    _userData = null;
   }
 
 //   int _example = 0;
-  Map<String, dynamic>? _userData = null;
+  Map<String, dynamic>? userData;
 
-//   // getter
-//   int get example => _example;
+  final achievements = [
+    Pair("assets/achievements/ID1.png", "This is a test."),
+    Pair("assets/achievements/ID2.png", "This is a test."),
+    Pair("assets/achievements/ID3.png", "This is a test."),
+    Pair("assets/achievements/ID4.png", "This is a test."),
+    Pair("assets/achievements/ID5.png", "This is a test."),
+  ];
 
-//   // setter
-//   set example(int value) => _example = value;
+  // unlocked, puchase, pending
+  final borders = [
+    Triple("ID1", "This is a test.", "unlocked"),
+    Triple("ID2", "This is a test.", "purchase"),
+    Triple("ID3", "This is a test.", "pending"),
+    Triple("ID4", "This is a test.", "purchase"),
+  ];
 
-  // getter
-  Map<String, dynamic>? get userData => _userData;
+  Map<String, String> achievementDescriptions = {
+    "empty": "",
+    "ID1": "Description 1",
+    "ID2": "Description 2",
+    "ID3": "Description 3",
+    "ID4": "Description 4",
+    "ID5": "Description 5",
+  };
 
-  // setter
-  set userData(Map<String, dynamic>? value) => _userData = value;
+  Map<String, Color> borderColors = {
+    "ID1": const Color.fromARGB(255, 45, 41, 43),
+    "ID2": const Color.fromARGB(255, 135, 84, 230),
+    "ID3": const Color.fromARGB(255, 223, 46, 134),
+    "ID4": const Color.fromARGB(255, 230, 177, 64),
+  };
 }
 
 

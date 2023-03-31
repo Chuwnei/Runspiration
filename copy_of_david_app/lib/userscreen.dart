@@ -381,59 +381,95 @@ class UserStats {
 // }
 
 class WalletScreen extends StatelessWidget {
+  WalletScreen({super.key});
+
+  final Singleton _singleton = Singleton();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wallet', style: GoogleFonts.comicNeue(),),
+        title: Text(
+          'Wallet',
+          style: GoogleFonts.comicNeue(),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-                  height: SizeConfig.blockSizeVertical! * 15,
-                  width: SizeConfig.blockSizeHorizontal! * 100,
-                  child: Container(
-                      color: Color.fromARGB(255, 115, 182, 236),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Stack(alignment: Alignment.center, children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 45, 41, 43),
-                                  shape: BoxShape.circle),
-                            ),
-                            Image(
-                                image: AssetImage('assets/default.png'),
-                                fit: BoxFit.contain,
-                                width: 100,
-                                height: 100
-                                // scale: 10,
-                                ),
-                          ]),
-                        ],
-                      )),
-                ),
-                Text(
-                  "100,000",
-                  style: GoogleFonts.comicNeue(fontSize: 65, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal! * 100,
-                  height: SizeConfig.blockSizeVertical! * 40,
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    padding: const EdgeInsets.all(20.0),
-                    crossAxisSpacing: 10.0,
-                    children: [],
-                  ),
-                  // child: Container(color: Colors.green,),
-                ),
+            height: SizeConfig.blockSizeVertical! * 25,
+            width: SizeConfig.blockSizeHorizontal! * 100,
+            child: Container(
+                color: const Color.fromARGB(255, 115, 182, 236),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Stack(alignment: Alignment.center, children: [
+                      Container(
+                        width: 120,
+                        height: 120,
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 45, 41, 43),
+                            shape: BoxShape.circle),
+                      ),
+                      const Image(
+                          image: AssetImage('assets/default.png'),
+                          fit: BoxFit.contain,
+                          width: 100,
+                          height: 100
+                          // scale: 10,
+                          ),
+                    ]),
+                    const SizedBox(height: 25),
+                    Text(
+                      // (Authentication().user?.displayName != null)
+                      //     ? "${Authentication().user?.displayName}"
+                      //     : "Hello!",
+                      "${Authentication().user!.email}",
+                      style: GoogleFonts.comicNeue(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    )
+                  ],
+                )),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            (_singleton.userData != null)
+                ? _singleton.userData!["currency"].toString()
+                : "0",
+            style: GoogleFonts.comicNeue(
+                fontSize: 65, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 100,
+          ),
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 80,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {
+                    // Navigator.pushNamed(context, '/profileGeneral');
+                  },
+                  child: const Text('Purchase Cosmetics',
+                      style: TextStyle(fontSize: 30)))),
+          // SizedBox(
+          //   width: SizeConfig.blockSizeHorizontal! * 100,
+          //   height: SizeConfig.blockSizeVertical! * 40,
+          //   child: GridView.count(
+          //     crossAxisCount: 3,
+          //     padding: const EdgeInsets.all(20.0),
+          //     crossAxisSpacing: 10.0,
+          //     children: [],
+          //   ),
+          //   // child: Container(color: Colors.green,),
+          // ),
         ],
       ),
     );
