@@ -15,69 +15,75 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Runspiration",
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  LoginForm()
-                  // const Text("Email", style: TextStyle(fontSize: 15)),
-                  // TextField(
-                  //   controller: emailcontroller,
-                  //   decoration: const InputDecoration(
-                  //       border: OutlineInputBorder(),
-                  //       labelText: "name@example.com"),
-                  //   onChanged: (text) {
-                  //     email = text;
-                  //   },
-                  // ),
-                  // const SizedBox(height: 50),
-                  // const Text("Password", style: TextStyle(fontSize: 15)),
-                  // TextField(
-                  //   controller: passwordcontroller,
-                  //   decoration: const InputDecoration(
-                  //     border: OutlineInputBorder(),
-                  //   ),
-                  //   onChanged: (text) {
-                  //     password = text;
-                  //   },
-                  //   obscureText: true,
-                  // ),
-                  // const SizedBox(height: 50),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Authentication().signin(email, password);
-                  //     // Navigator.pushNamed(context, '/mainscreen');
-                  //   },
-                  //   child: const Text("Sign In"),
-                  // ),
-                  // const SizedBox(height: 30),
-                  // // ElevatedButton(
-                  // //   onPressed: () {},
-                  // //   child: const Text("Or use google"),
-                  // // ),
-                  // ButtonBar(
-                  //   alignment: MainAxisAlignment.spaceBetween,
-                  //   children: <Widget>[
-                  //     TextButton(
-                  //         onPressed: () {},
-                  //         child: const Text("Forgot Password?")),
-                  //     TextButton(
-                  //         onPressed: () {
-                  //           Navigator.pushNamed(context, "/signup");
-                  //         },
-                  //         child: const Text("Sign Up")),
-                  //   ],
-                  // )
-                ])));
+        body: SafeArea(
+          child: Container(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/icons/Android_Icon.png', height: 150),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text("Runspiration",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical! * 5,
+                    ),
+                    LoginForm()
+                    // const Text("Email", style: TextStyle(fontSize: 15)),
+                    // TextField(
+                    //   controller: emailcontroller,
+                    //   decoration: const InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       labelText: "name@example.com"),
+                    //   onChanged: (text) {
+                    //     email = text;
+                    //   },
+                    // ),
+                    // const SizedBox(height: 50),
+                    // const Text("Password", style: TextStyle(fontSize: 15)),
+                    // TextField(
+                    //   controller: passwordcontroller,
+                    //   decoration: const InputDecoration(
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   onChanged: (text) {
+                    //     password = text;
+                    //   },
+                    //   obscureText: true,
+                    // ),
+                    // const SizedBox(height: 50),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     Authentication().signin(email, password);
+                    //     // Navigator.pushNamed(context, '/mainscreen');
+                    //   },
+                    //   child: const Text("Sign In"),
+                    // ),
+                    // const SizedBox(height: 30),
+                    // // ElevatedButton(
+                    // //   onPressed: () {},
+                    // //   child: const Text("Or use google"),
+                    // // ),
+                    // ButtonBar(
+                    //   alignment: MainAxisAlignment.spaceBetween,
+                    //   children: <Widget>[
+                    //     TextButton(
+                    //         onPressed: () {},
+                    //         child: const Text("Forgot Password?")),
+                    //     TextButton(
+                    //         onPressed: () {
+                    //           Navigator.pushNamed(context, "/signup");
+                    //         },
+                    //         child: const Text("Sign Up")),
+                    //   ],
+                    // )
+                  ])),
+        ));
   }
 }
 
