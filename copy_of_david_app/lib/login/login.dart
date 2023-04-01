@@ -21,9 +21,10 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Sign In",
+                  const Text("Runspiration",
+                      textAlign: TextAlign.center,
                       style:
-                          TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
                   const SizedBox(
                     height: 100,
                   ),

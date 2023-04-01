@@ -6,11 +6,25 @@ import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /*
-PaceMaster
-RunMomentum
-EnduranceEdge
 Runspiration
-InfinityStride
+https://doc-hosting.flycricket.io/runspiration-privacy-policy/4b939298-94ff-4adf-bba2-a9dd76f32436/privacy
+https://doc-hosting.flycricket.io/runspiration-terms-of-use/18f24006-a703-46df-b6cd-cc7bf92df123/terms
+
+
+Promotional Text: 
+Discover Runspiration, the game-changing running app that fuels your fitness journey! 
+Set ambitious goals, unlock achievements, 
+and flaunt your success with eye-catching profile pictures and borders. 
+Crush your daily targets and indulge in our thrilling daily spin, 
+earning exclusive rewards to keep you motivated. 
+Transform your runs and find your inspiration with Runspiration today!
+
+App Description:
+Introducing Runspiration, your ultimate running companion! 
+Set up personalized goals and track your achievements, while showcasing your progress with customizable profile pictures and borders.
+Stay motivated with our daily spin feature, rewarding you with exciting prizes after completing your goals. 
+Unleash your potential and get inspired with Runspiration!
+
  */
 
 void main() {
