@@ -211,10 +211,11 @@ class _AchievementScreenState extends State<AchievementScreen> {
               ),
               Expanded(
                   child: ListView(
-                children: _singleton.achievements
-                    .map((triple) => AchievementEntry(
-                        id: triple.a, imagePath: triple.b, description: triple.c))
-                    .toList(),
+                    children: _singleton.achievements.map((triple) => AchievementEntry(id: triple.a, imagePath: triple.b, description: triple.b)).toList()
+                // children: _singleton.achievements
+                //     .map((triple) => AchievementEntry(
+                //         id: triple.a, imagePath: triple.b, description: triple.c))
+                //     .toList(),
               )),
               SizedBox(
                   height: SizeConfig.blockSizeVertical! * 20,
