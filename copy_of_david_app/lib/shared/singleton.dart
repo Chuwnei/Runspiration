@@ -30,11 +30,11 @@ class Singleton {
   Map<String, dynamic>? userData;
 
   final achievements = [
-    Pair("assets/achievements/ID1.png", "This is a test."),
-    Pair("assets/achievements/ID2.png", "This is a test."),
-    Pair("assets/achievements/ID3.png", "This is a test."),
-    Pair("assets/achievements/ID4.png", "This is a test."),
-    Pair("assets/achievements/ID5.png", "This is a test."),
+    Triple("ID1", "assets/achievements/ID1.png", "This is a test."),
+    Triple("ID2", "assets/achievements/ID2.png", "This is a test."),
+    Triple("ID3", "assets/achievements/ID3.png", "This is a test."),
+    Triple("ID4", "assets/achievements/ID4.png", "This is a test."),
+    Triple("ID5", "assets/achievements/ID5.png", "This is a test."),
   ];
 
   // unlocked, puchase, pending

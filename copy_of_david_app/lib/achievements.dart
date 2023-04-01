@@ -120,103 +120,114 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  
                                   selection = 0;
                                   print("Hello $selection");
                                   setState(() {});
                                 },
                                 child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    (selection == 0) ? Container(
-                                      width: 80,
-                                      height: 80,
-                                      decoration: const BoxDecoration(
-                                          color: Color.fromARGB(255, 255, 255, 255),
-                                          shape: BoxShape.circle),
-                                    ) : Container(),
-                                    Image(
-                                      image: AssetImage(
-                                          'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][0] : "empty"}.png'),
-                                      fit: BoxFit.contain,
-                                      width: 75,
-                                      height: 75
-                                      // scale: 10,
-                                      ),]
-                                ),
+                                    alignment: Alignment.center,
+                                    children: [
+                                      (selection == 0)
+                                          ? Container(
+                                              width: 80,
+                                              height: 80,
+                                              decoration: const BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255),
+                                                  shape: BoxShape.circle),
+                                            )
+                                          : Container(),
+                                      Image(
+                                          image: AssetImage(
+                                              'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][0] : "empty"}.png'),
+                                          fit: BoxFit.contain,
+                                          width: 75,
+                                          height: 75
+                                          // scale: 10,
+                                          ),
+                                    ]),
                               ),
                             ]),
                         Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
-                                onTap: () {
-                                  
-                                  selection = 1;
-                                  print("Hello $selection");
-                                  setState(() {});
-                                },
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    (selection == 1) ? Container(
-                                      width: 80,
-                                      height: 80,
-                                      decoration: const BoxDecoration(
-                                          color: Color.fromARGB(255, 255, 255, 255),
-                                          shape: BoxShape.circle),
-                                    ) : Container(),
-                                    Image(
-                                    image: AssetImage(
-                                        'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][1] : "empty"}.png'),
-                                    fit: BoxFit.contain,
-                                    width: 75,
-                                    height: 75
-                                    // scale: 10,
-                                    ),])
-                              ),
+                                  onTap: () {
+                                    selection = 1;
+                                    print("Hello $selection");
+                                    setState(() {});
+                                  },
+                                  child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        (selection == 1)
+                                            ? Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: const BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    shape: BoxShape.circle),
+                                              )
+                                            : Container(),
+                                        Image(
+                                            image: AssetImage(
+                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][1] : "empty"}.png'),
+                                            fit: BoxFit.contain,
+                                            width: 75,
+                                            height: 75
+                                            // scale: 10,
+                                            ),
+                                      ])),
                             ]),
                         Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
-                                onTap: () {
-                                  
-                                  selection = 2;
-                                  print("Hello $selection");
-                                  setState(() {});
-                                },
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    (selection == 2) ? Container(
-                                      width: 80,
-                                      height: 80,
-                                      decoration: const BoxDecoration(
-                                          color: Color.fromARGB(255, 255, 255, 255),
-                                          shape: BoxShape.circle),
-                                    ) : Container(),
-                                    Image(
-                                    image: AssetImage(
-                                        'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][2] : "empty"}.png'),
-                                    fit: BoxFit.contain,
-                                    width: 75,
-                                    height: 75
-                                    // scale: 10,
-                                    ),])
-                              ),
+                                  onTap: () {
+                                    selection = 2;
+                                    print("Hello $selection");
+                                    setState(() {});
+                                  },
+                                  child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        (selection == 2)
+                                            ? Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: const BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    shape: BoxShape.circle),
+                                              )
+                                            : Container(),
+                                        Image(
+                                            image: AssetImage(
+                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][2] : "empty"}.png'),
+                                            fit: BoxFit.contain,
+                                            width: 75,
+                                            height: 75
+                                            // scale: 10,
+                                            ),
+                                      ])),
                             ]),
                       ],
                     )),
               ),
               Expanded(
                   child: ListView(
-                    children: _singleton.achievements.map((triple) => AchievementEntry(id: triple.a, imagePath: triple.b, description: triple.b)).toList()
-                // children: _singleton.achievements
-                //     .map((triple) => AchievementEntry(
-                //         id: triple.a, imagePath: triple.b, description: triple.c))
-                //     .toList(),
-              )),
+                      children: _singleton.achievements
+                          .map((triple) => AchievementEntry(
+                              id: triple.a,
+                              imagePath: triple.b,
+                              description: triple.c))
+                          .toList()
+                      // children: _singleton.achievements
+                      //     .map((triple) => AchievementEntry(
+                      //         id: triple.a, imagePath: triple.b, description: triple.c))
+                      //     .toList(),
+                      )),
               SizedBox(
                   height: SizeConfig.blockSizeVertical! * 20,
                   // width: 50,
@@ -393,7 +404,10 @@ class _AchievementScreenState extends State<AchievementScreen> {
 
 class AchievementEntry extends StatelessWidget {
   const AchievementEntry(
-      {super.key, required this.id, required this.imagePath, required this.description});
+      {super.key,
+      required this.id,
+      required this.imagePath,
+      required this.description});
   final String id;
   final String imagePath;
   final String description;
