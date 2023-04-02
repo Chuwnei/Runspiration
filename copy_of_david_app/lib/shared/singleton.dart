@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class Pair<T1, T2> {
   final T1 a;
@@ -15,7 +15,7 @@ class Triple<T1, T2, T3> {
   Triple(this.a, this.b, this.c);
 }
 
-class Singleton {
+class Singleton extends ChangeNotifier {
   static final Singleton _instance = Singleton._internal();
 
   // passes the instantiation to the _instance object
@@ -60,6 +60,14 @@ class Singleton {
     "ID3": const Color.fromARGB(255, 223, 46, 134),
     "ID4": const Color.fromARGB(255, 230, 177, 64),
   };
+
+  int achievementSelection = 0;
+
+  // setter for achievementSelection with notifyListeners()
+  void setAchievementSelection(int index) {
+    achievementSelection = index;
+    notifyListeners();
+  }
 }
 
 

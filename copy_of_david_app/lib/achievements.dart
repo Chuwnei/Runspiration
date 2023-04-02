@@ -1,9 +1,12 @@
+import 'package:david_app/backend_services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'size_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:david_app/shared/singleton.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 
 class AchievementScreen extends StatefulWidget {
   const AchievementScreen({super.key});
@@ -12,49 +15,25 @@ class AchievementScreen extends StatefulWidget {
   State<AchievementScreen> createState() => _AchievementScreenState();
 }
 
-// class Pair<T1, T2> {
-//   final T1 a;
-//   final T2 b;
-
-//   Pair(this.a, this.b);
-// }
-
-// class Triple<T1, T2, T3> {
-//   final T1 a;
-//   final T2 b;
-//   final T3 c;
-
-//   Triple(this.a, this.b, this.c);
-// }
-
 class _AchievementScreenState extends State<AchievementScreen> {
   bool positive = false;
-  int selection = 0;
 
-  Singleton _singleton = Singleton();
+  final Singleton _singleton = Singleton();
 
-  // final achievements = [
-  //   Pair("assets/achievements/ID1.png", "This is a test."),
-  //   Pair("assets/achievements/ID2.png", "This is a test."),
-  //   Pair("assets/achievements/ID3.png", "This is a test."),
-  //   Pair("assets/achievements/ID4.png", "This is a test."),
-  //   Pair("assets/achievements/ID5.png", "This is a test."),
-  // ];
-
-  // // unlocked, puchase, pending
-  // final borders = [
-  //   Triple("ID1", "This is a test.", "unlocked"),
-  //   Triple("ID2", "This is a test.", "purchase"),
-  //   Triple("ID3", "This is a test.", "pending"),
-  //   Triple("ID4", "This is a test.", "purchase"),
-  // ];
+  @override
+  void initState() {
+    super.initState();
+    Singleton().addListener(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(_singleton.userData!["achievements"]);
-    print(_singleton.userData!["achievements"]["active"].runtimeType);
+    // print(_singleton.userData!["achievements"]);
+    // print(_singleton.userData!["achievements"]["active"].runtimeType);
 
-    List<dynamic> active = _singleton.userData!["achievements"]["active"];
+    // List<dynamic> active = _singleton.userData!["achievements"]["active"];
 
     return !positive
         ? Scaffold(
@@ -79,17 +58,17 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   print("NEW: $b");
 
                   setState(() => positive = b);
-                  return Future.delayed(Duration(seconds: 1));
+                  return Future.delayed(const Duration(seconds: 1));
                 },
                 colorBuilder: (b) => b ? Colors.orange : Colors.green,
                 iconBuilder: (value) => value
-                    ? Icon(FontAwesomeIcons.user)
+                    ? const Icon(FontAwesomeIcons.user)
                     : Container(
                         width: 100,
                         height: 100,
                         decoration: const BoxDecoration(
                             color: Colors.green, shape: BoxShape.circle),
-                        child: Icon(FontAwesomeIcons.trophy),
+                        child: const Icon(FontAwesomeIcons.trophy),
                       ),
                 textBuilder: (value) => value
                     ? Center(
@@ -120,14 +99,15 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  selection = 0;
-                                  print("Hello $selection");
+                                  _singleton.achievementSelection = 0;
+                                  print(
+                                      "Hello ${_singleton.achievementSelection}");
                                   setState(() {});
                                 },
                                 child: Stack(
                                     alignment: Alignment.center,
                                     children: [
-                                      (selection == 0)
+                                      (_singleton.achievementSelection == 0)
                                           ? Container(
                                               width: 80,
                                               height: 80,
@@ -153,14 +133,15 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             children: [
                               InkWell(
                                   onTap: () {
-                                    selection = 1;
-                                    print("Hello $selection");
+                                    _singleton.achievementSelection = 1;
+                                    print(
+                                        "Hello ${_singleton.achievementSelection}");
                                     setState(() {});
                                   },
                                   child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        (selection == 1)
+                                        (_singleton.achievementSelection == 1)
                                             ? Container(
                                                 width: 80,
                                                 height: 80,
@@ -185,14 +166,15 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             children: [
                               InkWell(
                                   onTap: () {
-                                    selection = 2;
-                                    print("Hello $selection");
+                                    _singleton.achievementSelection = 2;
+                                    print(
+                                        "Hello ${_singleton.achievementSelection}");
                                     setState(() {});
                                   },
                                   child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        (selection == 2)
+                                        (_singleton.achievementSelection == 2)
                                             ? Container(
                                                 width: 80,
                                                 height: 80,
@@ -291,7 +273,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 },
                 colorBuilder: (b) => b ? Colors.orange : Colors.green,
                 iconBuilder: (value) => value
-                    ? Icon(FontAwesomeIcons.user)
+                    ? const Icon(FontAwesomeIcons.user)
                     : const Icon(FontAwesomeIcons.trophy),
                 textBuilder: (value) => value
                     ? Center(
@@ -313,7 +295,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   height: SizeConfig.blockSizeVertical! * 15,
                   width: SizeConfig.blockSizeHorizontal! * 100,
                   child: Container(
-                      color: Color.fromARGB(255, 115, 182, 236),
+                      color: const Color.fromARGB(255, 115, 182, 236),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -339,7 +321,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                       )),
                 ),
                 Text(
-                  "100,000",
+                  "${_singleton.userData!['currency']}",
                   style: GoogleFonts.comicNeue(
                       fontSize: 65, fontWeight: FontWeight.bold),
                 ),
@@ -403,7 +385,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
 }
 
 class AchievementEntry extends StatelessWidget {
-  const AchievementEntry(
+  AchievementEntry(
       {super.key,
       required this.id,
       required this.imagePath,
@@ -411,6 +393,8 @@ class AchievementEntry extends StatelessWidget {
   final String id;
   final String imagePath;
   final String description;
+
+  final _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
@@ -420,7 +404,29 @@ class AchievementEntry extends StatelessWidget {
         child: Card(
             color: const Color.fromARGB(255, 219, 219, 219),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                if (_singleton.userData!['achievements']['unlocked']
+                    .contains(id)) {
+                  // if unlocked
+                  List<dynamic> achievements =
+                      List.from(_singleton.userData!['achievements']['active']);
+                  achievements[_singleton.achievementSelection] = id;
+                  Function eq = const ListEquality().equals;
+                  if (!eq(achievements,
+                      _singleton.userData!['achievements']['active'])) {
+                    // update
+                    print("different");
+                    FirebaseFirestore.instance
+                        .collection('user_data')
+                        .doc(Authentication().user?.uid)
+                        .update({'achievements.active': achievements}).then(
+                            (value) => {
+                                  _singleton.setAchievementSelection(
+                                      _singleton.achievementSelection)
+                                });
+                  }
+                }
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

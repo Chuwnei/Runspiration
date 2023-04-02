@@ -58,12 +58,10 @@ class _UserScreenState extends State<UserScreen> {
 
     if (_singleton.userData!["lastOnline"].toDate().day !=
         Timestamp.now().toDate().day) {
-      // FirebaseFirestore.instance
-      //     .collection("user_data")
-      //     .doc(Authentication().user?.uid)
-      //     .update(docData);
-
-      // Reset daily stats & reassign the lastOnline timestamp.
+      FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(Authentication().user?.uid)
+          .update({"progress_in_km": 0, "lastOnline": Timestamp.now()});
     }
 
     _chartData = getData();
