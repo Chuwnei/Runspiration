@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health/health.dart';
 
 class Pair<T1, T2> {
   final T1 a;
@@ -28,6 +29,8 @@ class Singleton extends ChangeNotifier {
 
 //   int _example = 0;
   Map<String, dynamic>? userData;
+
+  List<HealthDataPoint> healthDataList = [];
 
   final achievements = [
     Triple("ID1", "assets/achievements/ID1.png", "This is a test."),

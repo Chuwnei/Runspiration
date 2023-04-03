@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:david_app/size_config.dart';
+import 'healthAPI.dart';
 
 class RunScreen extends StatelessWidget {
   const RunScreen({super.key});
@@ -28,8 +29,7 @@ class RunScreen extends StatelessWidget {
           colorBlendMode: BlendMode.darken,
         ),
         Center(
-          child: Container(
-              child: Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -59,7 +59,7 @@ class RunScreen extends StatelessWidget {
                             fontSize: 50, color: Colors.white)),
                   ))
             ],
-          )),
+          ),
         )
       ]),
     );
@@ -75,13 +75,19 @@ class Session extends StatefulWidget {
 
 class _SessionState extends State<Session> {
   late DateTime startTime;
-  double kilometers = 5.0;
+  double startKM = 0.0;
+  int startCal = 0;
+  double kilometers = 0.0;
   int calories = 0;
+
+  final _healthAPI = HealthAPI();
 
   @override
   void initState() {
     super.initState();
     startTime = DateTime.now();
+    startKM = _healthAPI.getDistance();
+    startCal = _healthAPI.getCalories();
   }
 
   @override
@@ -95,9 +101,15 @@ class _SessionState extends State<Session> {
           children: [
             TimerBuilder.periodic(const Duration(seconds: 1),
                 builder: (context) {
+              _healthAPI.fetchData();
               Duration diff = DateTime.now().difference(startTime);
+
+              kilometers = _healthAPI.getDistance() - startKM;
+              calories = _healthAPI.getCalories() - startCal;
+              // print(HealthAPI().getCalories());
+
               return Text(
-                  "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${(diff.inMinutes > 9) ? "" : 0}${diff.inMinutes}:${(diff.inSeconds > 9) ? "" : 0}${diff.inSeconds}",
+                  "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${((diff.inMinutes % 60) > 9) ? "" : 0}${diff.inMinutes % 60}:${((diff.inSeconds % 60) > 9) ? "" : 0}${diff.inSeconds % 60}",
                   style: GoogleFonts.comicNeue(
                       fontSize: 50,
                       color: Colors.blue,
@@ -117,45 +129,47 @@ class _SessionState extends State<Session> {
                         GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
               ],
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     Text(
+            //       "Current Pace:",
+            //       style:
+            //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+            //     ),
+            //     Text(
+            //       "Average Pace:",
+            //       style:
+            //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+            //     )
+            //   ],
+            // ),
+            // Text(
+            //   "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
+            //   style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
+            //   textAlign: TextAlign.center,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Current Pace:",
-                  style:
-                      GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+                SizedBox(
+                    width: SizeConfig.blockSizeHorizontal! * 40,
+                    height: 75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      // style: TextButton.styleFrom(
+                      //     padding:
+                      //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                      child: Text("Cancel",
+                          style: GoogleFonts.comicNeue(fontSize: 40)),
+                    )),
+                const SizedBox(
+                  width: 10,
                 ),
-                Text(
-                  "Average Pace:",
-                  style:
-                      GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-                )
-              ],
-            ),
-            Text(
-              "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
-              style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
-              textAlign: TextAlign.center,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // SizedBox(
-                //     width: SizeConfig.blockSizeHorizontal! * 40,
-                //     height: 75,
-                //     child: ElevatedButton(
-                //       onPressed: () {},
-                //       // style: TextButton.styleFrom(
-                //       //     padding:
-                //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                //       child: Text("Pause",
-                //           style: GoogleFonts.comicNeue(fontSize: 50)),
-                //     )),
-                // SizedBox(
-                //   width: 50,
-                // ),
                 SizedBox(
                     width: SizeConfig.blockSizeHorizontal! * 40,
                     height: 75,
@@ -178,8 +192,8 @@ class _SessionState extends State<Session> {
                       // style: TextButton.styleFrom(
                       //     padding:
                       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                      child: Text(" End ",
-                          style: GoogleFonts.comicNeue(fontSize: 50)),
+                      child: Text("Done",
+                          style: GoogleFonts.comicNeue(fontSize: 40)),
                     )),
               ],
             )

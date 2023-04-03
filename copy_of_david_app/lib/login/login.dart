@@ -3,6 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:david_app/backend_services/auth.dart';
 import 'package:david_app/size_config.dart';
+import 'package:david_app/healthAPI.dart';
+import 'package:david_app/shared/singleton.dart';
+import 'package:health/health.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -11,8 +14,19 @@ class Login extends StatelessWidget {
   // TextEditingController passwordcontroller = TextEditingController();
   // String email = '';
   // String password = '';
+  final _singleton = Singleton();
+  final _healthAPI = HealthAPI();
+
+  // call HealthAPI's fetchdata function to get the list of healthdatapoints
+  // and then set the list in the singleton
+  // void _fetchData() async {
+  //   List<HealthDataPoint> healthDataList = await HealthAPI().fetchData();
+  //   _singleton.healthDataList = healthDataList;
+  // }
+
   @override
   Widget build(BuildContext context) {
+    _healthAPI.fetchData();
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -28,8 +42,8 @@ class Login extends StatelessWidget {
                     ),
                     const Text("Runspiration",
                         textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.bold)),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical! * 5,
                     ),

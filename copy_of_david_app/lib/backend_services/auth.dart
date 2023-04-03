@@ -38,12 +38,11 @@ class Authentication {
     }
   }
 
-  Future<void> signup(user_email, password) async {
+  Future<void> signup(userEmail, password) async {
     try {
       //Create a new user with the provided email and password
       final accountCreationAttempt = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: user_email, password: password);
+          .createUserWithEmailAndPassword(email: userEmail, password: password);
       User? user = accountCreationAttempt.user;
       final docData = {
         "currency": 0,
@@ -53,6 +52,8 @@ class Authentication {
         "total_km": 0,
         "profile": "default.png",
         "lastOnline": Timestamp.now(),
+        "lastEdit": DateTime.now().subtract(const Duration(hours: 24)),
+        "lastReward": DateTime.now().subtract(const Duration(hours: 24)),
       };
       final achievements = {
         "active": ["empty", "empty", "empty"],

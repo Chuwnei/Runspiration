@@ -7,8 +7,9 @@ import 'package:david_app/login/drawer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:david_app/shared/loading.dart';
-import 'package:david_app/backend_services/auth.dart';
 import 'package:david_app/shared/singleton.dart';
+import 'healthAPI.dart';
+// import 'dart:async';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -26,6 +27,7 @@ class _UserScreenState extends State<UserScreen> {
   bool canEdit = true;
 
   Singleton _singleton = Singleton();
+  HealthAPI _healthAPI = HealthAPI();
 
   TextEditingController goalcontroller = TextEditingController();
   int goal = 5;
@@ -34,6 +36,9 @@ class _UserScreenState extends State<UserScreen> {
   void initState() {
     _chartData = getData();
     super.initState();
+    // Timer.periodic(Duration(seconds: 1), (timer) {
+    //   setState(() {});
+    // });
   }
 
   List<UserStats> getData() {
@@ -41,9 +46,9 @@ class _UserScreenState extends State<UserScreen> {
       UserStats(
           (_singleton.userData != null)
               ? _singleton.userData!["goal_for_running"].toDouble()
-              : 5.0,
+              : 2.0,
           (_singleton.userData != null)
-              ? _singleton.userData!["progress_in_km"].toDouble()
+              ? _healthAPI.getDistance() / 1000.0
               : 0.0,
           Colors.blue),
     ];
@@ -52,9 +57,12 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(Timestamp.now().seconds - _singleton.userData!["lastOnline"].seconds);
-    print(_singleton.userData!["lastOnline"].toDate().day);
-    print(Timestamp.now().toDate().day);
+    // print(Timestamp.now().seconds - _singleton.userData!["lastOnline"].seconds);
+    // print(_singleton.userData!["lastOnline"].toDate().day);
+    // print(Timestamp.now().toDate().day);
+
+    // print(HealthAPI().getCalories());
+    // print(HealthAPI().getDistance());
 
     if (_singleton.userData!["lastOnline"].toDate().day !=
         Timestamp.now().toDate().day) {
@@ -62,6 +70,17 @@ class _UserScreenState extends State<UserScreen> {
           .collection("user_data")
           .doc(Authentication().user?.uid)
           .update({"progress_in_km": 0, "lastOnline": Timestamp.now()});
+    }
+
+    if (_singleton.userData!["lastReward"].toDate().day !=
+        Timestamp.now().toDate().day) {
+      FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(Authentication().user?.uid)
+          .update({
+        "currency": FieldValue.increment(100),
+        "lastReward": Timestamp.now()
+      });
     }
 
     _chartData = getData();
@@ -104,22 +123,23 @@ class _UserScreenState extends State<UserScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    SizedBox(
-                                        width: 200,
-                                        height: 75,
-                                        child: ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                  context, '/healthTest');
-                                            },
-                                            child: const Text('HealthTest',
-                                                style:
-                                                    TextStyle(fontSize: 25)))),
+                                    // SizedBox(
+                                    //     width: 200,
+                                    //     height: 75,
+                                    //     child: ElevatedButton(
+                                    //         onPressed: () {
+                                    //           Navigator.pushNamed(
+                                    //               context, '/healthTest');
+                                    //         },
+                                    //         child: const Text('HealthTest',
+                                    //             style:
+                                    //                 TextStyle(fontSize: 25)))),
                                     Column(
                                       children: [
                                         Text("Calories",
                                             style: GoogleFonts.comicNeue()),
-                                        Text("0",
+                                        Text(
+                                            _healthAPI.getCalories().toString(),
                                             style: GoogleFonts.comicNeue(
                                                 fontSize: 45,
                                                 color: Colors.red))
@@ -128,7 +148,7 @@ class _UserScreenState extends State<UserScreen> {
                                     Column(children: [
                                       Text("Active Time",
                                           style: GoogleFonts.comicNeue()),
-                                      Text("0m",
+                                      Text("${_healthAPI.getExerciseTime()}m",
                                           style: GoogleFonts.comicNeue(
                                               fontSize: 45,
                                               color: Colors.purple))
@@ -153,11 +173,11 @@ class _UserScreenState extends State<UserScreen> {
                                                   null &&
                                               _singleton.userData![
                                                       "goal_for_running"] >
-                                                  5) // minimum 5 km per day!
+                                                  2) // minimum 2 km per day!
                                           ? _singleton.userData![
                                                   "goal_for_running"] +
                                               .0
-                                          : 5.0)
+                                          : 2.0)
                                 ]),
                                 Center(
                                     child: Container(
@@ -168,11 +188,11 @@ class _UserScreenState extends State<UserScreen> {
                                       height: 125,
                                     ),
                                     Text(
-                                        "Current: ${_singleton.userData!["progress_in_km"]}",
+                                        "Current: ${(_healthAPI.getDistance() / 1000.0).toStringAsFixed(2)}",
                                         style: GoogleFonts.comicNeue(
                                             fontSize: 30, color: Colors.blue)),
                                     Text(
-                                        "Goal: ${_singleton.userData!["goal_for_running"]}",
+                                        "Goal: ${_singleton.userData!["goal_for_running"]} km",
                                         style: GoogleFonts.comicNeue(
                                             fontSize: 20, color: Colors.green)),
                                     TextButton(
