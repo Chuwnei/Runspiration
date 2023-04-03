@@ -40,9 +40,9 @@ class Singleton extends ChangeNotifier {
   // unlocked, puchase, pending
   final borders = [
     Triple("ID1", "This is a test.", "unlocked"),
-    Triple("ID2", "This is a test.", "purchase"),
+    Triple("ID2", "100", "purchase"),
     Triple("ID3", "This is a test.", "pending"),
-    Triple("ID4", "This is a test.", "purchase"),
+    Triple("ID4", "250", "purchase"),
   ];
 
   Map<String, String> achievementDescriptions = {
@@ -63,6 +63,7 @@ class Singleton extends ChangeNotifier {
 
   int achievementSelection = 0;
   List<dynamic> achievementIDs = ["empty", "empty", "empty"];
+  String currentBorder = "ID1";
 
   // setter for achievementSelection with notifyListeners()
   void setAchievementSelection(int index) {

@@ -33,6 +33,7 @@ class Initialization extends StatelessWidget {
                 snapshot.data!.data() as Map<String, dynamic>;
             _singleton.userData = data;
             _singleton.achievementIDs = data['achievements']['active'];
+            _singleton.currentBorder = data['borders']['active'];
           }
 
           return UserScreen();

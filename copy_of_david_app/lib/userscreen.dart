@@ -104,16 +104,17 @@ class _UserScreenState extends State<UserScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    // SizedBox(
-                                    //     width: 250,
-                                    //     height: 75,
-                                    //     child: ElevatedButton(
-                                    //         onPressed: () {
-                                    //           Navigator.pushNamed(
-                                    //               context, '/healthTest');
-                                    //         },
-                                    //         child: const Text('HealthTest',
-                                    //             style: TextStyle(fontSize: 30)))),
+                                    SizedBox(
+                                        width: 200,
+                                        height: 75,
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, '/healthTest');
+                                            },
+                                            child: const Text('HealthTest',
+                                                style:
+                                                    TextStyle(fontSize: 25)))),
                                     Column(
                                       children: [
                                         Text("Calories",
@@ -513,7 +514,7 @@ class WalletScreen extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.pushNamed(context, '/profileGeneral');
+                    Navigator.pushNamed(context, '/achievementScreen');
                   },
                   child: const Text('Purchase Cosmetics',
                       style: TextStyle(fontSize: 30)))),
