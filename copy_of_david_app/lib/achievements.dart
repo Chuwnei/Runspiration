@@ -24,7 +24,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
   void initState() {
     super.initState();
     Singleton().addListener(() {
-      setState(() {});
+      if (mounted) setState(() {});
     });
   }
 
@@ -57,7 +57,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 onChanged: (b) {
                   print("NEW: $b");
 
-                  setState(() => positive = b);
+                  if (mounted) setState(() => positive = b);
                   return Future.delayed(const Duration(seconds: 1));
                 },
                 colorBuilder: (b) => b ? Colors.orange : Colors.green,
@@ -102,7 +102,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                   _singleton.achievementSelection = 0;
                                   print(
                                       "Hello ${_singleton.achievementSelection}");
-                                  setState(() {});
+                                  if (mounted) setState(() {});
                                 },
                                 child: Stack(
                                     alignment: Alignment.center,
@@ -119,7 +119,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                           : Container(),
                                       Image(
                                           image: AssetImage(
-                                              'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][0] : "empty"}.png'),
+                                              'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[0] : "empty"}.png'),
                                           fit: BoxFit.contain,
                                           width: 75,
                                           height: 75
@@ -136,7 +136,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                     _singleton.achievementSelection = 1;
                                     print(
                                         "Hello ${_singleton.achievementSelection}");
-                                    setState(() {});
+                                    if (mounted) setState(() {});
                                   },
                                   child: Stack(
                                       alignment: Alignment.center,
@@ -153,7 +153,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                             : Container(),
                                         Image(
                                             image: AssetImage(
-                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][1] : "empty"}.png'),
+                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[1] : "empty"}.png'),
                                             fit: BoxFit.contain,
                                             width: 75,
                                             height: 75
@@ -169,7 +169,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                     _singleton.achievementSelection = 2;
                                     print(
                                         "Hello ${_singleton.achievementSelection}");
-                                    setState(() {});
+                                    if (mounted) setState(() {});
                                   },
                                   child: Stack(
                                       alignment: Alignment.center,
@@ -186,7 +186,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                             : Container(),
                                         Image(
                                             image: AssetImage(
-                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.userData!["achievements"]["active"][2] : "empty"}.png'),
+                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[2] : "empty"}.png'),
                                             fit: BoxFit.contain,
                                             width: 75,
                                             height: 75
@@ -221,6 +221,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                           height: 75,
                           child: ElevatedButton(
                             onPressed: () {
+                              _singleton.achievementIDs = List.from(_singleton
+                                  .userData!['achievements']['active']);
                               Navigator.pop(context);
                             },
                             // style: TextButton.styleFrom(
@@ -229,14 +231,34 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             child: Text("Cancel",
                                 style: GoogleFonts.comicNeue(fontSize: 36)),
                           )),
-                      SizedBox(
+                      const SizedBox(
                         width: 50,
                       ),
                       SizedBox(
                           width: SizeConfig.blockSizeHorizontal! * 40,
                           height: 75,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Function eq = const ListEquality().equals;
+                              if (!eq(
+                                  _singleton.achievementIDs,
+                                  _singleton.userData!['achievements']
+                                      ['active'])) {
+                                // update
+                                print("different");
+                                FirebaseFirestore.instance
+                                    .collection('user_data')
+                                    .doc(Authentication().user?.uid)
+                                    .update({
+                                  'achievements.active':
+                                      _singleton.achievementIDs
+                                }).then((value) {
+                                  _singleton.setAchievementSelection(
+                                      _singleton.achievementSelection);
+                                  Navigator.pop(context);
+                                });
+                              }
+                            },
                             // style: TextButton.styleFrom(
                             //     padding:
                             //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
@@ -268,8 +290,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 onChanged: (b) {
                   print("NEW: $b");
 
-                  setState(() => positive = b);
-                  return Future.delayed(Duration(seconds: 1));
+                  if (mounted) setState(() => positive = b);
+                  return Future.delayed(const Duration(seconds: 1));
                 },
                 colorBuilder: (b) => b ? Colors.orange : Colors.green,
                 iconBuilder: (value) => value
@@ -409,21 +431,26 @@ class AchievementEntry extends StatelessWidget {
                     .contains(id)) {
                   // if unlocked
                   List<dynamic> achievements =
-                      List.from(_singleton.userData!['achievements']['active']);
+                      List.from(_singleton.achievementIDs);
                   achievements[_singleton.achievementSelection] = id;
+
+                  _singleton.achievementIDs = achievements;
+
                   Function eq = const ListEquality().equals;
                   if (!eq(achievements,
                       _singleton.userData!['achievements']['active'])) {
                     // update
                     print("different");
-                    FirebaseFirestore.instance
-                        .collection('user_data')
-                        .doc(Authentication().user?.uid)
-                        .update({'achievements.active': achievements}).then(
-                            (value) => {
-                                  _singleton.setAchievementSelection(
-                                      _singleton.achievementSelection)
-                                });
+                    _singleton.setAchievementSelection(
+                        _singleton.achievementSelection);
+                    // FirebaseFirestore.instance
+                    //     .collection('user_data')
+                    //     .doc(Authentication().user?.uid)
+                    //     .update({'achievements.active': achievements}).then(
+                    //         (value) => {
+                    //               _singleton.setAchievementSelection(
+                    //                   _singleton.achievementSelection)
+                    //             });
                   }
                 }
               },
@@ -431,13 +458,19 @@ class AchievementEntry extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image(
-                      image: AssetImage(imagePath),
-                      fit: BoxFit.contain,
-                      width: 75,
-                      height: 75
-                      // scale: 10,
-                      ),
+                  Opacity(
+                    opacity: _singleton.userData!['achievements']['unlocked']
+                            .contains(id)
+                        ? 1
+                        : 0.5,
+                    child: Image(
+                        image: AssetImage(imagePath),
+                        fit: BoxFit.contain,
+                        width: 75,
+                        height: 75
+                        // scale: 10,
+                        ),
+                  ),
                   const SizedBox(
                     width: 20,
                   ),

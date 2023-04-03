@@ -62,6 +62,7 @@ class Singleton extends ChangeNotifier {
   };
 
   int achievementSelection = 0;
+  List<dynamic> achievementIDs = ["empty", "empty", "empty"];
 
   // setter for achievementSelection with notifyListeners()
   void setAchievementSelection(int index) {

@@ -6,10 +6,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:david_app/backend_services/auth.dart';
 import 'package:david_app/shared/singleton.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final Singleton _singleton = Singleton();
+
+  @override
+  void initState() {
+    super.initState();
+    Singleton().addListener(() {
+      if (mounted) setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
