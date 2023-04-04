@@ -270,7 +270,7 @@ class _UserScreenState extends State<UserScreen> {
                         IconButton(
                           icon: Icon(Icons.directions_run),
                           onPressed: () {
-                            setState(() {
+                            if (mounted) setState(() {
                               _buttonPressed = 'Start a run';
                             });
                             Navigator.pushNamed(context, "/runscreen");
@@ -279,7 +279,7 @@ class _UserScreenState extends State<UserScreen> {
                         IconButton(
                           icon: Icon(Icons.people),
                           onPressed: () {
-                            setState(() {
+                            if (mounted) setState(() {
                               _buttonPressed = 'Union';
                             });
                             Navigator.pushNamed(context, "/profilescreen");
@@ -294,7 +294,7 @@ class _UserScreenState extends State<UserScreen> {
                         IconButton(
                           icon: Icon(Icons.account_balance_wallet),
                           onPressed: () {
-                            setState(() {
+                            if (mounted) setState(() {
                               _buttonPressed = 'Crypto account';
                             });
                             Navigator.push(
@@ -331,7 +331,7 @@ class _UserScreenState extends State<UserScreen> {
               children: [
                 SizedBox(
                   width: SizeConfig.blockSizeHorizontal! * 50,
-                  height: 50,
+                  height: 70,
                   child: TextField(
                     keyboardType: TextInputType.number,
                     controller: goalcontroller,
@@ -340,13 +340,13 @@ class _UserScreenState extends State<UserScreen> {
                     onChanged: (text) {
                       goal = int.parse(text);
                     },
-                    style: const TextStyle(fontSize: 32),
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ),
                 const SizedBox(width: 10),
                 const Text(
                   "km",
-                  style: TextStyle(fontSize: 32),
+                  style: TextStyle(fontSize: 35),
                 ),
               ],
             ),
@@ -370,7 +370,7 @@ class _UserScreenState extends State<UserScreen> {
                       .collection('user_data')
                       .doc(Authentication().user!.uid)
                       .update({
-                    "goal_for_running": (goal > 2) ? goal : 2,
+                    "goal_for_running": (goal > 2 && goal < 100) ? goal : 2,
                     "lastEdit": Timestamp.now()
                   }).then((value) => Navigator.of(context).pop());
                 },
@@ -458,10 +458,23 @@ class UserStats {
 //   }
 // }
 
-class WalletScreen extends StatelessWidget {
+class WalletScreen extends StatefulWidget {
   WalletScreen({super.key});
 
+  @override
+  State<WalletScreen> createState() => _WalletScreenState();
+}
+
+class _WalletScreenState extends State<WalletScreen> {
   final Singleton _singleton = Singleton();
+
+@override
+  void initState() {
+    super.initState();
+    Singleton().addListener(() {
+      if (mounted) setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -489,8 +502,8 @@ class WalletScreen extends StatelessWidget {
                       Container(
                         width: 120,
                         height: 120,
-                        decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 45, 41, 43),
+                        decoration: BoxDecoration(
+                            color: _singleton.borderColors[_singleton.currentBorder],
                             shape: BoxShape.circle),
                       ),
                       Image(

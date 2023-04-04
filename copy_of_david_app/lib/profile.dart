@@ -48,8 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       width: SizeConfig.blockSizeHorizontal! * 40 + 20,
                       height: SizeConfig.blockSizeHorizontal! * 40 + 20,
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 45, 41, 43),
+                      decoration: BoxDecoration(
+                          color: _singleton.borderColors[_singleton.currentBorder],
                           shape: BoxShape.circle),
                     ),
                     Image(

@@ -33,19 +33,24 @@ class Singleton extends ChangeNotifier {
   List<HealthDataPoint> healthDataList = [];
 
   final achievements = [
-    Triple("ID1", "assets/achievements/ID1.png", "This is a test."),
-    Triple("ID2", "assets/achievements/ID2.png", "This is a test."),
-    Triple("ID3", "assets/achievements/ID3.png", "This is a test."),
-    Triple("ID4", "assets/achievements/ID4.png", "This is a test."),
+    Triple("ID1", "assets/achievements/ID1.png", "Run 20 kilometers in total."),
+    Triple("ID2", "assets/achievements/ID2.png", "Run 5 consecutive days."),
+    Triple("ID3", "assets/achievements/ID3.png", "Achieve a fastest pace that's less than 5 minutes in a run"),
+    Triple("ID4", "assets/achievements/ID4.png", "Improve for 30 seconds since the first run"),
     Triple("ID5", "assets/achievements/ID5.png", "This is a test."),
   ];
 
   // unlocked, puchase, pending
   final borders = [
-    Triple("ID1", "This is a test.", "unlocked"),
-    Triple("ID2", "100", "purchase"),
-    Triple("ID3", "This is a test.", "pending"),
+    Triple("ID1", "0", "purchase"),
+    Triple("ID2", "200", "purchase"),
+    Triple("ID3", "100", "purchase"),
     Triple("ID4", "250", "purchase"),
+    Triple("ID5", "500", "purchase"),
+    Triple("ID6", "300", "purchase"),
+    Triple("ID7", "This is a test.", "pending"),
+    Triple("ID8", "This is a test.", "pending"),
+    Triple("ID9", "This is a test.", "pending"),
   ];
 
   Map<String, String> achievementDescriptions = {
@@ -60,8 +65,13 @@ class Singleton extends ChangeNotifier {
   Map<String, Color> borderColors = {
     "ID1": const Color.fromARGB(255, 45, 41, 43),
     "ID2": const Color.fromARGB(255, 135, 84, 230),
-    "ID3": const Color.fromARGB(255, 223, 46, 134),
-    "ID4": const Color.fromARGB(255, 230, 177, 64),
+    "ID3": Color.fromARGB(255, 247, 143, 195),
+    "ID4": Color.fromARGB(255, 64, 75, 230),
+    "ID5": Color.fromARGB(255, 0, 242, 255),
+    "ID6": Color.fromARGB(255, 4, 0, 255),
+    "ID7": Color.fromARGB(255, 230, 166, 64),
+    "ID8": Color.fromARGB(255, 0, 255, 0),
+    "ID9": Color.fromARGB(255, 255, 0, 204),
   };
 
   int achievementSelection = 0;
@@ -71,6 +81,11 @@ class Singleton extends ChangeNotifier {
   // setter for achievementSelection with notifyListeners()
   void setAchievementSelection(int index) {
     achievementSelection = index;
+    notifyListeners();
+  }
+
+  void setCurrentBorder(String id) {
+    currentBorder = id;
     notifyListeners();
   }
 }

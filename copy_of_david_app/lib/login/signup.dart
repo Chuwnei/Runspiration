@@ -22,7 +22,7 @@ class _signupState extends State<SignUp> {
     } else {
       match = false;
     }
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override

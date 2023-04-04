@@ -257,6 +257,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                                       _singleton.achievementSelection);
                                   Navigator.pop(context);
                                 });
+                              } else {
+                                Navigator.pop(context);
                               }
                             },
                             // style: TextButton.styleFrom(
@@ -326,8 +328,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             Container(
                               width: 120,
                               height: 120,
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 45, 41, 43),
+                              decoration: BoxDecoration(
+                                  color: _singleton.borderColors[_singleton.currentBorder],
                                   shape: BoxShape.circle),
                             ),
                             Image(
@@ -356,9 +358,9 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     crossAxisSpacing: 10.0,
                     children: _singleton.borders
                         .map((triple) => BorderEntry(
-                              color: triple.a,
+                              id: triple.a,
                               description: triple.b,
-                              type: triple.c,
+                              type: (!_singleton.userData!["borders"]["unlocked"].contains(triple.a)) ? triple.c : "unlocked",
                             ))
                         .toList(),
                   ),
@@ -376,6 +378,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             height: 75,
                             child: ElevatedButton(
                               onPressed: () {
+                                _singleton.currentBorder = _singleton.userData!["borders"]["active"];
                                 Navigator.pop(context);
                               },
                               // style: TextButton.styleFrom(
@@ -391,7 +394,39 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 75,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                              //   Function eq = const ListEquality().equals;
+                              // if (!eq(
+                              //     _singleton.achievementIDs,
+                              //     _singleton.userData!['achievements']
+                              //         ['active'])) {
+                              //   // update
+                              //   print("different");
+                              //   FirebaseFirestore.instance
+                              //       .collection('user_data')
+                              //       .doc(Authentication().user?.uid)
+                              //       .update({
+                              //     'achievements.active':
+                              //         _singleton.achievementIDs
+                              //   }).then((value) {
+                              //     _singleton.setAchievementSelection(
+                              //         _singleton.achievementSelection);
+                              //     Navigator.pop(context);
+                              //   });
+                              // } else {
+                              //   Navigator.pop(context);
+                              // }
+
+                                FirebaseFirestore.instance.collection('user_data')
+                                    .doc(Authentication().user?.uid)
+                                    .update({
+                                  'borders.active':
+                                      _singleton.currentBorder
+                                }).then((value) {
+                                  Navigator.pop(context);
+                                });
+                              },
+                              
                               // style: TextButton.styleFrom(
                               //     padding:
                               //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
@@ -503,10 +538,10 @@ class AchievementEntry extends StatelessWidget {
 class BorderEntry extends StatelessWidget {
   BorderEntry(
       {super.key,
-      required this.color,
+      required this.id,
       required this.description,
       required this.type});
-  final String color;
+  final String id;
   final String description;
   final String type;
 
@@ -525,12 +560,15 @@ class BorderEntry extends StatelessWidget {
               width: SizeConfig.blockSizeHorizontal! * 10,
               height: SizeConfig.blockSizeHorizontal! * 10,
               decoration: BoxDecoration(
-                  color: _singleton.borderColors[color],
+                  color: _singleton.borderColors[id],
                   shape: BoxShape.circle),
             ),
             (type == "unlocked")
                 ? ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print("Set the new border to $id");
+                      _singleton.setCurrentBorder(id);
+                    },
                     child: Text(
                       "Select",
                       maxLines: 1,
@@ -539,7 +577,16 @@ class BorderEntry extends StatelessWidget {
                   )
                 : (type == "purchase")
                     ? ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (int.parse(description) <= _singleton.userData!["currency"]) {
+                            FirebaseFirestore.instance
+                              .collection("user_data")
+                              .doc(Authentication().user?.uid)
+                              .update({"currency": FieldValue.increment(-int.parse(description)), "borders.active": id, "borders.unlocked": FieldValue.arrayUnion([id])}).then((value) => _singleton.setCurrentBorder(id));
+                          } else {
+                            print("Not enough money!");
+                          }
+                        },
                         child: Text(
                           description,
                           maxLines: 1,
