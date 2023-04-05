@@ -3,6 +3,7 @@ import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:david_app/shared/singleton.dart';
 import 'dart:io' show Platform;
+import 'dart:async';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // enum AppState {
@@ -133,9 +134,10 @@ class HealthAPI {
     }
   }
 
-  void fetchData() async {
+  Future<List<HealthDataPoint>> fetchData() async {
     List<HealthDataPoint> healthDataList = await HealthAPI()._fetchData();
     _singleton.healthDataList = healthDataList;
+    return healthDataList;
   }
 
   // write a function that returns an int representing the total active caloris burned today using the healthdatapoints list in singleton

@@ -8,8 +8,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:david_app/shared/loading.dart';
 import 'package:david_app/shared/singleton.dart';
+import 'package:health/health.dart';
 import 'healthAPI.dart';
-// import 'dart:async';
+import 'dart:async';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -32,13 +33,46 @@ class _UserScreenState extends State<UserScreen> {
   TextEditingController goalcontroller = TextEditingController();
   int goal = 5;
 
+  Future<void> _updateStats() async {
+    // Define a start and end time to query the data.
+    final endDate = DateTime.now();
+    final startDate = DateTime(endDate.year, endDate.month, endDate.day);
+
+    // Define the types of health data you want to get, in this case only ACTIVE_ENERGY_BURNED.
+    final types = <HealthDataType>[
+      HealthDataType.DISTANCE_WALKING_RUNNING,
+      HealthDataType.ACTIVE_ENERGY_BURNED,
+      HealthDataType.EXERCISE_TIME
+    ];
+
+    // Get the health data from the specified date range and types.
+    final healthData =
+        await HealthFactory().getHealthDataFromTypes(startDate, endDate, types);
+
+    // Store the result in the state to update the UI.
+    setState(() {
+      _singleton.healthDataList = healthData;
+      for (var i = 0; i < _singleton.healthDataList.length; i++) {
+        if (_singleton.healthDataList[i].type ==
+            HealthDataType.ACTIVE_ENERGY_BURNED) {
+          print(_singleton.healthDataList[i].dateFrom);
+          break;
+          // totalCalories +=
+          //     double.parse(_singleton.healthDataList[i].value.toString());
+        }
+      }
+    });
+  }
+
   @override
   void initState() {
     _chartData = getData();
     super.initState();
-    // Timer.periodic(Duration(seconds: 1), (timer) {
-    //   setState(() {});
-    // });
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      print("test");
+      _updateStats();
+      setState(() {});
+    });
   }
 
   List<UserStats> getData() {
@@ -139,7 +173,9 @@ class _UserScreenState extends State<UserScreen> {
                                         Text("Calories",
                                             style: GoogleFonts.comicNeue()),
                                         Text(
-                                            _healthAPI.getCalories().toString(),
+                                            HealthAPI()
+                                                .getCalories()
+                                                .toString(),
                                             style: GoogleFonts.comicNeue(
                                                 fontSize: 45,
                                                 color: Colors.red))
@@ -270,18 +306,20 @@ class _UserScreenState extends State<UserScreen> {
                         IconButton(
                           icon: Icon(Icons.directions_run),
                           onPressed: () {
-                            if (mounted) setState(() {
-                              _buttonPressed = 'Start a run';
-                            });
+                            if (mounted)
+                              setState(() {
+                                _buttonPressed = 'Start a run';
+                              });
                             Navigator.pushNamed(context, "/runscreen");
                           },
                         ),
                         IconButton(
                           icon: Icon(Icons.people),
                           onPressed: () {
-                            if (mounted) setState(() {
-                              _buttonPressed = 'Union';
-                            });
+                            if (mounted)
+                              setState(() {
+                                _buttonPressed = 'Union';
+                              });
                             Navigator.pushNamed(context, "/profilescreen");
                             // Navigator.push(
                             //   context,
@@ -294,9 +332,10 @@ class _UserScreenState extends State<UserScreen> {
                         IconButton(
                           icon: Icon(Icons.account_balance_wallet),
                           onPressed: () {
-                            if (mounted) setState(() {
-                              _buttonPressed = 'Crypto account';
-                            });
+                            if (mounted)
+                              setState(() {
+                                _buttonPressed = 'Crypto account';
+                              });
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -468,7 +507,7 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   final Singleton _singleton = Singleton();
 
-@override
+  @override
   void initState() {
     super.initState();
     Singleton().addListener(() {
@@ -503,7 +542,8 @@ class _WalletScreenState extends State<WalletScreen> {
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                            color: _singleton.borderColors[_singleton.currentBorder],
+                            color: _singleton
+                                .borderColors[_singleton.currentBorder],
                             shape: BoxShape.circle),
                       ),
                       Image(
