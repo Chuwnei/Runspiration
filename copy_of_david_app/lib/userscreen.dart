@@ -261,7 +261,7 @@ class _UserScreenState extends State<UserScreen> {
                               children: [
                                 Text("Average Pace",
                                     style: GoogleFonts.comicNeue()),
-                                Text("5:00 / km",
+                                Text("-:-- / km",
                                     style: GoogleFonts.comicNeue(
                                         fontSize: 45, color: Colors.blue))
                               ],
@@ -277,7 +277,7 @@ class _UserScreenState extends State<UserScreen> {
                                 Text("Average Distance",
                                     style: GoogleFonts.comicNeue()),
                                 Text(
-                                  "5 km",
+                                  "- km",
                                   style: GoogleFonts.comicNeue(
                                       fontSize: 45, color: Colors.amber),
                                 )
@@ -287,7 +287,7 @@ class _UserScreenState extends State<UserScreen> {
                               children: [
                                 Text("Fastest Pace",
                                     style: GoogleFonts.comicNeue()),
-                                Text("5:00 / km",
+                                Text("-:-- / km",
                                     style: GoogleFonts.comicNeue(
                                         fontSize: 45, color: Colors.orange))
                               ],
