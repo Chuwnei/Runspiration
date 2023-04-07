@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.david_app">
-   <application
-        android:label="david_app"
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:label="Runspiration"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
