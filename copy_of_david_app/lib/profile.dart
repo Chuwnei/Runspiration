@@ -49,7 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: SizeConfig.blockSizeHorizontal! * 40 + 20,
                       height: SizeConfig.blockSizeHorizontal! * 40 + 20,
                       decoration: BoxDecoration(
-                          color: _singleton.borderColors[_singleton.currentBorder],
+                          color:
+                              _singleton.borderColors[_singleton.currentBorder],
                           shape: BoxShape.circle),
                     ),
                     Image(
