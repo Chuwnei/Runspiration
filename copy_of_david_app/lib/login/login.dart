@@ -166,9 +166,13 @@ class _LoginFormState extends State<LoginForm> {
               height: 75,
               child: ElevatedButton(
                 onPressed: () {
-                  Authentication().signin(email, password).then((value) =>
+                  Authentication().signin(email, password).then((value) {
+                    print("HERE IS THE VALUE: $value");
+                    if (value != null) {
                       Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/', (route) => false));
+                          .pushNamedAndRemoveUntil('/', (route) => false);
+                    }
+                  });
                   // Navigator.pushNamed(context, '/mainscreen');
                 },
                 child: const Text(

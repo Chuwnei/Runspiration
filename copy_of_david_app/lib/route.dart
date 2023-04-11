@@ -17,7 +17,7 @@ var routeHolder = {
   '/runscreen': (context) => const RunScreen(),
   '/profilescreen': (context) => ProfileScreen(),
   '/healthTest': (context) => const HealthTest(),
-  // '/spinningWheelScreen': (context) => SpinningWheelScreen(),
+  '/spinningWheelScreen': (context) => const SpinningWheelScreen(),
   '/initializationScreen': (context) => Initialization(),
   '/achievementScreen': (context) => const AchievementScreen(),
 };

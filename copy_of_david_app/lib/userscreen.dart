@@ -50,18 +50,19 @@ class _UserScreenState extends State<UserScreen> {
         await HealthFactory().getHealthDataFromTypes(startDate, endDate, types);
 
     // Store the result in the state to update the UI.
-    setState(() {
-      _singleton.healthDataList = healthData;
-      for (var i = 0; i < _singleton.healthDataList.length; i++) {
-        if (_singleton.healthDataList[i].type ==
-            HealthDataType.ACTIVE_ENERGY_BURNED) {
-          print(_singleton.healthDataList[i].dateFrom);
-          break;
-          // totalCalories +=
-          //     double.parse(_singleton.healthDataList[i].value.toString());
+    if (mounted)
+      setState(() {
+        _singleton.healthDataList = healthData;
+        for (var i = 0; i < _singleton.healthDataList.length; i++) {
+          if (_singleton.healthDataList[i].type ==
+              HealthDataType.ACTIVE_ENERGY_BURNED) {
+            print(_singleton.healthDataList[i].dateFrom);
+            break;
+            // totalCalories +=
+            //     double.parse(_singleton.healthDataList[i].value.toString());
+          }
         }
-      }
-    });
+      });
   }
 
   @override
@@ -70,7 +71,7 @@ class _UserScreenState extends State<UserScreen> {
     super.initState();
     Timer.periodic(const Duration(seconds: 1), (timer) {
       print("test");
-      _updateStats();
+      if (mounted) _updateStats();
       setState(() {});
     });
   }

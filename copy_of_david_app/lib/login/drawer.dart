@@ -45,6 +45,17 @@ class UserDrawer extends StatelessWidget {
                   );
             },
           ),
+          ListTile(
+            tileColor: Colors.blue.shade50,
+            title: Text(
+              'Reward',
+              style: GoogleFonts.comicNeue(
+                  fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/spinningWheelScreen');
+            },
+          ),
           // ListTile(
           //   title: const Text('Item 2'),
           //   onTap: () {

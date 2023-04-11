@@ -28,10 +28,10 @@ class Authentication {
   Future signin(email, password) async {
     try {
       //Attempt to sign in a user with provided email and password
-      await FirebaseAuth.instance
+      final accountLoginAttempt = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       //updateData();
-      return null;
+      return accountLoginAttempt;
     } on FirebaseAuthException catch (error) {
       //Catch and log any errors that occur during the sign-in process
       print(error.message);

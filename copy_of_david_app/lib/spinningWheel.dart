@@ -1,3 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+
+class SpinningWheelScreen extends StatefulWidget {
+  const SpinningWheelScreen({super.key});
+
+  @override
+  State<SpinningWheelScreen> createState() => _SpinningWheelScreenState();
+}
+
+class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
+
 // import 'dart:async';
 // import 'dart:math';
 // import 'package:flutter/material.dart';
