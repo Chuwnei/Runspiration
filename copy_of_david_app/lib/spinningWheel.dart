@@ -1,6 +1,8 @@
+import 'dart:async';
+import 'dart:math';
+import 'size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 
 class SpinningWheelScreen extends StatefulWidget {
   const SpinningWheelScreen({super.key});
@@ -10,9 +12,101 @@ class SpinningWheelScreen extends StatefulWidget {
 }
 
 class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
+  StreamController<int> controller = StreamController<int>();
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    var rng = Random();
+    return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Won today: 0 points",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeHorizontal! * 90,
+                width: SizeConfig.blockSizeHorizontal! * 90,
+                child: FortuneWheel(
+                  animateFirst: false,
+                  indicators: <FortuneIndicator>[
+                    FortuneIndicator(
+                      alignment: Alignment
+                          .topCenter, // <-- changing the position of the indicator
+                      child: TriangleIndicator(
+                        color: Color.fromARGB(255, 0, 255,
+                            8), // <-- changing the color of the indicator
+                      ),
+                    ),
+                  ],
+                  physics: CircularPanPhysics(
+                      duration: Duration(seconds: 5), curve: Curves.decelerate),
+                  onFling: () {
+                    double rngResult = rng.nextDouble() * 100;
+                    int choice = 0;
+
+                    if (rngResult < 2.5) {
+                      choice = 5;
+                    } else if (rngResult < 15) {
+                      choice = 4;
+                    } else if (rngResult < 25) {
+                      choice = 2;
+                    } else if (rngResult < 45) {
+                      choice = 3;
+                    } else if (rngResult < 70) {
+                      choice = 1;
+                    } else {
+                      choice = 0;
+                    }
+
+                    print("RNG: $rngResult, Choice: $choice");
+
+                    controller.add(choice);
+                  },
+                  selected: controller.stream,
+                  items: const [
+                    FortuneItem(
+                        child: Text('10',
+                            style: TextStyle(
+                              fontSize: 30,
+                            ))), //30
+                    FortuneItem(
+                        child: Text('20',
+                            style: TextStyle(
+                              fontSize: 30,
+                            ))), //25
+                    FortuneItem(
+                        child: Text('Thank you',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ))), //10
+                    FortuneItem(
+                        child: Text('One more time',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ))), //20
+                    FortuneItem(
+                        child: Text('30',
+                            style: TextStyle(
+                              fontSize: 30,
+                            ))), //12.5
+                    FortuneItem(
+                        child: Text('88',
+                            style: TextStyle(
+                              fontSize: 30,
+                            ))), //2.5
+                  ],
+                ),
+              ),
+              Text("0x spins left!",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ));
   }
 }
 
