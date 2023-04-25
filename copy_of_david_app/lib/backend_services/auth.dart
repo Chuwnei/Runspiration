@@ -46,6 +46,7 @@ class Authentication {
       User? user = accountCreationAttempt.user;
       final docData = {
         "currency": 0,
+        "spins": 0,
         "goal_for_running": 2,
         "progress_in_km": 0,
         "sessions": 0,

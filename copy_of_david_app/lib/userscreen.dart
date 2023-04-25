@@ -70,7 +70,7 @@ class _UserScreenState extends State<UserScreen> {
     _chartData = getData();
     super.initState();
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      print("test");
+      // print("test");
       if (mounted) _updateStats();
       setState(() {});
     });

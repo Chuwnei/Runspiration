@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "743298458397",
+    "project_id": "runspiration-b81aa",
+    "storage_bucket": "runspiration-b81aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743298458397:android:d6367bd87da681becfb7f4",
+        "android_client_info": {
+          "package_name": "com.chunwei.runspiration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743298458397-1amu46k6d5c9dmrl74oigqrokukn8f2o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chunwei.runspiration",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "743298458397-mck3df146m94od99l4jh2pp11trilvfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVQLIL34mNEmO4as67iRw47YmZJYgXdDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743298458397-a5mb67898ia5gtuh4qvishs32rrei9f0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "743298458397-5gabmp9n6silasc3flk71a0jaarj2e39.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.chunwei.runspiration"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

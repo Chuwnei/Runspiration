@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:david_app/shared/singleton.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 
 class SpinningWheelScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class SpinningWheelScreen extends StatefulWidget {
 class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
   StreamController<int> controller = StreamController<int>();
 
+  final _singleton = Singleton();
+  int winnings = 0;
+
   @override
   Widget build(BuildContext context) {
     var rng = Random();
@@ -25,7 +29,7 @@ class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Won today: 0 points",
+                "You won: $winnings points",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -46,26 +50,37 @@ class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
                   physics: CircularPanPhysics(
                       duration: Duration(seconds: 5), curve: Curves.decelerate),
                   onFling: () {
-                    double rngResult = rng.nextDouble() * 100;
-                    int choice = 0;
+                    if (_singleton.userData!["spins"] > 0) {
+                      double rngResult = rng.nextDouble() * 100;
+                      int choice = 0;
 
-                    if (rngResult < 2.5) {
-                      choice = 5;
-                    } else if (rngResult < 15) {
-                      choice = 4;
-                    } else if (rngResult < 25) {
-                      choice = 2;
-                    } else if (rngResult < 45) {
-                      choice = 3;
-                    } else if (rngResult < 70) {
-                      choice = 1;
-                    } else {
-                      choice = 0;
+                      if (rngResult < 2.5) {
+                        choice = 5;
+                        winnings += 88;
+                      } else if (rngResult < 15) {
+                        choice = 4;
+                        winnings += 30;
+                      } else if (rngResult < 25) {
+                        choice = 2;
+                      } else if (rngResult < 45) {
+                        choice = 3;
+                        _singleton.userData!["spins"] += 1;
+                      } else if (rngResult < 70) {
+                        choice = 1;
+                        winnings += 20;
+                      } else {
+                        choice = 0;
+                        winnings += 10;
+                      }
+
+                      print("RNG: $rngResult, Choice: $choice");
+
+                      controller.add(choice);
+
+                      _singleton.userData!["spins"] -= 1;
+
+                      setState(() {});
                     }
-
-                    print("RNG: $rngResult, Choice: $choice");
-
-                    controller.add(choice);
                   },
                   selected: controller.stream,
                   items: const [
@@ -102,7 +117,7 @@ class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
                   ],
                 ),
               ),
-              Text("0x spins left!",
+              Text("${_singleton.userData!["spins"]}x spins left!",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             ],
           ),
