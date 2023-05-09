@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:david_app/backend_services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserDrawer extends StatelessWidget {
   final List<TextButton> elements;
-  const UserDrawer({Key? key, required this.elements}) : super(key: key);
+  UserDrawer({Key? key, required this.elements}) : super(key: key);
+
+  final Uri _url = Uri.parse('https://forms.gle/c7kJL2pfy8RqwQ6v9');
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -54,6 +63,17 @@ class UserDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pushNamed(context, '/spinningWheelScreen');
+            },
+          ),
+          ListTile(
+            tileColor: Colors.blue.shade50,
+            title: Text(
+              'Feedback',
+              style: GoogleFonts.comicNeue(
+                  fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
+            ),
+            onTap: () {
+              _launchUrl();
             },
           ),
           // ListTile(
