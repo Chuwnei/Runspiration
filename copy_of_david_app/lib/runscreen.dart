@@ -2,10 +2,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:david_app/backend_services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:david_app/size_config.dart';
 import 'healthAPI.dart';
+import 'dart:async';
+
+class SensorData {
+  static const MethodChannel _channel = MethodChannel('com.example/sensor');
+
+  static Future<void> startUpdates(
+      Function stepsCallback, Function distanceCallback) async {
+    _channel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'stepsUpdate':
+          stepsCallback(call.arguments);
+          break;
+        case 'distanceUpdate':
+          distanceCallback(call.arguments);
+          break;
+      }
+    });
+    await _channel.invokeMethod('startUpdates');
+  }
+
+  static Future<void> stopUpdates() async {
+    await _channel.invokeMethod('stopUpdates');
+  }
+}
 
 class RunScreen extends StatelessWidget {
   const RunScreen({super.key});
@@ -81,6 +106,13 @@ class _SessionState extends State<Session> {
   int calories = 0;
 
   final _healthAPI = HealthAPI();
+  double _caloriesBurned = 0.0;
+  int _stepsTaken = 0;
+  double _distanceTraveled = 0.0;
+  int _secondsElapsed = 0;
+  double _weightInKg = 70.0;
+  double _metValue = 7.0;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -88,7 +120,47 @@ class _SessionState extends State<Session> {
     startTime = DateTime.now();
     startKM = _healthAPI.getDistance();
     startCal = _healthAPI.getCalories();
+    startRun();
   }
+
+  void startRun() {
+    SensorData.startUpdates((steps) {
+      setState(() {
+        print("STEPS: $steps");
+        _stepsTaken = steps;
+      });
+    }, (distance) {
+      setState(() {
+        print("DISTANCE: $distance");
+        _distanceTraveled = distance;
+      });
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _secondsElapsed++;
+        _caloriesBurned = _calculateCaloriesBurned();
+      });
+    });
+  }
+
+  double _calculateCaloriesBurned() {
+    double caloriesPerSecond = 0.0175 * _metValue * _weightInKg / 60;
+    return caloriesPerSecond * _secondsElapsed;
+  }
+
+  void endRun() async {
+    SensorData.stopUpdates();
+    _timer.cancel();
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   startTime = DateTime.now();
+  //   startKM = _healthAPI.getDistance();
+  //   startCal = _healthAPI.getCalories();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +193,7 @@ class _SessionState extends State<Session> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Km: $kilometers",
+                Text("Km: $_distanceTraveled",
                     style: GoogleFonts.comicNeue(
                         fontSize: 50, color: Colors.blue)),
                 Text("Cal: $calories",
