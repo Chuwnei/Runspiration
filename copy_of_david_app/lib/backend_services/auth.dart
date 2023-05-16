@@ -38,7 +38,7 @@ class Authentication {
     }
   }
 
-  Future<void> signup(userEmail, password) async {
+  Future signup(userEmail, password) async {
     try {
       //Create a new user with the provided email and password
       final accountCreationAttempt = await FirebaseAuth.instance
@@ -69,7 +69,7 @@ class Authentication {
           .collection("user_data")
           .doc(user?.uid)
           .set(docData);
-
+      return 1;
       //updateData();
     } on FirebaseAuthException catch (error) {
       //Catch and log any errors that occur during the sign-up process
