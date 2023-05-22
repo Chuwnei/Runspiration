@@ -114,6 +114,9 @@ class _SessionState extends State<Session> {
   double _metValue = 7.0;
   late Timer _timer;
 
+  double _accountedDistance = 0.0;
+  List<double> _paceList = [];
+
   @override
   void initState() {
     super.initState();
@@ -135,7 +138,7 @@ class _SessionState extends State<Session> {
       if (mounted) {
         setState(() {
           print("DISTANCE: $distance");
-          _distanceTraveled = distance;
+          _distanceTraveled = distance / 1000;
         });
       }
     });
@@ -144,6 +147,13 @@ class _SessionState extends State<Session> {
       if (mounted) {
         setState(() {
           _secondsElapsed++;
+          // check if a minute has passed
+          if (_secondsElapsed % 60 == 0) {
+            // calculate pace
+            double pace = _distanceTraveled - _accountedDistance;
+            _paceList.add(pace);
+            _accountedDistance = _distanceTraveled;
+          }
           _caloriesBurned = _calculateCaloriesBurned();
         });
       }
@@ -202,22 +212,30 @@ class _SessionState extends State<Session> {
                 Text("Km: ${_distanceTraveled.toStringAsFixed(2)}",
                     style: GoogleFonts.comicNeue(
                         fontSize: 50, color: Colors.blue)),
-                Text("Cal: $calories",
+                Text("Cal: ${int.parse(_caloriesBurned.toStringAsFixed(0))}",
                     style:
                         GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
               ],
+            ),
+            Text(
+              "Current Pace: ${_paceList.isNotEmpty ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
+              style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+            ),
+            Text(
+              "Average Pace: ${_paceList.isNotEmpty ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
+              style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
             ),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   crossAxisAlignment: CrossAxisAlignment.center,
             //   children: [
             //     Text(
-            //       "Current Pace:",
+            //       "Current Pace: ${_paceList.length > 0 ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
             //       style:
             //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
             //     ),
             //     Text(
-            //       "Average Pace:",
+            //       "Average Pace: ${_paceList.length > 0 ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
             //       style:
             //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
             //     )
