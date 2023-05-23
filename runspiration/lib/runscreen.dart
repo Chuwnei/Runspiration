@@ -278,8 +278,9 @@ class _SessionState extends State<Session> {
 
                         userData.update({
                           "sessions": FieldValue.increment(1),
-                          "progress_in_km": FieldValue.increment(kilometers),
-                          "total_km": FieldValue.increment(kilometers)
+                          "progress_in_km":
+                              FieldValue.increment(_distanceTraveled),
+                          "total_km": FieldValue.increment(_distanceTraveled)
                         });
 
                         Navigator.of(context)

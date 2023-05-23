@@ -57,7 +57,8 @@ class Authentication {
         "lastReward": DateTime.now().subtract(const Duration(hours: 24)),
       };
       final achievements = {
-        "active": ["empty", "empty", "empty"],
+        "active": ["ID0", "empty", "empty"],
+        "unlocked": ["ID0"]
       };
       docData["achievements"] = achievements;
       final borders = {

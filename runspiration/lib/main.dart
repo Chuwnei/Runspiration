@@ -40,6 +40,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp(
+    name: "Runspiration",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -49,7 +50,9 @@ class _MyAppState extends State<MyApp> {
       future: firebaseInitialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          // return Text(snapshot.error.toString());
+          print(snapshot.error);
+          return Container();
         } else if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,

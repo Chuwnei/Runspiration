@@ -145,18 +145,18 @@ SPEC CHECKSUMS:
   FirebaseCore: 2082fffcd855f95f883c0a1641133eb9bbe76d40
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
   FirebaseCoreInternal: bca76517fe1ed381e989f5e7d8abb0da8d85bed3
-  FirebaseFirestore: 9bfe2e814686fb3ba2495b97618b38987e4c8526
+  FirebaseFirestore: 56251017e7fb2530d39d42724a6772fd78fd734e
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   health: 5a380c0f6c4f619535845992993964293962e99e
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
 PODFILE CHECKSUM: 2f835d4e61a63cc46e916a1fc9f5333800fbbd53
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

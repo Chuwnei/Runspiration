@@ -461,6 +461,10 @@ class AchievementEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("===");
+    print(_singleton.userData!['achievements']['unlocked']);
+    print(_singleton.userData!['achievements']);
+    print(_singleton.userData);
     return SizedBox(
         width: SizeConfig.blockSizeHorizontal! * 100,
         height: 150,

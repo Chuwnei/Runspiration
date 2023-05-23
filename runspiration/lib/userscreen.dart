@@ -278,7 +278,7 @@ class _UserScreenState extends State<UserScreen> {
                                 Text("Average Distance",
                                     style: GoogleFonts.comicNeue()),
                                 Text(
-                                  "- km",
+                                  "${_singleton.userData!['total_km'] / _singleton.userData!['sessions']} km",
                                   style: GoogleFonts.comicNeue(
                                       fontSize: 45, color: Colors.amber),
                                 )

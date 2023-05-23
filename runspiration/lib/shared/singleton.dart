@@ -33,11 +33,14 @@ class Singleton extends ChangeNotifier {
   List<HealthDataPoint> healthDataList = [];
 
   final achievements = [
+    Triple("ID0", "assets/achievements/ID0.png",
+        "Welcome! You signed up for runspiration."),
     Triple("ID1", "assets/achievements/ID1.png", "Run 20 kilometers in total."),
     Triple("ID2", "assets/achievements/ID2.png", "Run 5 consecutive days."),
-    Triple("ID3", "assets/achievements/ID3.png", "Achieve a fastest pace that's less than 5 minutes in a run"),
-    Triple("ID4", "assets/achievements/ID4.png", "Improve for 30 seconds since the first run"),
-    Triple("ID5", "assets/achievements/ID5.png", "This is a test."),
+    Triple("ID3", "assets/achievements/ID3.png",
+        "Achieve a fastest pace that's less than 5 minutes in a run"),
+    Triple("ID4", "assets/achievements/ID4.png",
+        "Improve for 30 seconds since the first run"),
   ];
 
   // unlocked, puchase, pending
