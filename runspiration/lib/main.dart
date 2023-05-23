@@ -40,7 +40,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp(
-    name: "Runspiration",
+    // name: "Runspiration",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
