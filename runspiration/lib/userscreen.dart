@@ -85,7 +85,7 @@ class _UserScreenState extends State<UserScreen> {
           (_singleton.userData != null)
               ? _healthAPI.getDistance() / 1000.0
               : 0.0,
-          Colors.blue),
+          Color.fromARGB(255, 0, 217, 255)),
     ];
     return chartData;
   }
@@ -134,69 +134,75 @@ class _UserScreenState extends State<UserScreen> {
                   title: Text('Home', style: GoogleFonts.comicNeue()),
                 ),
                 drawer: UserDrawer(elements: btnList),
-                body: SingleChildScrollView(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Card(
-                          color: Colors.grey.shade200,
-                          child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Column(children: [
-                              Text(
-                                "Today",
-                                style: GoogleFonts.comicNeue(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 50,
-                                    color: Colors.grey.shade800),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    // SizedBox(
-                                    //     width: 200,
-                                    //     height: 75,
-                                    //     child: ElevatedButton(
-                                    //         onPressed: () {
-                                    //           Navigator.pushNamed(
-                                    //               context, '/healthTest');
-                                    //         },
-                                    //         child: const Text('HealthTest',
-                                    //             style:
-                                    //                 TextStyle(fontSize: 25)))),
-                                    Column(
-                                      children: [
-                                        Text("Calories",
-                                            style: GoogleFonts.comicNeue()),
-                                        Text(
-                                            HealthAPI()
-                                                .getCalories()
-                                                .toString(),
-                                            style: GoogleFonts.comicNeue(
-                                                fontSize: 45,
-                                                color: Colors.red))
-                                      ],
-                                    ),
-                                    Column(children: [
-                                      Text("Active Time",
-                                          style: GoogleFonts.comicNeue()),
-                                      Text("${_healthAPI.getExerciseTime()}m",
+                body: Stack(children: [
+                  const Image(
+                    image: AssetImage('assets/images/pexels-pixabay-35009.jpg'),
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    colorBlendMode: BlendMode.darken,
+                  ),
+                  SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  // SizedBox(
+                                  //     width: 200,
+                                  //     height: 75,
+                                  //     child: ElevatedButton(
+                                  //         onPressed: () {
+                                  //           Navigator.pushNamed(
+                                  //               context, '/healthTest');
+                                  //         },
+                                  //         child: const Text('HealthTest',
+                                  //             style:
+                                  //                 TextStyle(fontSize: 25)))),
+                                  Column(
+                                    children: [
+                                      Text("Calories",
+                                          style: GoogleFonts.comicNeue(
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255))),
+                                      Text(HealthAPI().getCalories().toString(),
                                           style: GoogleFonts.comicNeue(
                                               fontSize: 45,
-                                              color: Colors.purple))
-                                    ]),
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255)))
+                                    ],
+                                  ),
+                                  Column(children: [
+                                    Text("Active Time",
+                                        style: GoogleFonts.comicNeue(
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255))),
+                                    Text("${_healthAPI.getExerciseTime()}m",
+                                        style: GoogleFonts.comicNeue(
+                                            fontSize: 45,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)))
                                   ]),
-                              Stack(children: <Widget>[
+                                ]),
+                            Stack(
+                              children: <Widget>[
                                 SfCircularChart(series: <CircularSeries>[
                                   // Renders radial bar chart
                                   RadialBarSeries<UserStats, double>(
-                                      useSeriesColor: true,
-                                      trackOpacity: 0.3,
+                                      // useSeriesColor: true,
+                                      trackColor:
+                                          Color.fromARGB(255, 0, 217, 255),
+                                      trackOpacity: 0.5,
                                       innerRadius: '80%',
                                       cornerStyle: CornerStyle.bothCurve,
                                       dataSource: _chartData,
@@ -227,76 +233,123 @@ class _UserScreenState extends State<UserScreen> {
                                     Text(
                                         "Current: ${(_healthAPI.getDistance() / 1000.0).toStringAsFixed(2)}",
                                         style: GoogleFonts.comicNeue(
-                                            fontSize: 30, color: Colors.blue)),
+                                          fontSize: 30,
+                                          color:
+                                              Color.fromARGB(255, 34, 203, 21),
+                                          fontWeight: FontWeight.bold,
+                                        )),
                                     Text(
                                         "Goal: ${_singleton.userData!["goal_for_running"]} km",
                                         style: GoogleFonts.comicNeue(
-                                            fontSize: 20, color: Colors.green)),
+                                          fontSize: 20,
+                                          color:
+                                              Color.fromARGB(255, 34, 203, 21),
+                                          fontWeight: FontWeight.bold,
+                                        )),
                                     TextButton(
                                         onPressed: () =>
                                             _dialogBuilder(context),
                                         child: Text("Edit",
-                                            style: GoogleFonts.comicNeue())),
+                                            style: GoogleFonts.comicNeue(
+                                                color: Colors.blue))),
                                   ],
                                 )))
-                              ]),
-                            ]),
+                              ],
+                            ),
+                          ]),
+                          //const SizedBox(height: 100),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical! * 30,
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                ),
+                                color: Color.fromARGB(136, 255, 255, 255),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Session Count",
+                                              style: GoogleFonts.comicNeue(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            ),
+                                            Text(
+                                              _singleton.userData!["sessions"]
+                                                  .toString(),
+                                              style: GoogleFonts.comicNeue(
+                                                  fontSize: 35,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text("Average Pace",
+                                                style: GoogleFonts.comicNeue(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255))),
+                                            Text("-:-- / km",
+                                                style: GoogleFonts.comicNeue(
+                                                    fontSize: 35,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)))
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(height: 50),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text("Average Distance",
+                                                style: GoogleFonts.comicNeue(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255))),
+                                            Text(
+                                              "${(_singleton.userData!['total_km'] / _singleton.userData!['sessions']).toStringAsFixed(2)} km",
+                                              style: GoogleFonts.comicNeue(
+                                                  fontSize: 35,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text("Fastest Pace",
+                                                style: GoogleFonts.comicNeue(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255))),
+                                            Text("-:-- / km",
+                                                style: GoogleFonts.comicNeue(
+                                                    fontSize: 35,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)))
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                )),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Text("Session Count",
-                                    style: GoogleFonts.comicNeue()),
-                                Text(
-                                  _singleton.userData!["sessions"].toString(),
-                                  style: GoogleFonts.comicNeue(
-                                      fontSize: 45, color: Colors.green),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text("Average Pace",
-                                    style: GoogleFonts.comicNeue()),
-                                Text("-:-- / km",
-                                    style: GoogleFonts.comicNeue(
-                                        fontSize: 45, color: Colors.blue))
-                              ],
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 50),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Text("Average Distance",
-                                    style: GoogleFonts.comicNeue()),
-                                Text(
-                                  "${_singleton.userData!['total_km'] / _singleton.userData!['sessions']} km",
-                                  style: GoogleFonts.comicNeue(
-                                      fontSize: 45, color: Colors.amber),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text("Fastest Pace",
-                                    style: GoogleFonts.comicNeue()),
-                                Text("-:-- / km",
-                                    style: GoogleFonts.comicNeue(
-                                        fontSize: 45, color: Colors.orange))
-                              ],
-                            )
-                          ],
-                        )
-                      ]),
-                ),
+                        ]),
+                  ),
+                ]),
                 bottomNavigationBar: BottomAppBar(
                   shape: const CircularNotchedRectangle(),
                   child: Container(

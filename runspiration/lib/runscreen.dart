@@ -8,6 +8,7 @@ import 'package:timer_builder/timer_builder.dart';
 import 'package:runspiration/size_config.dart';
 import 'healthAPI.dart';
 import 'dart:async';
+import 'package:runspiration/shared/singleton.dart';
 
 class SensorData {
   static const MethodChannel _channel = MethodChannel('com.example/sensor');
@@ -181,72 +182,216 @@ class _SessionState extends State<Session> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TimerBuilder.periodic(const Duration(seconds: 1),
-                builder: (context) {
-              _healthAPI.fetchData();
-              Duration diff = DateTime.now().difference(startTime);
+        body: Container(
+      decoration: BoxDecoration(
+        color: Color(0xFF14181B),
+        image: DecorationImage(
+            fit: BoxFit.cover,
+            image: Image.asset(
+              'assets/images/pexels-pixabay-54326.jpg',
+            ).image,
+            opacity: 0.5),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TimerBuilder.periodic(const Duration(seconds: 1),
+                  builder: (context) {
+                _healthAPI.fetchData();
+                Duration diff = DateTime.now().difference(startTime);
 
-              kilometers = _healthAPI.getDistance() - startKM;
-              calories = _healthAPI.getCalories() - startCal;
-              // print(HealthAPI().getCalories());
+                kilometers = _healthAPI.getDistance() - startKM;
+                calories = _healthAPI.getCalories() - startCal;
+                // print(HealthAPI().getCalories());
 
-              return Text(
-                  "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${((diff.inMinutes % 60) > 9) ? "" : 0}${diff.inMinutes % 60}:${((diff.inSeconds % 60) > 9) ? "" : 0}${diff.inSeconds % 60}",
-                  style: GoogleFonts.comicNeue(
-                      fontSize: 50,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold));
-            }),
-            // Text("00:00:00",
-            //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Km: ${_distanceTraveled.toStringAsFixed(2)}",
+                return Text(
+                    "${(diff.inHours > 9) ? "" : 0}${diff.inHours}:${((diff.inMinutes % 60) > 9) ? "" : 0}${diff.inMinutes % 60}:${((diff.inSeconds % 60) > 9) ? "" : 0}${diff.inSeconds % 60}",
                     style: GoogleFonts.comicNeue(
-                        fontSize: 50, color: Colors.blue)),
-                Text("Cal: ${int.parse(_caloriesBurned.toStringAsFixed(0))}",
-                    style:
-                        GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue))
-              ],
-            ),
-            Text(
-              "Current Pace: ${_paceList.isNotEmpty ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
-              style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-            ),
-            Text(
-              "Average Pace: ${_paceList.isNotEmpty ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
-              style: GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-            ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: [
-            //     Text(
-            //       "Current Pace: ${_paceList.length > 0 ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
-            //       style:
-            //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-            //     ),
-            //     Text(
-            //       "Average Pace: ${_paceList.length > 0 ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
-            //       style:
-            //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-            //     )
-            //   ],
-            // ),
-            // Text(
-            //   "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
-            //   style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
-            //   textAlign: TextAlign.center,
-            // ),
-            Row(
+                        fontSize: 70,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold));
+              }),
+              // Text("00:00:00",
+              //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Km: ${_distanceTraveled.toStringAsFixed(2)}",
+                      style: GoogleFonts.comicNeue(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
+                  Text("Cal: ${int.parse(_caloriesBurned.toStringAsFixed(0))}",
+                      style: GoogleFonts.comicNeue(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold))
+                ],
+              ),
+              Text(
+                "Current Pace: \n${_paceList.isNotEmpty ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.comicNeue(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Average Pace: \n${_paceList.isNotEmpty ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.comicNeue(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Gold Earned: 1000",
+                style: GoogleFonts.comicNeue(
+                    fontSize: 30,
+                    color: Color.fromARGB(255, 254, 229, 153),
+                    fontWeight: FontWeight.bold),
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       "Current Pace: ${_paceList.length > 0 ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
+              //       style:
+              //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+              //     ),
+              //     Text(
+              //       "Average Pace: ${_paceList.length > 0 ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
+              //       style:
+              //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
+              //     )
+              //   ],
+              // ),
+              // Text(
+              //   "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
+              //   style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
+              //   textAlign: TextAlign.center,
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      width: SizeConfig.blockSizeHorizontal! * 40,
+                      height: 75,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        // style: TextButton.styleFrom(
+                        //     padding:
+                        //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                        child: Text("Cancel",
+                            style: GoogleFonts.comicNeue(
+                                fontSize: 40, fontWeight: FontWeight.bold)),
+                      )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                      width: SizeConfig.blockSizeHorizontal! * 40,
+                      height: 75,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 5, 175, 11)),
+                        onPressed: () {
+                          // log workout here too...
+                          DocumentReference userData = FirebaseFirestore
+                              .instance
+                              .collection('user_data')
+                              .doc(Authentication().user!.uid);
+
+                          userData.update({
+                            "sessions": FieldValue.increment(1),
+                            "progress_in_km":
+                                FieldValue.increment(_distanceTraveled),
+                            "total_km": FieldValue.increment(_distanceTraveled)
+                          });
+
+                          // Navigator.of(context)
+                          //     .pushNamedAndRemoveUntil('/', (route) => false);
+                          Navigator.pushNamed(context, '/summaryScreen');
+                        },
+                        // style: TextButton.styleFrom(
+                        //     padding:
+                        //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                        child: Text("Done",
+                            style: GoogleFonts.comicNeue(
+                                fontSize: 40, fontWeight: FontWeight.bold)),
+                      )),
+                ],
+              )
+            ]),
+      ),
+    ));
+  }
+}
+
+class SummaryScreen extends StatelessWidget {
+  SummaryScreen({super.key});
+
+  final _singleton = Singleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Container(
+      decoration: BoxDecoration(
+        color: Color(0xFF14181B),
+        image: DecorationImage(
+            fit: BoxFit.cover,
+            image: Image.asset(
+              'assets/images/pexels-gustavo-rodrigues-1748447.jpg',
+            ).image,
+            opacity: 0.5),
+      ),
+      child: Column(
+        children: [
+          Text("Monday.Jan.30",
+              style: GoogleFonts.comicNeue(
+                  fontSize: 40, fontWeight: FontWeight.bold)),
+          Card(
+              color: Color.fromARGB(139, 255, 255, 255),
+              child: Column(children: [
+                Row(children: [
+                  Stack(alignment: Alignment.center, children: [
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal! * 30 + 20,
+                      height: SizeConfig.blockSizeHorizontal! * 30 + 20,
+                      decoration: BoxDecoration(
+                          color:
+                              _singleton.borderColors[_singleton.currentBorder],
+                          shape: BoxShape.circle),
+                    ),
+                    Image(
+                      image: AssetImage(
+                          'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
+                      fit: BoxFit.contain,
+                      width: SizeConfig.blockSizeHorizontal! * 30,
+                      height: SizeConfig.blockSizeHorizontal! * 30,
+                      // scale: 10,
+                    ),
+                  ]),
+                  Column(
+                    children: [Text("email"), Text("quote")],
+                  )
+                ]),
+                Row(
+                  children: [Text("12\nKM ran"), Text("5:30/km \n avg pace")],
+                )
+              ])),
+          Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -254,47 +399,37 @@ class _SessionState extends State<Session> {
                     width: SizeConfig.blockSizeHorizontal! * 40,
                     height: 75,
                     child: ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
                       },
                       // style: TextButton.styleFrom(
                       //     padding:
                       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
                       child: Text("Cancel",
-                          style: GoogleFonts.comicNeue(fontSize: 40)),
+                          style: GoogleFonts.comicNeue(
+                              fontSize: 40, fontWeight: FontWeight.bold)),
                     )),
-                const SizedBox(
-                  width: 10,
-                ),
                 SizedBox(
                     width: SizeConfig.blockSizeHorizontal! * 40,
                     height: 75,
                     child: ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
                       onPressed: () {
-                        // log workout here too...
-                        DocumentReference userData = FirebaseFirestore.instance
-                            .collection('user_data')
-                            .doc(Authentication().user!.uid);
-
-                        userData.update({
-                          "sessions": FieldValue.increment(1),
-                          "progress_in_km":
-                              FieldValue.increment(_distanceTraveled),
-                          "total_km": FieldValue.increment(_distanceTraveled)
-                        });
-
-                        Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/', (route) => false);
+                        // Navigator.of(context).pop();
                       },
                       // style: TextButton.styleFrom(
                       //     padding:
                       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                      child: Text("Done",
-                          style: GoogleFonts.comicNeue(fontSize: 40)),
+                      child: Text("Cancel",
+                          style: GoogleFonts.comicNeue(
+                              fontSize: 40, fontWeight: FontWeight.bold)),
                     )),
-              ],
-            )
-          ]),
+              ])
+        ],
+      ),
     ));
   }
 }

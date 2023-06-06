@@ -20,4 +20,5 @@ var routeHolder = {
   '/spinningWheelScreen': (context) => const SpinningWheelScreen(),
   '/initializationScreen': (context) => Initialization(),
   '/achievementScreen': (context) => const AchievementScreen(),
+  '/summaryScreen': (context) => SummaryScreen(),
 };
