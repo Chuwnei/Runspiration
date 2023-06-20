@@ -139,7 +139,7 @@ class _UserScreenState extends State<UserScreen> {
                 drawer: UserDrawer(elements: btnList),
                 body: Stack(children: [
                   const Image(
-                    image: AssetImage('assets/images/pexels-pixabay-35009.jpg'),
+                    image: AssetImage('assets/images/runhome.png'),
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,
@@ -238,7 +238,7 @@ class _UserScreenState extends State<UserScreen> {
                                         style: GoogleFonts.comicNeue(
                                           fontSize: 30,
                                           color:
-                                              Color.fromARGB(255, 34, 203, 21),
+                                              Color.fromARGB(255, 17, 0, 255),
                                           fontWeight: FontWeight.bold,
                                         )),
                                     Text(
@@ -246,7 +246,7 @@ class _UserScreenState extends State<UserScreen> {
                                         style: GoogleFonts.comicNeue(
                                           fontSize: 20,
                                           color:
-                                              Color.fromARGB(255, 34, 203, 21),
+                                              Color.fromARGB(255, 0, 217, 255),
                                           fontWeight: FontWeight.bold,
                                         )),
                                     TextButton(
@@ -254,7 +254,8 @@ class _UserScreenState extends State<UserScreen> {
                                             _dialogBuilder(context),
                                         child: Text("Edit",
                                             style: GoogleFonts.comicNeue(
-                                                color: Colors.blue))),
+                                                color: Color.fromARGB(
+                                                    255, 0, 217, 255)))),
                                   ],
                                 )))
                               ],
@@ -267,7 +268,7 @@ class _UserScreenState extends State<UserScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40.0),
                                 ),
-                                color: Color.fromARGB(136, 255, 255, 255),
+                                color: Color.fromARGB(99, 70, 70, 70),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
