@@ -100,16 +100,18 @@ class _UserScreenState extends State<UserScreen> {
     // print(HealthAPI().getDistance());
     CheckAchievements();
 
-    if (_singleton.userData!["lastOnline"].toDate().day !=
-        Timestamp.now().toDate().day) {
+    if (_singleton.userData != null &&
+        _singleton.userData!["lastOnline"].toDate().day !=
+            Timestamp.now().toDate().day) {
       FirebaseFirestore.instance
           .collection("user_data")
           .doc(Authentication().user?.uid)
           .update({"progress_in_km": 0, "lastOnline": Timestamp.now()});
     }
 
-    if (_singleton.userData!["lastReward"].toDate().day !=
-        Timestamp.now().toDate().day) {
+    if (_singleton.userData != null &&
+        _singleton.userData!["lastReward"].toDate().day !=
+            Timestamp.now().toDate().day) {
       FirebaseFirestore.instance
           .collection("user_data")
           .doc(Authentication().user?.uid)
@@ -240,7 +242,7 @@ class _UserScreenState extends State<UserScreen> {
                                           fontWeight: FontWeight.bold,
                                         )),
                                     Text(
-                                        "Goal: ${_singleton.userData!["goal_for_running"]} km",
+                                        "Goal: ${(_singleton.userData != null) ? _singleton.userData!["goal_for_running"] : 2} km",
                                         style: GoogleFonts.comicNeue(
                                           fontSize: 20,
                                           color:
@@ -421,6 +423,9 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   void CheckAchievements() {
+    if (_singleton.userData == null) {
+      return;
+    }
     // check if a user ran 20 total km and give them the achievement if they did
     if (_singleton.userData!["total_km"] >= 20 &&
         !_singleton.userData!["achievements"]["unlocked"].contains("ID1")) {
