@@ -313,6 +313,8 @@ class _SessionState extends State<Session> {
                               .doc(Authentication().user!.uid);
 
                           userData.update({
+                            "total_time": FieldValue.increment(
+                                DateTime.now().difference(startTime).inSeconds),
                             "sessions": FieldValue.increment(1),
                             "progress_in_km":
                                 FieldValue.increment(_distanceTraveled),
@@ -395,35 +397,62 @@ class SummaryScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // SizedBox(
+                //     width: SizeConfig.blockSizeHorizontal! * 40,
+                //     height: 75,
+                //     child: ElevatedButton(
+                //       style:
+                //           ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                //       onPressed: () {
+                //         // Navigator.of(context).pop();
+                //       },
+                //       // style: TextButton.styleFrom(
+                //       //     padding:
+                //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                //       child: Text("Cancel",
+                //           style: GoogleFonts.comicNeue(
+                //               fontSize: 40, fontWeight: FontWeight.bold)),
+                //     )),
+                // SizedBox(
+                //     width: SizeConfig.blockSizeHorizontal! * 40,
+                //     height: 75,
+                //     child: ElevatedButton(
+                //       style:
+                //           ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                //       onPressed: () {
+                //         // Navigator.of(context).pop();
+                //       },
+                //       // style: TextButton.styleFrom(
+                //       //     padding:
+                //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                //       child: Text("Cancel",
+                //           style: GoogleFonts.comicNeue(
+                //               fontSize: 40, fontWeight: FontWeight.bold)),
+                //     )),
                 SizedBox(
-                    width: SizeConfig.blockSizeHorizontal! * 40,
+                    width: SizeConfig.blockSizeHorizontal! * 80,
                     height: 75,
                     child: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue),
                       onPressed: () {
                         // Navigator.of(context).pop();
+                        // FirebaseFirestore.instance
+                        //     .collection('user_data')
+                        //     .doc(Authentication().user!.uid)
+                        //     .update({
+                        //   "sessions": FieldValue.increment(1),
+                        //   "progress_in_km": FieldValue.increment(12),
+                        //   "total_km": FieldValue.increment(12)
+                        // });
+
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/", (route) => false);
                       },
                       // style: TextButton.styleFrom(
                       //     padding:
                       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                      child: Text("Cancel",
-                          style: GoogleFonts.comicNeue(
-                              fontSize: 40, fontWeight: FontWeight.bold)),
-                    )),
-                SizedBox(
-                    width: SizeConfig.blockSizeHorizontal! * 40,
-                    height: 75,
-                    child: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      onPressed: () {
-                        // Navigator.of(context).pop();
-                      },
-                      // style: TextButton.styleFrom(
-                      //     padding:
-                      //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                      child: Text("Cancel",
+                      child: Text("Done",
                           style: GoogleFonts.comicNeue(
                               fontSize: 40, fontWeight: FontWeight.bold)),
                     )),

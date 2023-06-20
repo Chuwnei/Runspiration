@@ -58,11 +58,11 @@ class Singleton extends ChangeNotifier {
 
   Map<String, String> achievementDescriptions = {
     "empty": "",
-    "ID1": "Description 1",
-    "ID2": "Description 2",
-    "ID3": "Description 3",
-    "ID4": "Description 4",
-    "ID5": "Description 5",
+    "ID0": "Description 1",
+    "ID1": "Description 2",
+    "ID2": "Description 3",
+    "ID3": "Description 4",
+    "ID4": "Description 5",
   };
 
   Map<String, Color> borderColors = {

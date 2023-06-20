@@ -142,7 +142,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/achievementScreen');
                   },
-                  child: const Text('Edit',
+                  child: const Text('Edit', style: TextStyle(fontSize: 30)))),
+          const SizedBox(height: 10),
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 95,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/accountScreen');
+                  },
+                  child: const Text('Account Settings',
                       style: TextStyle(fontSize: 30)))), //general screen
         ],
       )),

@@ -98,6 +98,7 @@ class _UserScreenState extends State<UserScreen> {
 
     // print(HealthAPI().getCalories());
     // print(HealthAPI().getDistance());
+    CheckAchievements();
 
     if (_singleton.userData!["lastOnline"].toDate().day !=
         Timestamp.now().toDate().day) {
@@ -297,7 +298,12 @@ class _UserScreenState extends State<UserScreen> {
                                                 style: GoogleFonts.comicNeue(
                                                     color: Color.fromARGB(
                                                         255, 255, 255, 255))),
-                                            Text("-:-- / km",
+                                            Text(
+                                                (_singleton.userData![
+                                                            "total_time"] >
+                                                        0)
+                                                    ? "${_singleton.userData!['total_time'] ~/ _singleton.userData!['total_km'] ~/ 60}:${(_singleton.userData!['total_time'] ~/ _singleton.userData!['total_km'] % 60).toString().padLeft(2, '0')} / km"
+                                                    : "-:-- / km",
                                                 style: GoogleFonts.comicNeue(
                                                     fontSize: 35,
                                                     fontWeight: FontWeight.bold,
@@ -319,7 +325,11 @@ class _UserScreenState extends State<UserScreen> {
                                                     color: Color.fromARGB(
                                                         255, 255, 255, 255))),
                                             Text(
-                                              "${(_singleton.userData!['total_km'] / _singleton.userData!['sessions']).toStringAsFixed(2)} km",
+                                              (_singleton.userData![
+                                                          'sessions'] >
+                                                      0)
+                                                  ? "${(_singleton.userData!['total_km'] / _singleton.userData!['sessions']).toStringAsFixed(2)} km"
+                                                  : "0 km",
                                               style: GoogleFonts.comicNeue(
                                                   fontSize: 35,
                                                   fontWeight: FontWeight.bold,
@@ -408,6 +418,41 @@ class _UserScreenState extends State<UserScreen> {
             return const LoadingScreen();
           }
         });
+  }
+
+  void CheckAchievements() {
+    // check if a user ran 20 total km and give them the achievement if they did
+    if (_singleton.userData!["total_km"] >= 20 &&
+        !_singleton.userData!["achievements"]["unlocked"].contains("ID1")) {
+      FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(Authentication().user?.uid)
+          .update({
+        "achievements.unlocked": FieldValue.arrayUnion(["ID1"])
+      });
+
+      // _singleton.userData!["achievements"].add("20km");
+      // _singleton.userData!["achievements"].sort();
+      // _singleton.userData!["achievements"].forEach((element) {
+      //   print(element);
+      // });
+    }
+
+    // check if a user has 5 or more run_streaks and give them the achievement if they did
+    if (_singleton.userData!["run_streak"] >= 5 &&
+        !_singleton.userData!["achievements"]["unlocked"].contains("ID2")) {
+      FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(Authentication().user?.uid)
+          .update({
+        "achievements.unlocked": FieldValue.arrayUnion(["ID2"])
+      });
+      // _singleton.userData!["achievements"].add("5streaks");
+      // _singleton.userData!["achievements"].sort();
+      // _singleton.userData!["achievements"].forEach((element) {
+      //   print(element);
+      // });
+    }
   }
 
   Future<void> _dialogBuilder(BuildContext context) {

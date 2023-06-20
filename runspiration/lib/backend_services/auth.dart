@@ -51,6 +51,8 @@ class Authentication {
         "progress_in_km": 0,
         "sessions": 0,
         "total_km": 0,
+        "run_streak": 0,
+        "total_time": 0,
         "profile": "default.png",
         "lastOnline": Timestamp.now(),
         "lastEdit": DateTime.now().subtract(const Duration(hours: 24)),
