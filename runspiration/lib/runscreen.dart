@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:location/location.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:timer_builder/timer_builder.dart';
 import 'package:runspiration/size_config.dart';
 import 'healthAPI.dart';
 import 'dart:async';
+import 'dart:math';
 import 'package:runspiration/shared/singleton.dart';
 import 'package:runspiration/encouraging_quotes.dart';
 
@@ -101,11 +103,14 @@ class Session extends StatefulWidget {
 }
 
 class _SessionState extends State<Session> {
+  final _singleton = Singleton();
+
   late DateTime startTime;
   double startKM = 0.0;
   int startCal = 0;
   double kilometers = 0.0;
   int calories = 0;
+  double totalDistance = 0.0;
 
   final _healthAPI = HealthAPI();
   double _caloriesBurned = 0.0;
@@ -118,6 +123,8 @@ class _SessionState extends State<Session> {
 
   double _accountedDistance = 0.0;
   List<double> _paceList = [];
+
+  LocationData? prevLocation;
 
   @override
   void initState() {
@@ -160,6 +167,32 @@ class _SessionState extends State<Session> {
         });
       }
     });
+
+    // Listen the singleton's locationData variable
+    _singleton.locationStreamController.stream.listen((locationData) {
+      if (mounted) {
+        setState(() {
+          if (prevLocation != null) {
+            kilometers += _calculateDistance(prevLocation!, locationData);
+            totalDistance = startKM + kilometers;
+            print(
+                "TOTAL DISTANCE: $totalDistance km, New: $kilometers km, Old: $startKM km");
+          }
+          prevLocation = locationData;
+        });
+      }
+    });
+  }
+
+  double _calculateDistance(LocationData start, LocationData end) {
+    var p = 0.017453292519943295;
+    var a = 0.5 -
+        cos((end.latitude! - start.latitude!) * p) / 2 +
+        cos(start.latitude! * p) *
+            cos(end.latitude! * p) *
+            (1 - cos((end.longitude! - start.longitude!) * p)) /
+            2;
+    return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
   }
 
   double _calculateCaloriesBurned() {
@@ -307,7 +340,12 @@ class _SessionState extends State<Session> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 5, 175, 11)),
                         onPressed: () {
-                          // log workout here too...
+                          _singleton.currentRunKM = _distanceTraveled;
+                          _singleton.avgPace = _paceList.isNotEmpty
+                              ? (_paceList.reduce((a, b) => a + b) /
+                                  _paceList.length)
+                              : 0.0;
+                          // log workout here too..
                           DocumentReference userData = FirebaseFirestore
                               .instance
                               .collection('user_data')
@@ -351,8 +389,24 @@ class SummaryScreen extends StatefulWidget {
 class _SummaryScreenState extends State<SummaryScreen>
     with TickerProviderStateMixin {
   final _singleton = Singleton();
+  final HealthAPI _healthAPI = HealthAPI();
   late AnimationController _controller;
   late String chosenQuote;
+  double goal = 2.0;
+  double distance = 0.0;
+
+  Map<int, String> dayNames = {
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thurday",
+    5: "Friday",
+    6: "Saturday",
+    7: "Sunday"
+  };
+
+  // current datetime
+  DateTime currentTime = DateTime.now();
 
   @override
   void initState() {
@@ -374,7 +428,13 @@ class _SummaryScreenState extends State<SummaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (_controller.value >= 0.5) {
+    // (_healthAPI.getDistance() / 1000.0)
+    goal = (_singleton.userData != null &&
+            _singleton.userData!["goal_for_running"] > 2)
+        ? _singleton.userData!["goal_for_running"] + .0
+        : 2.0;
+    distance = (_healthAPI.getDistance() / 1000.0);
+    if (_controller.value >= 1.0 || _controller.value >= (distance / goal)) {
       _controller.stop();
     }
 
@@ -392,7 +452,8 @@ class _SummaryScreenState extends State<SummaryScreen>
       child: SafeArea(
         child: Column(
           children: [
-            Text("Monday.Jan.30",
+            Text(
+                "${dayNames[currentTime.weekday]}.${currentTime.month}.${currentTime.day}",
                 style: GoogleFonts.comicNeue(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
@@ -458,13 +519,15 @@ class _SummaryScreenState extends State<SummaryScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text("12\nKM ran",
+                              Text(
+                                  "${(_singleton.currentRunKM).toStringAsFixed(2)}\nKM ran",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.comicNeue(
                                       fontSize: 30,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold)),
-                              Text("5:30/km \n avg pace",
+                              Text(
+                                  "${_singleton.avgPace.toStringAsFixed(2)} km/min \n avg pace",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.comicNeue(
                                       fontSize: 30,
@@ -485,7 +548,8 @@ class _SummaryScreenState extends State<SummaryScreen>
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // SizedBox(width: 10),
-                        Text("PROGRESS BAR: 10%",
+                        Text(
+                            "PROGRESS BAR: ${((distance / goal) * 100).toInt()}%",
                             style: GoogleFonts.comicNeue(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -507,7 +571,8 @@ class _SummaryScreenState extends State<SummaryScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text("GOAL: 5 km",
+                        Text(
+                            "GOAL: ${(_singleton.userData != null && _singleton.userData!["goal_for_running"] > 2) ? _singleton.userData!["goal_for_running"] + .0 : 2.0} km",
                             style: GoogleFonts.comicNeue(
                                 fontSize: 20,
                                 color: Colors.white,

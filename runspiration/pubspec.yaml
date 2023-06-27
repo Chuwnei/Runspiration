@@ -53,6 +53,7 @@ dependencies:
   json_annotation: ^4.8.0
   flutter_fortune_wheel: ^1.2.0
   url_launcher: ^6.1.10
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

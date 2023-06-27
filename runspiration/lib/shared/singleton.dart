@@ -1,5 +1,10 @@
+// import 'dart:html';
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
+import 'package:location/location.dart';
 
 class Pair<T1, T2> {
   final T1 a;
@@ -30,7 +35,30 @@ class Singleton extends ChangeNotifier {
 //   int _example = 0;
   Map<String, dynamic>? userData;
 
+  // Session Variables
+
+  double currentRunKM = 0.0;
+  double avgPace = 0.0;
+
+  // -----------------
+
   List<HealthDataPoint> healthDataList = [];
+
+  StreamController<LocationData> locationStreamController =
+      StreamController<LocationData>.broadcast();
+
+  LocationData? locationData;
+  void updateLocationData(LocationData data) {
+    locationData = data;
+
+    // print(locationData?.speed.toString());
+    // print("accuracy: ${locationData?.speedAccuracy.toString()}");
+    // print("long: ${locationData?.longitude.toString()}");
+    // print("lat: ${locationData?.latitude.toString()}");
+    locationStreamController.add(data);
+
+    notifyListeners();
+  }
 
   final achievements = [
     Triple("ID0", "assets/achievements/ID0.png",

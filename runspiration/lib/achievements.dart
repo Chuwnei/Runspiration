@@ -84,192 +84,215 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 width: SizeConfig.blockSizeHorizontal! * 30,
               )
             ]),
-            body: Column(children: [
-              SizedBox(
-                height: SizeConfig.blockSizeHorizontal! * 25,
-                width: SizeConfig.blockSizeHorizontal! * 100,
-                child: Container(
-                    color: const Color.fromARGB(255, 115, 182, 236),
+            body: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF14181B),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: Image.asset(
+                      'assets/images/blur_pencils.jpg',
+                    ).image,
+                    opacity: 0.5),
+              ),
+              child: Column(children: [
+                SizedBox(
+                  height: SizeConfig.blockSizeHorizontal! * 25,
+                  width: SizeConfig.blockSizeHorizontal! * 100,
+                  child: Container(
+                      color: const Color.fromARGB(255, 115, 182, 236),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    _singleton.achievementSelection = 0;
+                                    print(
+                                        "Hello ${_singleton.achievementSelection}");
+                                    if (mounted) setState(() {});
+                                  },
+                                  child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        (_singleton.achievementSelection == 0)
+                                            ? Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: const BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    shape: BoxShape.circle),
+                                              )
+                                            : Container(),
+                                        Image(
+                                            image: AssetImage(
+                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[0] : "empty"}.png'),
+                                            fit: BoxFit.contain,
+                                            width: 75,
+                                            height: 75
+                                            // scale: 10,
+                                            ),
+                                      ]),
+                                ),
+                              ]),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                    onTap: () {
+                                      _singleton.achievementSelection = 1;
+                                      print(
+                                          "Hello ${_singleton.achievementSelection}");
+                                      if (mounted) setState(() {});
+                                    },
+                                    child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          (_singleton.achievementSelection == 1)
+                                              ? Container(
+                                                  width: 80,
+                                                  height: 80,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                )
+                                              : Container(),
+                                          Image(
+                                              image: AssetImage(
+                                                  'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[1] : "empty"}.png'),
+                                              fit: BoxFit.contain,
+                                              width: 75,
+                                              height: 75
+                                              // scale: 10,
+                                              ),
+                                        ])),
+                              ]),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                    onTap: () {
+                                      _singleton.achievementSelection = 2;
+                                      print(
+                                          "Hello ${_singleton.achievementSelection}");
+                                      if (mounted) setState(() {});
+                                    },
+                                    child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          (_singleton.achievementSelection == 2)
+                                              ? Container(
+                                                  width: 80,
+                                                  height: 80,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                )
+                                              : Container(),
+                                          Image(
+                                              image: AssetImage(
+                                                  'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[2] : "empty"}.png'),
+                                              fit: BoxFit.contain,
+                                              width: 75,
+                                              height: 75
+                                              // scale: 10,
+                                              ),
+                                        ])),
+                              ]),
+                        ],
+                      )),
+                ),
+                Expanded(
+                    child: ListView(
+                        children: _singleton.achievements
+                            .map((triple) => AchievementEntry(
+                                id: triple.a,
+                                imagePath: triple.b,
+                                description: triple.c))
+                            .toList()
+                        // children: _singleton.achievements
+                        //     .map((triple) => AchievementEntry(
+                        //         id: triple.a, imagePath: triple.b, description: triple.c))
+                        //     .toList(),
+                        )),
+                SizedBox(
+                    height: SizeConfig.blockSizeVertical! * 20,
+                    // width: 50,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  _singleton.achievementSelection = 0;
-                                  print(
-                                      "Hello ${_singleton.achievementSelection}");
-                                  if (mounted) setState(() {});
-                                },
-                                child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      (_singleton.achievementSelection == 0)
-                                          ? Container(
-                                              width: 80,
-                                              height: 80,
-                                              decoration: const BoxDecoration(
-                                                  color: Color.fromARGB(
-                                                      255, 255, 255, 255),
-                                                  shape: BoxShape.circle),
-                                            )
-                                          : Container(),
-                                      Image(
-                                          image: AssetImage(
-                                              'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[0] : "empty"}.png'),
-                                          fit: BoxFit.contain,
-                                          width: 75,
-                                          height: 75
-                                          // scale: 10,
-                                          ),
-                                    ]),
-                              ),
-                            ]),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                  onTap: () {
-                                    _singleton.achievementSelection = 1;
-                                    print(
-                                        "Hello ${_singleton.achievementSelection}");
-                                    if (mounted) setState(() {});
-                                  },
-                                  child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        (_singleton.achievementSelection == 1)
-                                            ? Container(
-                                                width: 80,
-                                                height: 80,
-                                                decoration: const BoxDecoration(
-                                                    color: Color.fromARGB(
-                                                        255, 255, 255, 255),
-                                                    shape: BoxShape.circle),
-                                              )
-                                            : Container(),
-                                        Image(
-                                            image: AssetImage(
-                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[1] : "empty"}.png'),
-                                            fit: BoxFit.contain,
-                                            width: 75,
-                                            height: 75
-                                            // scale: 10,
-                                            ),
-                                      ])),
-                            ]),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                  onTap: () {
-                                    _singleton.achievementSelection = 2;
-                                    print(
-                                        "Hello ${_singleton.achievementSelection}");
-                                    if (mounted) setState(() {});
-                                  },
-                                  child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        (_singleton.achievementSelection == 2)
-                                            ? Container(
-                                                width: 80,
-                                                height: 80,
-                                                decoration: const BoxDecoration(
-                                                    color: Color.fromARGB(
-                                                        255, 255, 255, 255),
-                                                    shape: BoxShape.circle),
-                                              )
-                                            : Container(),
-                                        Image(
-                                            image: AssetImage(
-                                                'assets/achievements/${(_singleton.userData != null) ? _singleton.achievementIDs[2] : "empty"}.png'),
-                                            fit: BoxFit.contain,
-                                            width: 75,
-                                            height: 75
-                                            // scale: 10,
-                                            ),
-                                      ])),
-                            ]),
+                        SizedBox(
+                            width: SizeConfig.blockSizeHorizontal! * 40,
+                            height: 75,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _singleton.achievementIDs = List.from(_singleton
+                                    .userData!['achievements']['active']);
+                                Navigator.pop(context);
+                              },
+                              // style: TextButton.styleFrom(
+                              //     padding:
+                              //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                              child: Text("Cancel",
+                                  style: GoogleFonts.comicNeue(fontSize: 36)),
+                            )),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        SizedBox(
+                            width: SizeConfig.blockSizeHorizontal! * 40,
+                            height: 75,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Function eq = const ListEquality().equals;
+                                if (!eq(
+                                    _singleton.achievementIDs,
+                                    _singleton.userData!['achievements']
+                                        ['active'])) {
+                                  // update
+                                  print("different");
+                                  FirebaseFirestore.instance
+                                      .collection('user_data')
+                                      .doc(Authentication().user?.uid)
+                                      .update({
+                                    'achievements.active':
+                                        _singleton.achievementIDs
+                                  }).then((value) {
+                                    _singleton.setAchievementSelection(
+                                        _singleton.achievementSelection);
+                                    Navigator.pop(context);
+                                  });
+                                } else {
+                                  Navigator.pop(context);
+                                }
+                              },
+                              // style: TextButton.styleFrom(
+                              //     padding:
+                              //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                              child: Text(" Save ",
+                                  style: GoogleFonts.comicNeue(fontSize: 36)),
+                            )),
                       ],
                     )),
-              ),
-              Expanded(
-                  child: ListView(
-                      children: _singleton.achievements
-                          .map((triple) => AchievementEntry(
-                              id: triple.a,
-                              imagePath: triple.b,
-                              description: triple.c))
-                          .toList()
-                      // children: _singleton.achievements
-                      //     .map((triple) => AchievementEntry(
-                      //         id: triple.a, imagePath: triple.b, description: triple.c))
-                      //     .toList(),
-                      )),
-              SizedBox(
-                  height: SizeConfig.blockSizeVertical! * 20,
-                  // width: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: SizeConfig.blockSizeHorizontal! * 40,
-                          height: 75,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _singleton.achievementIDs = List.from(_singleton
-                                  .userData!['achievements']['active']);
-                              Navigator.pop(context);
-                            },
-                            // style: TextButton.styleFrom(
-                            //     padding:
-                            //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                            child: Text("Cancel",
-                                style: GoogleFonts.comicNeue(fontSize: 36)),
-                          )),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      SizedBox(
-                          width: SizeConfig.blockSizeHorizontal! * 40,
-                          height: 75,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Function eq = const ListEquality().equals;
-                              if (!eq(
-                                  _singleton.achievementIDs,
-                                  _singleton.userData!['achievements']
-                                      ['active'])) {
-                                // update
-                                print("different");
-                                FirebaseFirestore.instance
-                                    .collection('user_data')
-                                    .doc(Authentication().user?.uid)
-                                    .update({
-                                  'achievements.active':
-                                      _singleton.achievementIDs
-                                }).then((value) {
-                                  _singleton.setAchievementSelection(
-                                      _singleton.achievementSelection);
-                                  Navigator.pop(context);
-                                });
-                              } else {
-                                Navigator.pop(context);
-                              }
-                            },
-                            // style: TextButton.styleFrom(
-                            //     padding:
-                            //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                            child: Text(" Save ",
-                                style: GoogleFonts.comicNeue(fontSize: 36)),
-                          )),
-                    ],
-                  )),
-            ]),
+              ]),
+            ),
           )
         : Scaffold(
             appBar: AppBar(actions: [
@@ -311,137 +334,148 @@ class _AchievementScreenState extends State<AchievementScreen> {
                 width: SizeConfig.blockSizeHorizontal! * 30,
               )
             ]),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: SizeConfig.blockSizeVertical! * 15,
-                  width: SizeConfig.blockSizeHorizontal! * 100,
-                  child: Container(
-                      color: const Color.fromARGB(255, 115, 182, 236),
+            body: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF14181B),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: Image.asset(
+                      'assets/images/blur_pencils.jpg',
+                    ).image,
+                    opacity: 0.5),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical! * 15,
+                    width: SizeConfig.blockSizeHorizontal! * 100,
+                    child: Container(
+                        color: const Color.fromARGB(255, 115, 182, 236),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Stack(alignment: Alignment.center, children: [
+                              Container(
+                                width: 120,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                    color: _singleton
+                                        .borderColors[_singleton.currentBorder],
+                                    shape: BoxShape.circle),
+                              ),
+                              Image(
+                                  image: AssetImage(
+                                      'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
+                                  fit: BoxFit.contain,
+                                  width: 100,
+                                  height: 100
+                                  // scale: 10,
+                                  ),
+                            ]),
+                          ],
+                        )),
+                  ),
+                  Text(
+                    "${_singleton.userData!['currency']}",
+                    style: GoogleFonts.comicNeue(
+                        fontSize: 65, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.blockSizeHorizontal! * 100,
+                    height: SizeConfig.blockSizeVertical! * 40,
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      padding: const EdgeInsets.all(20.0),
+                      crossAxisSpacing: 10.0,
+                      children: _singleton.borders
+                          .map((triple) => BorderEntry(
+                                id: triple.a,
+                                description: triple.b,
+                                type: (!_singleton.userData!["borders"]
+                                            ["unlocked"]
+                                        .contains(triple.a))
+                                    ? triple.c
+                                    : "unlocked",
+                              ))
+                          .toList(),
+                    ),
+                    // child: Container(color: Colors.green,),
+                  ),
+                  //
+                  SizedBox(
+                      height: SizeConfig.blockSizeVertical! * 20,
+                      // width: 50,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Stack(alignment: Alignment.center, children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                  color: _singleton
-                                      .borderColors[_singleton.currentBorder],
-                                  shape: BoxShape.circle),
-                            ),
-                            Image(
-                                image: AssetImage(
-                                    'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
-                                fit: BoxFit.contain,
-                                width: 100,
-                                height: 100
-                                // scale: 10,
-                                ),
-                          ]),
+                          SizedBox(
+                              width: SizeConfig.blockSizeHorizontal! * 40,
+                              height: 75,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  _singleton.currentBorder =
+                                      _singleton.userData!["borders"]["active"];
+                                  Navigator.pop(context);
+                                },
+                                // style: TextButton.styleFrom(
+                                //     padding:
+                                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                                child: Text("Cancel",
+                                    style: GoogleFonts.comicNeue(fontSize: 36)),
+                              )),
+                          const SizedBox(
+                            width: 50,
+                          ),
+                          SizedBox(
+                              width: SizeConfig.blockSizeHorizontal! * 40,
+                              height: 75,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  //   Function eq = const ListEquality().equals;
+                                  // if (!eq(
+                                  //     _singleton.achievementIDs,
+                                  //     _singleton.userData!['achievements']
+                                  //         ['active'])) {
+                                  //   // update
+                                  //   print("different");
+                                  //   FirebaseFirestore.instance
+                                  //       .collection('user_data')
+                                  //       .doc(Authentication().user?.uid)
+                                  //       .update({
+                                  //     'achievements.active':
+                                  //         _singleton.achievementIDs
+                                  //   }).then((value) {
+                                  //     _singleton.setAchievementSelection(
+                                  //         _singleton.achievementSelection);
+                                  //     Navigator.pop(context);
+                                  //   });
+                                  // } else {
+                                  //   Navigator.pop(context);
+                                  // }
+
+                                  FirebaseFirestore.instance
+                                      .collection('user_data')
+                                      .doc(Authentication().user?.uid)
+                                      .update({
+                                    'borders.active': _singleton.currentBorder
+                                  }).then((value) {
+                                    Navigator.pop(context);
+                                  });
+                                },
+
+                                // style: TextButton.styleFrom(
+                                //     padding:
+                                //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
+                                child: Text(" Save ",
+                                    style: GoogleFonts.comicNeue(fontSize: 36)),
+                              )),
                         ],
                       )),
-                ),
-                Text(
-                  "${_singleton.userData!['currency']}",
-                  style: GoogleFonts.comicNeue(
-                      fontSize: 65, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal! * 100,
-                  height: SizeConfig.blockSizeVertical! * 40,
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    padding: const EdgeInsets.all(20.0),
-                    crossAxisSpacing: 10.0,
-                    children: _singleton.borders
-                        .map((triple) => BorderEntry(
-                              id: triple.a,
-                              description: triple.b,
-                              type: (!_singleton.userData!["borders"]
-                                          ["unlocked"]
-                                      .contains(triple.a))
-                                  ? triple.c
-                                  : "unlocked",
-                            ))
-                        .toList(),
-                  ),
-                  // child: Container(color: Colors.green,),
-                ),
-                //
-                SizedBox(
-                    height: SizeConfig.blockSizeVertical! * 20,
-                    // width: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: SizeConfig.blockSizeHorizontal! * 40,
-                            height: 75,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                _singleton.currentBorder =
-                                    _singleton.userData!["borders"]["active"];
-                                Navigator.pop(context);
-                              },
-                              // style: TextButton.styleFrom(
-                              //     padding:
-                              //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                              child: Text("Cancel",
-                                  style: GoogleFonts.comicNeue(fontSize: 36)),
-                            )),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        SizedBox(
-                            width: SizeConfig.blockSizeHorizontal! * 40,
-                            height: 75,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                //   Function eq = const ListEquality().equals;
-                                // if (!eq(
-                                //     _singleton.achievementIDs,
-                                //     _singleton.userData!['achievements']
-                                //         ['active'])) {
-                                //   // update
-                                //   print("different");
-                                //   FirebaseFirestore.instance
-                                //       .collection('user_data')
-                                //       .doc(Authentication().user?.uid)
-                                //       .update({
-                                //     'achievements.active':
-                                //         _singleton.achievementIDs
-                                //   }).then((value) {
-                                //     _singleton.setAchievementSelection(
-                                //         _singleton.achievementSelection);
-                                //     Navigator.pop(context);
-                                //   });
-                                // } else {
-                                //   Navigator.pop(context);
-                                // }
-
-                                FirebaseFirestore.instance
-                                    .collection('user_data')
-                                    .doc(Authentication().user?.uid)
-                                    .update({
-                                  'borders.active': _singleton.currentBorder
-                                }).then((value) {
-                                  Navigator.pop(context);
-                                });
-                              },
-
-                              // style: TextButton.styleFrom(
-                              //     padding:
-                              //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                              child: Text(" Save ",
-                                  style: GoogleFonts.comicNeue(fontSize: 36)),
-                            )),
-                      ],
-                    )),
-              ],
+                ],
+              ),
             ),
           );
   }
