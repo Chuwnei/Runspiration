@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:runspiration/size_config.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +11,8 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account'),
+        title: Text('Account',
+            style: GoogleFonts.comicNeue(fontWeight: FontWeight.bold)),
       ),
       body: Center(
         child: Column(
@@ -19,7 +21,7 @@ class AccountScreen extends StatelessWidget {
             children: [
               SizedBox(
                   width: SizeConfig.blockSizeHorizontal! * 95,
-                  height: 50,
+                  height: SizeConfig.blockSizeVertical! * 40,
                   child: ElevatedButton(
                       onPressed: () async {
                         await Authentication().signout().then(
@@ -28,18 +30,23 @@ class AccountScreen extends StatelessWidget {
                                       '/', (route) => false),
                             );
                       },
-                      child: const Text('Log Out',
-                          style: TextStyle(fontSize: 30)))),
+                      child: Text('Log Out',
+                          style: GoogleFonts.comicNeue(
+                              fontSize: 30, fontWeight: FontWeight.bold)))),
               const SizedBox(height: 10),
               SizedBox(
                   width: SizeConfig.blockSizeHorizontal! * 95,
-                  height: 50,
+                  height: SizeConfig.blockSizeVertical! * 40,
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
                       onPressed: () {
                         _dialogBuilder(context);
                       },
-                      child: const Text('Delete Account',
-                          style: TextStyle(fontSize: 30)))),
+                      child: Text('Delete Account',
+                          style: GoogleFonts.comicNeue(
+                              fontSize: 30, fontWeight: FontWeight.bold)))),
             ]),
       ),
     );

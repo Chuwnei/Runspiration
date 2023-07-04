@@ -415,7 +415,7 @@ class _SummaryScreenState extends State<SummaryScreen>
     _controller = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this)
       ..addListener(() {
-        setState(() {});
+        if (mounted) setState(() {});
       });
     _controller.forward();
   }

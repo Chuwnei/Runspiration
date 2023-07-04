@@ -79,18 +79,18 @@ class Singleton extends ChangeNotifier {
     Triple("ID4", "250", "purchase"),
     Triple("ID5", "500", "purchase"),
     Triple("ID6", "300", "purchase"),
-    Triple("ID7", "This is a test.", "pending"),
-    Triple("ID8", "This is a test.", "pending"),
-    Triple("ID9", "This is a test.", "pending"),
+    Triple("ID7", "Newbie's Gift.", "pending"),
+    Triple("ID8", "Elite's Special.", "pending"),
+    Triple("ID9", "Crown of perseverance.", "pending"),
   ];
 
   Map<String, String> achievementDescriptions = {
     "empty": "",
-    "ID0": "Description 1",
-    "ID1": "Description 2",
-    "ID2": "Description 3",
-    "ID3": "Description 4",
-    "ID4": "Description 5",
+    "ID0": "First Step",
+    "ID1": "Elite Runner",
+    "ID2": "Discipline Monster",
+    "ID3": "Gas, Gas, Gas",
+    "ID4": "Better Every Day",
   };
 
   Map<String, Color> borderColors = {

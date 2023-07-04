@@ -34,7 +34,7 @@ class _HealthTestState extends State<HealthTest> {
 
   /// Fetch data points from the health plugin and show them in the app.
   Future fetchData() async {
-    setState(() => _state = AppState.FETCHING_DATA);
+    if (mounted) setState(() => _state = AppState.FETCHING_DATA);
 
     // define the types to get
     final types = [
@@ -99,10 +99,11 @@ class _HealthTestState extends State<HealthTest> {
       _healthDataList.forEach((x) => print(x));
 
       // update the UI to display the results
-      setState(() {
-        _state =
-            _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
-      });
+      if (mounted)
+        setState(() {
+          _state =
+              _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
+        });
     } else {
       print("Authorization not granted");
       setState(() => _state = AppState.DATA_NOT_FETCHED);
@@ -128,10 +129,11 @@ class _HealthTestState extends State<HealthTest> {
 
       print('Total number of steps: $steps');
 
-      setState(() {
-        _nofSteps = (steps == null) ? 0 : steps;
-        _state = (steps == null) ? AppState.NO_DATA : AppState.STEPS_READY;
-      });
+      if (mounted)
+        setState(() {
+          _nofSteps = (steps == null) ? 0 : steps;
+          _state = (steps == null) ? AppState.NO_DATA : AppState.STEPS_READY;
+        });
     } else {
       print("Authorization not granted - error in authorization");
       setState(() => _state = AppState.DATA_NOT_FETCHED);

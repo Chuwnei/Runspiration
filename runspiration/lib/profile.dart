@@ -103,7 +103,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     (_singleton.userData != null)
                         ? "${_singleton.achievementDescriptions[_singleton.userData!['achievements']['active'][0]]}"
                         : "",
-                    style: GoogleFonts.comicNeue(),
+                    style: GoogleFonts.comicNeue(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ]),
                 Column(children: [
@@ -119,7 +120,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       (_singleton.userData != null)
                           ? "${_singleton.achievementDescriptions[_singleton.userData!['achievements']['active'][1]]}"
                           : "",
-                      style: GoogleFonts.comicNeue()),
+                      style: GoogleFonts.comicNeue(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
                 ]),
                 Column(children: [
                   Image(
@@ -134,7 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     (_singleton.userData != null)
                         ? "${_singleton.achievementDescriptions[_singleton.userData!['achievements']['active'][2]]}"
                         : "",
-                    style: GoogleFonts.comicNeue(),
+                    style: GoogleFonts.comicNeue(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ]),
               ],
@@ -145,24 +148,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //       Navigator.pushNamed(context, '/achievementScreen');
             //     },
             //     child: Text("Edit", style: GoogleFonts.comicNeue(fontSize: 36))),
-            SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 95,
-                height: 50,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/achievementScreen');
-                    },
-                    child: const Text('Edit', style: TextStyle(fontSize: 30)))),
-            const SizedBox(height: 10),
-            SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 95,
-                height: 50,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/accountScreen');
-                    },
-                    child: const Text('Account Settings',
-                        style: TextStyle(fontSize: 30)))), //general screen
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                    width: SizeConfig.blockSizeHorizontal! * 40,
+                    height: 65,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/achievementScreen');
+                        },
+                        child: Text('Edit',
+                            style: GoogleFonts.comicNeue(fontSize: 30)))),
+                // const SizedBox(height: 10),
+                SizedBox(
+                    width: SizeConfig.blockSizeHorizontal! * 40,
+                    height: 65,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/accountScreen');
+                        },
+                        child: Text('Settings',
+                            style: GoogleFonts.comicNeue(fontSize: 30)))),
+              ],
+            ), //general screen
           ],
         )),
       ),

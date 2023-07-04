@@ -72,7 +72,7 @@ class _UserScreenState extends State<UserScreen> {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       // print("test");
       if (mounted) _updateStats();
-      setState(() {});
+      if (mounted) setState(() {});
     });
   }
 
@@ -629,85 +629,101 @@ class _WalletScreenState extends State<WalletScreen> {
           style: GoogleFonts.comicNeue(),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: SizeConfig.blockSizeVertical! * 25,
-            width: SizeConfig.blockSizeHorizontal! * 100,
-            child: Container(
-                color: const Color.fromARGB(255, 115, 182, 236),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Stack(alignment: Alignment.center, children: [
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                            color: _singleton
-                                .borderColors[_singleton.currentBorder],
-                            shape: BoxShape.circle),
-                      ),
-                      Image(
-                          image: AssetImage(
-                              'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
-                          fit: BoxFit.contain,
-                          width: 100,
-                          height: 100
-                          // scale: 10,
-                          ),
-                    ]),
-                    const SizedBox(height: 25),
-                    Text(
-                      // (Authentication().user?.displayName != null)
-                      //     ? "${Authentication().user?.displayName}"
-                      //     : "Hello!",
-                      "${Authentication().user!.email}",
-                      style: GoogleFonts.comicNeue(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    )
-                  ],
-                )),
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            (_singleton.userData != null)
-                ? _singleton.userData!["currency"].toString()
-                : "0",
-            style: GoogleFonts.comicNeue(
-                fontSize: 65, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 100,
-          ),
-          SizedBox(
-              width: SizeConfig.blockSizeHorizontal! * 80,
-              height: 50,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/achievementScreen');
-                  },
-                  child: const Text('Purchase Cosmetics',
-                      style: TextStyle(fontSize: 30)))),
-          // SizedBox(
-          //   width: SizeConfig.blockSizeHorizontal! * 100,
-          //   height: SizeConfig.blockSizeVertical! * 40,
-          //   child: GridView.count(
-          //     crossAxisCount: 3,
-          //     padding: const EdgeInsets.all(20.0),
-          //     crossAxisSpacing: 10.0,
-          //     children: [],
-          //   ),
-          //   // child: Container(color: Colors.green,),
-          // ),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(0, 20, 24, 27),
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: Image.asset(
+                'assets/images/wallet.png',
+              ).image,
+              opacity: 1.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: SizeConfig.blockSizeVertical! * 25,
+              width: SizeConfig.blockSizeHorizontal! * 100,
+              child: Container(
+                  color: const Color.fromARGB(150, 255, 255, 255),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Stack(alignment: Alignment.center, children: [
+                        Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                              color: _singleton
+                                  .borderColors[_singleton.currentBorder],
+                              shape: BoxShape.circle),
+                        ),
+                        Image(
+                            image: AssetImage(
+                                'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
+                            fit: BoxFit.contain,
+                            width: 100,
+                            height: 100
+                            // scale: 10,
+                            ),
+                      ]),
+                      const SizedBox(height: 25),
+                      Text(
+                        // (Authentication().user?.displayName != null)
+                        //     ? "${Authentication().user?.displayName}"
+                        //     : "Hello!",
+                        "${Authentication().user!.email}",
+                        style: GoogleFonts.comicNeue(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      )
+                    ],
+                  )),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              (_singleton.userData != null)
+                  ? _singleton.userData!["currency"].toString()
+                  : "0",
+              style: GoogleFonts.comicNeue(
+                  fontSize: 100,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 80,
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/achievementScreen');
+                    },
+                    child: const Text('Purchase Cosmetics',
+                        style: TextStyle(fontSize: 30)))),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical! * 3,
+            )
+            // SizedBox(
+            //   width: SizeConfig.blockSizeHorizontal! * 100,
+            //   height: SizeConfig.blockSizeVertical! * 40,
+            //   child: GridView.count(
+            //     crossAxisCount: 3,
+            //     padding: const EdgeInsets.all(20.0),
+            //     crossAxisSpacing: 10.0,
+            //     children: [],
+            //   ),
+            //   // child: Container(color: Colors.green,),
+            // ),
+          ],
+        ),
       ),
     );
   }

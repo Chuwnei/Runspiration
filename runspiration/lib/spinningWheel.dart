@@ -79,7 +79,7 @@ class _SpinningWheelScreenState extends State<SpinningWheelScreen> {
 
                       _singleton.userData!["spins"] -= 1;
 
-                      setState(() {});
+                      if (mounted) setState(() {});
                     }
                   },
                   selected: controller.stream,

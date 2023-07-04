@@ -37,15 +37,18 @@ class _AchievementScreenState extends State<AchievementScreen> {
 
     return !positive
         ? Scaffold(
-            appBar: AppBar(actions: [
-              AnimatedToggleSwitch<bool>.dual(
+            appBar: AppBar(
+              title: AnimatedToggleSwitch<bool>.dual(
+                // loading: false,
+                indicatorSize:
+                    Size.fromWidth(SizeConfig.blockSizeHorizontal! * 20),
                 current: positive,
                 first: false,
                 second: true,
                 dif: SizeConfig.blockSizeHorizontal! * 20,
                 borderColor: Colors.transparent,
                 borderWidth: 5.0,
-                height: 55,
+                height: 50,
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black26,
@@ -60,7 +63,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   if (mounted) setState(() => positive = b);
                   return Future.delayed(const Duration(seconds: 1));
                 },
-                colorBuilder: (b) => b ? Colors.orange : Colors.green,
+                colorBuilder: (b) => b ? Colors.blue : Colors.green,
                 iconBuilder: (value) => value
                     ? const Icon(FontAwesomeIcons.user)
                     : Container(
@@ -80,26 +83,26 @@ class _AchievementScreenState extends State<AchievementScreen> {
                         child: Text('Achievements',
                             style: GoogleFonts.comicNeue(color: Colors.black))),
               ),
-              SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 30,
-              )
-            ]),
+              // SizedBox(
+              //   width: SizeConfig.blockSizeHorizontal! * 30,
+              // )
+            ),
             body: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF14181B),
+                color: Color.fromARGB(0, 20, 24, 27),
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: Image.asset(
                       'assets/images/blur_pencils.jpg',
                     ).image,
-                    opacity: 0.5),
+                    opacity: 1.0),
               ),
               child: Column(children: [
                 SizedBox(
                   height: SizeConfig.blockSizeHorizontal! * 25,
                   width: SizeConfig.blockSizeHorizontal! * 100,
                   child: Container(
-                      color: const Color.fromARGB(255, 115, 182, 236),
+                      color: const Color.fromARGB(0, 115, 182, 236),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -242,6 +245,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 75,
                             child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red),
                               onPressed: () {
                                 _singleton.achievementIDs = List.from(_singleton
                                     .userData!['achievements']['active']);
@@ -260,6 +265,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                             width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 75,
                             child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green),
                               onPressed: () {
                                 Function eq = const ListEquality().equals;
                                 if (!eq(
@@ -295,15 +302,18 @@ class _AchievementScreenState extends State<AchievementScreen> {
             ),
           )
         : Scaffold(
-            appBar: AppBar(actions: [
-              AnimatedToggleSwitch<bool>.dual(
+            appBar: AppBar(
+              title: AnimatedToggleSwitch<bool>.dual(
+                // loading: false,
+                indicatorSize:
+                    Size.fromWidth(SizeConfig.blockSizeHorizontal! * 20),
                 current: positive,
                 first: false,
                 second: true,
                 dif: SizeConfig.blockSizeHorizontal! * 20,
                 borderColor: Colors.transparent,
                 borderWidth: 5.0,
-                height: 55,
+                height: 50,
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black26,
@@ -318,7 +328,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   if (mounted) setState(() => positive = b);
                   return Future.delayed(const Duration(seconds: 1));
                 },
-                colorBuilder: (b) => b ? Colors.orange : Colors.green,
+                colorBuilder: (b) => b ? Colors.blue : Colors.green,
                 iconBuilder: (value) => value
                     ? const Icon(FontAwesomeIcons.user)
                     : const Icon(FontAwesomeIcons.trophy),
@@ -330,19 +340,19 @@ class _AchievementScreenState extends State<AchievementScreen> {
                         child: Text('Achievements',
                             style: GoogleFonts.comicNeue(color: Colors.black))),
               ),
-              SizedBox(
-                width: SizeConfig.blockSizeHorizontal! * 30,
-              )
-            ]),
+              // SizedBox(
+              //   width: SizeConfig.blockSizeHorizontal! * 30,
+              // )
+            ),
             body: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF14181B),
+                color: Color.fromARGB(0, 255, 255, 255),
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: Image.asset(
                       'assets/images/blur_pencils.jpg',
                     ).image,
-                    opacity: 0.5),
+                    opacity: 1.0),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -352,36 +362,38 @@ class _AchievementScreenState extends State<AchievementScreen> {
                     height: SizeConfig.blockSizeVertical! * 15,
                     width: SizeConfig.blockSizeHorizontal! * 100,
                     child: Container(
-                        color: const Color.fromARGB(255, 115, 182, 236),
+                        // color: const Color.fromARGB(255, 115, 182, 236),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Stack(alignment: Alignment.center, children: [
-                              Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                    color: _singleton
-                                        .borderColors[_singleton.currentBorder],
-                                    shape: BoxShape.circle),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Stack(alignment: Alignment.center, children: [
+                          Container(
+                            width: 120,
+                            height: 120,
+                            decoration: BoxDecoration(
+                                color: _singleton
+                                    .borderColors[_singleton.currentBorder],
+                                shape: BoxShape.circle),
+                          ),
+                          Image(
+                              image: AssetImage(
+                                  'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
+                              fit: BoxFit.contain,
+                              width: 100,
+                              height: 100
+                              // scale: 10,
                               ),
-                              Image(
-                                  image: AssetImage(
-                                      'assets/profiles/${(_singleton.userData != null) ? _singleton.userData!["profile"].toString() : "default.png"}'),
-                                  fit: BoxFit.contain,
-                                  width: 100,
-                                  height: 100
-                                  // scale: 10,
-                                  ),
-                            ]),
-                          ],
-                        )),
+                        ]),
+                      ],
+                    )),
                   ),
                   Text(
                     "${_singleton.userData!['currency']}",
                     style: GoogleFonts.comicNeue(
-                        fontSize: 65, fontWeight: FontWeight.bold),
+                        fontSize: 65,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   SizedBox(
                     width: SizeConfig.blockSizeHorizontal! * 100,
@@ -415,6 +427,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                               width: SizeConfig.blockSizeHorizontal! * 40,
                               height: 75,
                               child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red),
                                 onPressed: () {
                                   _singleton.currentBorder =
                                       _singleton.userData!["borders"]["active"];
@@ -433,6 +447,8 @@ class _AchievementScreenState extends State<AchievementScreen> {
                               width: SizeConfig.blockSizeHorizontal! * 40,
                               height: 75,
                               child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green),
                                 onPressed: () {
                                   //   Function eq = const ListEquality().equals;
                                   // if (!eq(
@@ -495,15 +511,18 @@ class AchievementEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("===");
-    print(_singleton.userData!['achievements']['unlocked']);
-    print(_singleton.userData!['achievements']);
-    print(_singleton.userData);
+    // print("===");
+    // print(_singleton.userData!['achievements']['unlocked']);
+    // print(_singleton.userData!['achievements']);
+    // print(_singleton.userData);
     return SizedBox(
         width: SizeConfig.blockSizeHorizontal! * 100,
         height: 150,
         child: Card(
-            color: const Color.fromARGB(255, 219, 219, 219),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            color: Color.fromARGB(150, 255, 255, 255),
             child: InkWell(
               onTap: () {
                 if (_singleton.userData!['achievements']['unlocked']
@@ -537,11 +556,14 @@ class AchievementEntry extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    width: 15,
+                  ),
                   Opacity(
                     opacity: _singleton.userData!['achievements']['unlocked']
                             .contains(id)
                         ? 1
-                        : 0.5,
+                        : 0.3,
                     child: Image(
                         image: AssetImage(imagePath),
                         fit: BoxFit.contain,
@@ -560,11 +582,21 @@ class AchievementEntry extends StatelessWidget {
                       color: const Color.fromARGB(125, 34, 34, 34),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                      width: SizeConfig.blockSizeHorizontal! * 60,
+                  // const SizedBox(
+                  //   width: 20,
+                  // ),
+                  Container(
+                      decoration: BoxDecoration(
+                        color: _singleton.userData!['achievements']['unlocked']
+                                .contains(id)
+                            ? const Color.fromARGB(134, 255, 255, 255)
+                            : const Color.fromARGB(0, 0, 0, 0),
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                      width: SizeConfig.blockSizeHorizontal! * 100 - 124,
                       height: 250,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -594,7 +626,10 @@ class BorderEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color.fromARGB(255, 115, 182, 236),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      color: const Color.fromARGB(150, 255, 255, 255),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -608,6 +643,9 @@ class BorderEntry extends StatelessWidget {
             ),
             (type == "unlocked")
                 ? ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateColor.resolveWith(
+                            (states) => Color.fromARGB(200, 255, 255, 255))),
                     onPressed: () {
                       print("Set the new border to $id");
                       _singleton.setCurrentBorder(id);
@@ -615,11 +653,15 @@ class BorderEntry extends StatelessWidget {
                     child: Text(
                       "Select",
                       maxLines: 1,
-                      style: GoogleFonts.comicNeue(),
+                      style: GoogleFonts.comicNeue(color: Colors.black),
                     ),
                   )
                 : (type == "purchase")
                     ? ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) =>
+                                    Color.fromARGB(200, 255, 255, 255))),
                         onPressed: () {
                           if (int.parse(description) <=
                               _singleton.userData!["currency"]) {
@@ -639,13 +681,18 @@ class BorderEntry extends StatelessWidget {
                         child: Text(
                           description,
                           maxLines: 1,
-                          style: GoogleFonts.comicNeue(),
+                          style: GoogleFonts.comicNeue(color: Colors.black),
                         ),
                       )
                     : ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) =>
+                                    Color.fromARGB(200, 255, 255, 255))),
                         onPressed: () {},
                         child: Text(description,
-                            maxLines: 1, style: GoogleFonts.comicNeue()),
+                            maxLines: 1,
+                            style: GoogleFonts.comicNeue(color: Colors.black)),
                       ),
           ],
         ),
