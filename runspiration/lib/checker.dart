@@ -1,11 +1,11 @@
 import 'package:runspiration/initialization.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/widgets/container.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:runspiration/login/login.dart';
-import 'package:runspiration/userscreen.dart';
-import 'package:runspiration/shared/loading.dart';
+// import 'package:runspiration/userscreen.dart';
+// import 'package:runspiration/shared/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'size_config.dart';
 
@@ -18,7 +18,7 @@ class Checker extends StatelessWidget {
 
     User? user = Authentication().user;
     if (user == null) {
-      return Login();
+      return const Login();
     } else {
       // TODO: email verification
       // Authentication().verifyEmail().then((value) {
@@ -29,7 +29,7 @@ class Checker extends StatelessWidget {
       //   }
       // });
 
-      return Initialization();
+      return const Initialization();
     }
 
     // return StreamBuilder(

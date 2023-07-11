@@ -8,7 +8,7 @@ class Authentication {
   final user = FirebaseAuth
       .instance.currentUser; //Reference to the current user if signed in
 
-  Singleton _singleton = Singleton();
+  final Singleton _singleton = Singleton();
 
   Future<void> updateData() async {
     var document = FirebaseFirestore.instance

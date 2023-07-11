@@ -1,14 +1,14 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/widgets/container.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:runspiration/size_config.dart';
 import 'package:runspiration/healthAPI.dart';
-import 'package:runspiration/shared/singleton.dart';
-import 'package:health/health.dart';
+// import 'package:runspiration/shared/singleton.dart';
+// import 'package:health/health.dart';
 
 class Login extends StatefulWidget {
-  Login({super.key});
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -16,7 +16,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   // TextEditingController emailcontroller = TextEditingController();
-  final _singleton = Singleton();
 
   final _healthAPI = HealthAPI();
 
@@ -28,7 +27,7 @@ class _LoginState extends State<Login> {
         resizeToAvoidBottomInset: false,
         body: Container(
           decoration: BoxDecoration(
-            color: Color(0xFF14181B),
+            color: const Color(0xFF14181B),
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: Image.asset(
@@ -112,9 +111,10 @@ class _LoginState extends State<Login> {
 }
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key? key}) : super(key: key);
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginFormState createState() => _LoginFormState();
 }
 
@@ -128,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
   String? newPassword;
   String? newConfirm;
 
-  bool _obscureText = true;
+  final bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -166,31 +166,31 @@ class _LoginFormState extends State<LoginForm> {
                       TextFormField(
                         // initialValue: 'Input text',
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           labelText: "name@example.com",
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
@@ -198,7 +198,7 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          contentPadding: EdgeInsetsDirectional.fromSTEB(
+                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
                               20.0, 24.0, 20.0, 24.0),
                         ),
                         validator: (value) {
@@ -216,31 +216,31 @@ class _LoginFormState extends State<LoginForm> {
                       TextFormField(
                         // initialValue: 'Input text',
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             labelText: "Password",
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
@@ -248,8 +248,9 @@ class _LoginFormState extends State<LoginForm> {
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 24.0, 20.0, 24.0)),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    20.0, 24.0, 20.0, 24.0)),
                         obscureText: _obscureText,
                         onChanged: (value) => setState(() => password = value),
                         validator: (value) {
@@ -274,7 +275,7 @@ class _LoginFormState extends State<LoginForm> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 backgroundColor:
-                                    Color.fromARGB(255, 12, 198, 170)),
+                                    const Color.fromARGB(255, 12, 198, 170)),
                             onPressed: () {
                               Authentication()
                                   .signin(email, password)
@@ -350,31 +351,31 @@ class _LoginFormState extends State<LoginForm> {
                       TextFormField(
                         // initialValue: 'Input text',
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           labelText: "name@example.com",
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
@@ -382,7 +383,7 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          contentPadding: EdgeInsetsDirectional.fromSTEB(
+                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
                               20.0, 24.0, 20.0, 24.0),
                         ),
                         validator: (value) {
@@ -400,31 +401,31 @@ class _LoginFormState extends State<LoginForm> {
                       TextFormField(
                         // initialValue: 'Input text',
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             labelText: "Password",
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
@@ -432,8 +433,9 @@ class _LoginFormState extends State<LoginForm> {
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 24.0, 20.0, 24.0)),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    20.0, 24.0, 20.0, 24.0)),
                         obscureText: _obscureText,
                         onChanged: (value) =>
                             setState(() => newPassword = value),
@@ -452,31 +454,31 @@ class _LoginFormState extends State<LoginForm> {
                       TextFormField(
                         // initialValue: 'Input text',
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             labelText: "Confirm Password",
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
@@ -484,8 +486,9 @@ class _LoginFormState extends State<LoginForm> {
                             ),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 24.0, 20.0, 24.0)),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    20.0, 24.0, 20.0, 24.0)),
                         obscureText: _obscureText,
                         onChanged: (value) =>
                             setState(() => newConfirm = value),
@@ -512,7 +515,7 @@ class _LoginFormState extends State<LoginForm> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 backgroundColor:
-                                    Color.fromARGB(255, 12, 198, 170)),
+                                    const Color.fromARGB(255, 12, 198, 170)),
                             onPressed: (_formKey.currentState != null &&
                                     _formKey.currentState!.validate())
                                 ? () {

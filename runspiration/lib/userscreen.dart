@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:runspiration/size_config.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:runspiration/login/drawer.dart';
@@ -13,6 +13,8 @@ import 'healthAPI.dart';
 import 'dart:async';
 
 class UserScreen extends StatefulWidget {
+  const UserScreen({super.key});
+
   @override
   _UserScreenState createState() => _UserScreenState();
 }
@@ -27,8 +29,8 @@ class _UserScreenState extends State<UserScreen> {
   String _buttonPressed = 'Home';
   bool canEdit = true;
 
-  Singleton _singleton = Singleton();
-  HealthAPI _healthAPI = HealthAPI();
+  final Singleton _singleton = Singleton();
+  final HealthAPI _healthAPI = HealthAPI();
 
   TextEditingController goalcontroller = TextEditingController();
   int goal = 5;
@@ -86,7 +88,7 @@ class _UserScreenState extends State<UserScreen> {
           (_singleton.userData != null)
               ? _healthAPI.getDistance() / 1000.0
               : 0.0,
-          Color.fromARGB(255, 0, 217, 255)),
+          const Color.fromARGB(255, 0, 217, 255)),
     ];
     return chartData;
   }
@@ -175,26 +177,26 @@ class _UserScreenState extends State<UserScreen> {
                                     children: [
                                       Text("Calories",
                                           style: GoogleFonts.comicNeue(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 255, 255, 255))),
                                       Text(HealthAPI().getCalories().toString(),
                                           style: GoogleFonts.comicNeue(
                                               fontSize: 45,
                                               fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 255, 255, 255)))
                                     ],
                                   ),
                                   Column(children: [
                                     Text("Active Time",
                                         style: GoogleFonts.comicNeue(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 255, 255, 255))),
                                     Text("${_healthAPI.getExerciseTime()}m",
                                         style: GoogleFonts.comicNeue(
                                             fontSize: 45,
                                             fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 255, 255, 255)))
                                   ]),
                                 ]),
@@ -204,8 +206,8 @@ class _UserScreenState extends State<UserScreen> {
                                   // Renders radial bar chart
                                   RadialBarSeries<UserStats, double>(
                                       // useSeriesColor: true,
-                                      trackColor:
-                                          Color.fromARGB(255, 0, 217, 255),
+                                      trackColor: const Color.fromARGB(
+                                          255, 0, 217, 255),
                                       trackOpacity: 0.5,
                                       innerRadius: '80%',
                                       cornerStyle: CornerStyle.bothCurve,
@@ -227,8 +229,7 @@ class _UserScreenState extends State<UserScreen> {
                                           : 2.0)
                                 ]),
                                 Center(
-                                    child: Container(
-                                        child: Column(
+                                    child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     const SizedBox(
@@ -238,16 +239,16 @@ class _UserScreenState extends State<UserScreen> {
                                         "Current: ${(_healthAPI.getDistance() / 1000.0).toStringAsFixed(2)}",
                                         style: GoogleFonts.comicNeue(
                                           fontSize: 30,
-                                          color:
-                                              Color.fromARGB(255, 17, 0, 255),
+                                          color: const Color.fromARGB(
+                                              255, 17, 0, 255),
                                           fontWeight: FontWeight.bold,
                                         )),
                                     Text(
                                         "Goal: ${(_singleton.userData != null) ? _singleton.userData!["goal_for_running"] : 2} km",
                                         style: GoogleFonts.comicNeue(
                                           fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 0, 217, 255),
+                                          color: const Color.fromARGB(
+                                              255, 0, 217, 255),
                                           fontWeight: FontWeight.bold,
                                         )),
                                     TextButton(
@@ -255,10 +256,10 @@ class _UserScreenState extends State<UserScreen> {
                                             _dialogBuilder(context),
                                         child: Text("Edit",
                                             style: GoogleFonts.comicNeue(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 0, 217, 255)))),
                                   ],
-                                )))
+                                ))
                               ],
                             ),
                           ]),
@@ -269,7 +270,7 @@ class _UserScreenState extends State<UserScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40.0),
                                 ),
-                                color: Color.fromARGB(99, 70, 70, 70),
+                                color: const Color.fromARGB(0, 70, 70, 70),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -282,7 +283,7 @@ class _UserScreenState extends State<UserScreen> {
                                             Text(
                                               "Session Count",
                                               style: GoogleFonts.comicNeue(
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 255, 255, 255)),
                                             ),
                                             Text(
@@ -370,6 +371,7 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                 ]),
                 bottomNavigationBar: BottomAppBar(
+                  color: Colors.blue,
                   shape: const CircularNotchedRectangle(),
                   child: SizedBox(
                     height: 50.0,
@@ -377,6 +379,7 @@ class _UserScreenState extends State<UserScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconButton(
+                          color: Colors.white,
                           icon: const Icon(Icons.directions_run),
                           onPressed: () {
                             if (mounted) {
@@ -388,7 +391,8 @@ class _UserScreenState extends State<UserScreen> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.people),
+                          color: Colors.white,
+                          icon: const Icon(Icons.people),
                           onPressed: () {
                             if (mounted) {
                               setState(() {
@@ -405,6 +409,7 @@ class _UserScreenState extends State<UserScreen> {
                           },
                         ),
                         IconButton(
+                          color: Colors.white,
                           icon: const Icon(Icons.account_balance_wallet),
                           onPressed: () {
                             if (mounted) {
@@ -640,7 +645,7 @@ class _WalletScreenState extends State<WalletScreen> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(0, 20, 24, 27),
+          color: const Color.fromARGB(0, 20, 24, 27),
           image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
@@ -696,15 +701,41 @@ class _WalletScreenState extends State<WalletScreen> {
             const SizedBox(
               height: 25,
             ),
-            Text(
-              (_singleton.userData != null)
-                  ? _singleton.userData!["currency"].toString()
-                  : "0",
-              style: GoogleFonts.comicNeue(
-                  fontSize: 100,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
+            Stack(alignment: Alignment.center, children: [
+              Container(
+                width: 220,
+                height: 220,
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 255, 206, 59),
+                    shape: BoxShape.circle),
+              ),
+              Container(
+                  width: 200,
+                  height: 200,
+                  decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 172, 133, 14),
+                      shape: BoxShape.circle)
+                  // scale: 10,
+                  ),
+              Container(
+                  width: 180,
+                  height: 180,
+                  decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 255, 206, 59),
+                      shape: BoxShape.circle)
+                  // scale: 10,
+                  ),
+              Text(
+                (_singleton.userData != null)
+                    ? _singleton.userData!["currency"].toString()
+                    : "0",
+                style: GoogleFonts.comicNeue(
+                    fontSize: 100,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 172, 133, 14)),
+              ),
+            ]),
+
             const SizedBox(
               height: 100,
             ),
@@ -712,11 +743,14 @@ class _WalletScreenState extends State<WalletScreen> {
                 width: SizeConfig.blockSizeHorizontal! * 80,
                 height: 50,
                 child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(215, 33, 149, 243))),
                     onPressed: () {
                       Navigator.pushNamed(context, '/achievementScreen');
                     },
-                    child: const Text('Purchase Cosmetics',
-                        style: TextStyle(fontSize: 30)))),
+                    child: Text('Purchase Cosmetics',
+                        style: GoogleFonts.comicNeue(fontSize: 30)))),
             SizedBox(
               height: SizeConfig.blockSizeVertical! * 3,
             )

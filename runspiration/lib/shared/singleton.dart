@@ -96,13 +96,13 @@ class Singleton extends ChangeNotifier {
   Map<String, Color> borderColors = {
     "ID1": const Color.fromARGB(255, 45, 41, 43),
     "ID2": const Color.fromARGB(255, 135, 84, 230),
-    "ID3": Color.fromARGB(255, 247, 143, 195),
-    "ID4": Color.fromARGB(255, 64, 75, 230),
-    "ID5": Color.fromARGB(255, 0, 242, 255),
-    "ID6": Color.fromARGB(255, 4, 0, 255),
-    "ID7": Color.fromARGB(255, 230, 166, 64),
-    "ID8": Color.fromARGB(255, 0, 255, 0),
-    "ID9": Color.fromARGB(255, 255, 0, 204),
+    "ID3": const Color.fromARGB(255, 247, 143, 195),
+    "ID4": const Color.fromARGB(255, 64, 75, 230),
+    "ID5": const Color.fromARGB(255, 0, 242, 255),
+    "ID6": const Color.fromARGB(255, 4, 0, 255),
+    "ID7": const Color.fromARGB(255, 230, 166, 64),
+    "ID8": const Color.fromARGB(255, 0, 255, 0),
+    "ID9": const Color.fromARGB(255, 255, 0, 204),
   };
 
   int achievementSelection = 0;

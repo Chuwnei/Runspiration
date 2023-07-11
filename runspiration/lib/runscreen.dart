@@ -283,7 +283,7 @@ class _SessionState extends State<Session> {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                "Gold Earned: 1000",
+                "Gold Earned: ${((_distanceTraveled * 50).toInt() < 999) ? (_distanceTraveled * 50).toInt() : 999}",
                 style: GoogleFonts.comicNeue(
                     fontSize: 30,
                     color: const Color.fromARGB(255, 254, 229, 153),
@@ -352,7 +352,9 @@ class _SessionState extends State<Session> {
                             "sessions": FieldValue.increment(1),
                             "progress_in_km":
                                 FieldValue.increment(_distanceTraveled),
-                            "total_km": FieldValue.increment(_distanceTraveled)
+                            "total_km": FieldValue.increment(_distanceTraveled),
+                            "currency": FieldValue.increment(
+                                (_distanceTraveled * 50).toInt()),
                           });
 
                           Navigator.pushNamed(context, '/summaryScreen');
@@ -370,7 +372,7 @@ class _SessionState extends State<Session> {
 }
 
 class SummaryScreen extends StatefulWidget {
-  SummaryScreen({super.key});
+  const SummaryScreen({super.key});
 
   @override
   State<SummaryScreen> createState() => _SummaryScreenState();

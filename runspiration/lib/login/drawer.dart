@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,7 +32,7 @@ class UserDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.blue,
             ),
             child: Text(
@@ -45,7 +45,7 @@ class UserDrawer extends StatelessWidget {
             title: Text(
               'Logout',
               style: GoogleFonts.comicNeue(
-                  fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
+                  fontSize: 28, color: const Color.fromARGB(255, 34, 34, 34)),
             ),
             onTap: () async {
               await Authentication().signout().then(
@@ -59,7 +59,7 @@ class UserDrawer extends StatelessWidget {
             title: Text(
               'Reward',
               style: GoogleFonts.comicNeue(
-                  fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
+                  fontSize: 28, color: const Color.fromARGB(255, 34, 34, 34)),
             ),
             onTap: () {
               Navigator.pushNamed(context, '/spinningWheelScreen');
@@ -70,7 +70,7 @@ class UserDrawer extends StatelessWidget {
             title: Text(
               'Feedback',
               style: GoogleFonts.comicNeue(
-                  fontSize: 28, color: Color.fromARGB(255, 34, 34, 34)),
+                  fontSize: 28, color: const Color.fromARGB(255, 34, 34, 34)),
             ),
             onTap: () {
               _launchUrl();

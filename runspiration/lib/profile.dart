@@ -50,6 +50,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               width: SizeConfig.blockSizeHorizontal! * 100,
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
                 color: const Color.fromARGB(177, 115, 181, 236),
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:runspiration/shared/singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
+// import 'package:collection/collection.dart';
 
 class AchievementScreen extends StatefulWidget {
   const AchievementScreen({super.key});
@@ -89,7 +89,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
             ),
             body: Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(0, 20, 24, 27),
+                color: const Color.fromARGB(0, 20, 24, 27),
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: Image.asset(
@@ -346,7 +346,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
             ),
             body: Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(0, 255, 255, 255),
+                color: const Color.fromARGB(0, 255, 255, 255),
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: Image.asset(
@@ -361,9 +361,7 @@ class _AchievementScreenState extends State<AchievementScreen> {
                   SizedBox(
                     height: SizeConfig.blockSizeVertical! * 15,
                     width: SizeConfig.blockSizeHorizontal! * 100,
-                    child: Container(
-                        // color: const Color.fromARGB(255, 115, 182, 236),
-                        child: Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -386,14 +384,47 @@ class _AchievementScreenState extends State<AchievementScreen> {
                               ),
                         ]),
                       ],
-                    )),
+                    ),
                   ),
-                  Text(
-                    "${_singleton.userData!['currency']}",
-                    style: GoogleFonts.comicNeue(
-                        fontSize: 65,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(alignment: Alignment.center, children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 255, 206, 59),
+                              shape: BoxShape.circle),
+                        ),
+                        Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 172, 133, 14),
+                                shape: BoxShape.circle)
+                            // scale: 10,
+                            ),
+                        Container(
+                            width: 40,
+                            height: 40,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 206, 59),
+                                shape: BoxShape.circle)
+                            // scale: 10,
+                            ),
+                      ]),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "${_singleton.userData!['currency']}",
+                        style: GoogleFonts.comicNeue(
+                            fontSize: 65,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     width: SizeConfig.blockSizeHorizontal! * 100,
@@ -522,7 +553,7 @@ class AchievementEntry extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            color: Color.fromARGB(150, 255, 255, 255),
+            color: const Color.fromARGB(150, 255, 255, 255),
             child: InkWell(
               onTap: () {
                 if (_singleton.userData!['achievements']['unlocked']
@@ -645,7 +676,8 @@ class BorderEntry extends StatelessWidget {
                 ? ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith(
-                            (states) => Color.fromARGB(200, 255, 255, 255))),
+                            (states) =>
+                                const Color.fromARGB(200, 255, 255, 255))),
                     onPressed: () {
                       print("Set the new border to $id");
                       _singleton.setCurrentBorder(id);
@@ -661,7 +693,7 @@ class BorderEntry extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (states) =>
-                                    Color.fromARGB(200, 255, 255, 255))),
+                                    const Color.fromARGB(200, 255, 255, 255))),
                         onPressed: () {
                           if (int.parse(description) <=
                               _singleton.userData!["currency"]) {
@@ -688,10 +720,11 @@ class BorderEntry extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (states) =>
-                                    Color.fromARGB(200, 255, 255, 255))),
+                                    const Color.fromARGB(200, 255, 255, 255))),
                         onPressed: () {},
                         child: Text(description,
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comicNeue(color: Colors.black)),
                       ),
           ],

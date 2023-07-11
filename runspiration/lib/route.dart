@@ -12,15 +12,15 @@ import 'achievements.dart';
 
 var routeHolder = {
   '/': (context) => const Checker(),
-  '/login': (context) => Login(),
+  '/login': (context) => const Login(),
   '/signup': (context) => const SignUp(),
   '/homescreen': (context) => UserScreen(),
   '/runscreen': (context) => const RunScreen(),
   '/profilescreen': (context) => const ProfileScreen(),
   '/healthTest': (context) => const HealthTest(),
   '/spinningWheelScreen': (context) => const SpinningWheelScreen(),
-  '/initializationScreen': (context) => Initialization(),
+  '/initializationScreen': (context) => const Initialization(),
   '/achievementScreen': (context) => const AchievementScreen(),
-  '/summaryScreen': (context) => SummaryScreen(),
+  '/summaryScreen': (context) => const SummaryScreen(),
   '/accountScreen': (context) => const AccountScreen(),
 };
