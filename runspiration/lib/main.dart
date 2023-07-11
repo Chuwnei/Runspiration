@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options1.dart';
 import 'package:runspiration/route.dart';
 import 'firebase_options.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 /*
 Runspiration
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
                 fontSize: 50,
                 color: Colors.blue,
               )),
-              scaffoldBackgroundColor: Color.fromARGB(255, 245, 245, 245),
+              scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
             ),
           );
         }

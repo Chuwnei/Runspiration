@@ -50,7 +50,7 @@ class _UserScreenState extends State<UserScreen> {
         await HealthFactory().getHealthDataFromTypes(startDate, endDate, types);
 
     // Store the result in the state to update the UI.
-    if (mounted)
+    if (mounted) {
       setState(() {
         _singleton.healthDataList = healthData;
         for (var i = 0; i < _singleton.healthDataList.length; i++) {
@@ -63,6 +63,7 @@ class _UserScreenState extends State<UserScreen> {
           }
         }
       });
+    }
   }
 
   @override
@@ -290,7 +291,7 @@ class _UserScreenState extends State<UserScreen> {
                                               style: GoogleFonts.comicNeue(
                                                   fontSize: 35,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 255, 255, 255)),
                                             )
                                           ],
@@ -299,18 +300,18 @@ class _UserScreenState extends State<UserScreen> {
                                           children: [
                                             Text("Average Pace",
                                                 style: GoogleFonts.comicNeue(
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                         255, 255, 255, 255))),
                                             Text(
                                                 (_singleton.userData![
                                                             "total_time"] >
                                                         0)
-                                                    ? "${_singleton.userData!['total_time'] ~/ _singleton.userData!['total_km'] ~/ 60}:${(_singleton.userData!['total_time'] ~/ _singleton.userData!['total_km'] % 60).toString().padLeft(2, '0')} / km"
-                                                    : "-:-- / km",
+                                                    ? "${_singleton.userData!['total_time'] ~/ _singleton.userData!['total_km'] ~/ 60}:${(_singleton.userData!['total_time'] ~/ _singleton.userData!['total_km'] % 60).toString().padLeft(2, '0')}/km"
+                                                    : "-:--/km",
                                                 style: GoogleFonts.comicNeue(
                                                     fontSize: 35,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                         255, 255, 255, 255)))
                                           ],
                                         )
@@ -325,7 +326,7 @@ class _UserScreenState extends State<UserScreen> {
                                           children: [
                                             Text("Average Distance",
                                                 style: GoogleFonts.comicNeue(
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                         255, 255, 255, 255))),
                                             Text(
                                               (_singleton.userData![
@@ -336,7 +337,7 @@ class _UserScreenState extends State<UserScreen> {
                                               style: GoogleFonts.comicNeue(
                                                   fontSize: 35,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 255, 255, 255)),
                                             )
                                           ],
@@ -345,13 +346,18 @@ class _UserScreenState extends State<UserScreen> {
                                           children: [
                                             Text("Fastest Pace",
                                                 style: GoogleFonts.comicNeue(
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                         255, 255, 255, 255))),
-                                            Text("-:-- / km",
+                                            Text(
+                                                (_singleton.userData![
+                                                            'fastest_pace'] !=
+                                                        null)
+                                                    ? "${_singleton.userData!['fastest_pace'].toStringAsFixed(2)} km/min"
+                                                    : "0 km/min",
                                                 style: GoogleFonts.comicNeue(
                                                     fontSize: 35,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                         255, 255, 255, 255)))
                                           ],
                                         )
@@ -365,28 +371,30 @@ class _UserScreenState extends State<UserScreen> {
                 ]),
                 bottomNavigationBar: BottomAppBar(
                   shape: const CircularNotchedRectangle(),
-                  child: Container(
+                  child: SizedBox(
                     height: 50.0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.directions_run),
+                          icon: const Icon(Icons.directions_run),
                           onPressed: () {
-                            if (mounted)
+                            if (mounted) {
                               setState(() {
                                 _buttonPressed = 'Start a run';
                               });
+                            }
                             Navigator.pushNamed(context, "/runscreen");
                           },
                         ),
                         IconButton(
                           icon: Icon(Icons.people),
                           onPressed: () {
-                            if (mounted)
+                            if (mounted) {
                               setState(() {
                                 _buttonPressed = 'Union';
                               });
+                            }
                             Navigator.pushNamed(context, "/profilescreen");
                             // Navigator.push(
                             //   context,
@@ -397,12 +405,13 @@ class _UserScreenState extends State<UserScreen> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.account_balance_wallet),
+                          icon: const Icon(Icons.account_balance_wallet),
                           onPressed: () {
-                            if (mounted)
+                            if (mounted) {
                               setState(() {
                                 _buttonPressed = 'Crypto account';
                               });
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -9,7 +9,7 @@ import 'package:runspiration/shared/singleton.dart';
 import 'package:location/location.dart';
 
 class Initialization extends StatefulWidget {
-  Initialization({super.key});
+  const Initialization({super.key});
 
   @override
   State<Initialization> createState() => _InitializationState();

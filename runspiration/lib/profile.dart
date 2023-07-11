@@ -1,13 +1,13 @@
 import 'package:runspiration/size_config.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/widgets/container.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:runspiration/backend_services/auth.dart';
 import 'package:runspiration/shared/singleton.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(0, 214, 214, 214),
+          color: const Color.fromARGB(0, 214, 214, 214),
           image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               width: SizeConfig.blockSizeHorizontal! * 100,
               child: Card(
-                color: Color.fromARGB(177, 115, 181, 236),
+                color: const Color.fromARGB(177, 115, 181, 236),
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Column(children: [

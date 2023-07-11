@@ -218,7 +218,7 @@ class _SessionState extends State<Session> {
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(
-        color: Color(0xFF14181B),
+        color: const Color(0xFF14181B),
         image: DecorationImage(
             fit: BoxFit.cover,
             image: Image.asset(
@@ -286,30 +286,9 @@ class _SessionState extends State<Session> {
                 "Gold Earned: 1000",
                 style: GoogleFonts.comicNeue(
                     fontSize: 30,
-                    color: Color.fromARGB(255, 254, 229, 153),
+                    color: const Color.fromARGB(255, 254, 229, 153),
                     fontWeight: FontWeight.bold),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       "Current Pace: ${_paceList.length > 0 ? _paceList.last.toStringAsFixed(2) : 0.0} km/min",
-              //       style:
-              //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-              //     ),
-              //     Text(
-              //       "Average Pace: ${_paceList.length > 0 ? (_paceList.reduce((a, b) => a + b) / _paceList.length).toStringAsFixed(2) : 0.0} km/min",
-              //       style:
-              //           GoogleFonts.comicNeue(fontSize: 30, color: Colors.blue),
-              //     )
-              //   ],
-              // ),
-              // Text(
-              //   "For the sake of testing, we are going to have the end button automatically log a session as if the user ran 5km.",
-              //   style: GoogleFonts.comicNeue(fontSize: 25, color: Colors.blue),
-              //   textAlign: TextAlign.center,
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -351,6 +330,22 @@ class _SessionState extends State<Session> {
                               .collection('user_data')
                               .doc(Authentication().user!.uid);
 
+                          // check if field "fastest_pace" exists and if it does, compare it to the average pace and update if faster
+                          userData.get().then((value) {
+                            if (value.exists) {
+                              final data = value.data() as Map<String, dynamic>;
+                              if (data["fastest_pace"] != null) {
+                                if (data["fastest_pace"] > _singleton.avgPace) {
+                                  userData.update(
+                                      {"fastest_pace": _singleton.avgPace});
+                                }
+                              } else {
+                                userData.update(
+                                    {"fastest_pace": _singleton.avgPace});
+                              }
+                            }
+                          });
+
                           userData.update({
                             "total_time": FieldValue.increment(
                                 DateTime.now().difference(startTime).inSeconds),
@@ -360,13 +355,8 @@ class _SessionState extends State<Session> {
                             "total_km": FieldValue.increment(_distanceTraveled)
                           });
 
-                          // Navigator.of(context)
-                          //     .pushNamedAndRemoveUntil('/', (route) => false);
                           Navigator.pushNamed(context, '/summaryScreen');
                         },
-                        // style: TextButton.styleFrom(
-                        //     padding:
-                        //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
                         child: Text("Done",
                             style: GoogleFonts.comicNeue(
                                 fontSize: 40, fontWeight: FontWeight.bold)),
