@@ -68,7 +68,7 @@ class Singleton extends ChangeNotifier {
     Triple("ID3", "assets/achievements/ID3.png",
         "Achieve a fastest pace that's less than 5 minutes in a run"),
     Triple("ID4", "assets/achievements/ID4.png",
-        "Improve for 30 seconds since the first run"),
+        "Beat your fastest pace by 30 seconds or more."),
   ];
 
   // unlocked, puchase, pending
@@ -91,6 +91,18 @@ class Singleton extends ChangeNotifier {
     "ID2": "Discipline Monster",
     "ID3": "Gas, Gas, Gas",
     "ID4": "Better Every Day",
+  };
+
+  Map<String, String> borderDescriptions = {
+    "ID1": "Default",
+    "ID2": "Blue",
+    "ID3": "Pink",
+    "ID4": "Purple",
+    "ID5": "Cyan",
+    "ID6": "Blue 2",
+    "ID7": "Complete your 5th session.",
+    "ID8": "Reach 1000 total kilometers.",
+    "ID9": "Get a 7 day run streak.",
   };
 
   Map<String, Color> borderColors = {

@@ -205,14 +205,6 @@ class _SessionState extends State<Session> {
     _timer.cancel();
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   startTime = DateTime.now();
-  //   startKM = _healthAPI.getDistance();
-  //   startCal = _healthAPI.getCalories();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -248,8 +240,6 @@ class _SessionState extends State<Session> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold));
               }),
-              // Text("00:00:00",
-              //     style: GoogleFonts.comicNeue(fontSize: 50, color: Colors.blue)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -302,9 +292,6 @@ class _SessionState extends State<Session> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        // style: TextButton.styleFrom(
-                        //     padding:
-                        //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
                         child: Text("Cancel",
                             style: GoogleFonts.comicNeue(
                                 fontSize: 40, fontWeight: FontWeight.bold)),
@@ -335,7 +322,19 @@ class _SessionState extends State<Session> {
                             if (value.exists) {
                               final data = value.data() as Map<String, dynamic>;
                               if (data["fastest_pace"] != null) {
-                                if (data["fastest_pace"] > _singleton.avgPace) {
+                                if (data["fastest_pace"] > _singleton.avgPace &&
+                                    _singleton.avgPace != 0.0) {
+                                  // check if we beat the fastest pace by 30 seconds and get achievement if so
+                                  if (data["fastest_pace"] -
+                                          _singleton.avgPace >=
+                                      0.5) {
+                                    userData.update({
+                                      // "achievements.active": FieldValue.arrayUnion(["ID2"]),
+                                      "achievements.unlocked":
+                                          FieldValue.arrayUnion(["ID2"])
+                                    });
+                                  }
+
                                   userData.update(
                                       {"fastest_pace": _singleton.avgPace});
                                 }
@@ -353,8 +352,12 @@ class _SessionState extends State<Session> {
                             "progress_in_km":
                                 FieldValue.increment(_distanceTraveled),
                             "total_km": FieldValue.increment(_distanceTraveled),
-                            "currency": FieldValue.increment(
-                                (_distanceTraveled * 50).toInt()),
+                            "currency": (_singleton.userData!["currency"] +
+                                        (_distanceTraveled * 50).toInt() <
+                                    999)
+                                ? FieldValue.increment(
+                                    (_distanceTraveled * 50).toInt())
+                                : 999,
                           });
 
                           Navigator.pushNamed(context, '/summaryScreen');
@@ -420,7 +423,6 @@ class _SummaryScreenState extends State<SummaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    // (_healthAPI.getDistance() / 1000.0)
     goal = (_singleton.userData != null &&
             _singleton.userData!["goal_for_running"] > 2)
         ? _singleton.userData!["goal_for_running"] + .0
@@ -550,10 +552,6 @@ class _SummaryScreenState extends State<SummaryScreen>
                     ),
                     SizedBox(height: 10),
                     // insert bar here
-                    // Container(
-                    //     color: Colors.blue,
-                    //     width: SizeConfig.blockSizeHorizontal! * 90,
-                    //     height: 20),
                     LinearProgressIndicator(
                       value: _controller.value,
                       backgroundColor: Colors.white,
@@ -585,38 +583,6 @@ class _SummaryScreenState extends State<SummaryScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // SizedBox(
-                  //     width: SizeConfig.blockSizeHorizontal! * 40,
-                  //     height: 75,
-                  //     child: ElevatedButton(
-                  //       style:
-                  //           ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  //       onPressed: () {
-                  //         // Navigator.of(context).pop();
-                  //       },
-                  //       // style: TextButton.styleFrom(
-                  //       //     padding:
-                  //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                  //       child: Text("Cancel",
-                  //           style: GoogleFonts.comicNeue(
-                  //               fontSize: 40, fontWeight: FontWeight.bold)),
-                  //     )),
-                  // SizedBox(
-                  //     width: SizeConfig.blockSizeHorizontal! * 40,
-                  //     height: 75,
-                  //     child: ElevatedButton(
-                  //       style:
-                  //           ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  //       onPressed: () {
-                  //         // Navigator.of(context).pop();
-                  //       },
-                  //       // style: TextButton.styleFrom(
-                  //       //     padding:
-                  //       //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
-                  //       child: Text("Cancel",
-                  //           style: GoogleFonts.comicNeue(
-                  //               fontSize: 40, fontWeight: FontWeight.bold)),
-                  //     )),
                   SizedBox(
                       width: SizeConfig.blockSizeHorizontal! * 80,
                       height: 75,
@@ -624,22 +590,9 @@ class _SummaryScreenState extends State<SummaryScreen>
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue),
                         onPressed: () {
-                          // Navigator.of(context).pop();
-                          // FirebaseFirestore.instance
-                          //     .collection('user_data')
-                          //     .doc(Authentication().user!.uid)
-                          //     .update({
-                          //   "sessions": FieldValue.increment(1),
-                          //   "progress_in_km": FieldValue.increment(12),
-                          //   "total_km": FieldValue.increment(12)
-                          // });
-
                           Navigator.pushNamedAndRemoveUntil(
                               context, "/", (route) => false);
                         },
-                        // style: TextButton.styleFrom(
-                        //     padding:
-                        //         EdgeInsets.symmetric(horizontal: 50, vertical: 30)),
                         child: Text("Done",
                             style: GoogleFonts.comicNeue(
                                 fontSize: 40, fontWeight: FontWeight.bold)),

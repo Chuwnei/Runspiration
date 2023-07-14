@@ -654,6 +654,26 @@ class BorderEntry extends StatelessWidget {
 
   final _singleton = Singleton();
 
+  // helper function that creates a dialog box showing the full description of the border entry when tapped
+  void _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(description),
+            content: Text(_singleton.borderDescriptions[id] ??
+                "No description available."),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Close"))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -721,7 +741,9 @@ class BorderEntry extends StatelessWidget {
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (states) =>
                                     const Color.fromARGB(200, 255, 255, 255))),
-                        onPressed: () {},
+                        onPressed: () {
+                          _showDialog(context);
+                        },
                         child: Text(description,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

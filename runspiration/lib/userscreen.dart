@@ -103,6 +103,14 @@ class _UserScreenState extends State<UserScreen> {
     // print(HealthAPI().getDistance());
     CheckAchievements();
 
+    // if the user's currency is greater than 999, set it to 999
+    if (_singleton.userData != null && _singleton.userData!["currency"] > 999) {
+      FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(Authentication().user?.uid)
+          .update({"currency": 999});
+    }
+
     if (_singleton.userData != null &&
         _singleton.userData!["lastOnline"].toDate().day !=
             Timestamp.now().toDate().day) {
@@ -115,13 +123,132 @@ class _UserScreenState extends State<UserScreen> {
     if (_singleton.userData != null &&
         _singleton.userData!["lastReward"].toDate().day !=
             Timestamp.now().toDate().day) {
-      FirebaseFirestore.instance
-          .collection("user_data")
-          .doc(Authentication().user?.uid)
-          .update({
-        "currency": FieldValue.increment(100),
-        "lastReward": Timestamp.now()
-      });
+      // check if the user already has 999 currency before giving them the daily reward
+      // if (_singleton.userData!["currency"] < 999) {
+      //   FirebaseFirestore.instance
+      //       .collection("user_data")
+      //       .doc(Authentication().user?.uid)
+      //       .update({
+      //     "currency": (_singleton.userData!["currency"] + 100 < 999)
+      //         ? FieldValue.increment(100)
+      //         : 999,
+      //     "lastReward": Timestamp.now()
+      //   });
+      // }
+
+      // check if the user reached their goal for the day and give them the reward if they did
+      if (_singleton.userData!["progress_in_km"] >=
+          _singleton.userData!["goal_for_running"]) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "spins": FieldValue.increment(5),
+          "lastReward": Timestamp.now()
+        });
+      }
+
+      // ACHIEVEMENT CHECKING BELOW
+
+      // check if a user ran 20 total km and give them the achievement if they did
+      if (_singleton.userData!["total_km"] >= 20 &&
+          !_singleton.userData!["achievements"]["unlocked"].contains("ID1")) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "achievements.unlocked": FieldValue.arrayUnion(["ID1"])
+        });
+
+        // _singleton.userData!["achievements"].add("20km");
+        // _singleton.userData!["achievements"].sort();
+        // _singleton.userData!["achievements"].forEach((element) {
+        //   print(element);
+        // });
+      }
+
+      // check if the user has 5 or more run_streaks and give them the achievement if they did
+      if (_singleton.userData!["run_streak"] >= 5 &&
+          !_singleton.userData!["achievements"]["unlocked"].contains("ID2")) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "achievements.unlocked": FieldValue.arrayUnion(["ID2"])
+        });
+        // _singleton.userData!["achievements"].add("5streaks");
+        // _singleton.userData!["achievements"].sort();
+        // _singleton.userData!["achievements"].forEach((element) {
+        //   print(element);
+        // });
+      }
+
+      // check if the user has a fastest pace of 5km/min or less and give them the achievement if they did
+      if (_singleton.userData!["fastest_pace"] != null &&
+          _singleton.userData!["fastest_pace"] <= 5 &&
+          !_singleton.userData!["achievements"]["unlocked"].contains("ID3")) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "achievements.unlocked": FieldValue.arrayUnion(["ID3"])
+        });
+        // _singleton.userData!["achievements"].add("5pace");
+        // _singleton.userData!["achievements"].sort();
+        // _singleton.userData!["achievements"].forEach((element) {
+        //   print(element);
+        // });
+      }
+
+      // BORDER CHECKING BELOW
+
+      // check if the user has completed their 5th session and give them the border if they did
+      if (_singleton.userData!["sessions"] >= 5 &&
+          !_singleton.userData!["borders"]["unlocked"].contains("ID7")) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "borders.unlocked": FieldValue.arrayUnion(["ID7"])
+        });
+        // _singleton.userData!["borders"].add("5sessions");
+        // _singleton.userData!["borders"].sort();
+        // _singleton.userData!["borders"].forEach((element) {
+        //   print(element);
+        // });
+      }
+
+      // check if the user has reached 1000 total km and give them the border if they did
+      if (_singleton.userData!["total_km"] >= 1000 &&
+          !_singleton.userData!["borders"]["unlocked"].contains("ID8")) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "borders.unlocked": FieldValue.arrayUnion(["ID8"])
+        });
+        // _singleton.userData!["borders"].add("1000km");
+        // _singleton.userData!["borders"].sort();
+        // _singleton.userData!["borders"].forEach((element) {
+        //   print(element);
+        // });
+      }
+
+      // check if the user has a 7 day run streak and give them the border if they did
+      if (_singleton.userData!["run_streak"] >= 7 &&
+          !_singleton.userData!["borders"]["unlocked"].contains("ID9")) {
+        FirebaseFirestore.instance
+            .collection("user_data")
+            .doc(Authentication().user?.uid)
+            .update({
+          "borders.unlocked": FieldValue.arrayUnion(["ID9"])
+        });
+        // _singleton.userData!["borders"].add("7streaks");
+        // _singleton.userData!["borders"].sort();
+        // _singleton.userData!["borders"].forEach((element) {
+        //   print(element);
+        // });
+      }
     }
 
     _chartData = getData();
