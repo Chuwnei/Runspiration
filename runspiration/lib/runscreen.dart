@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:runspiration/size_config.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'healthAPI.dart';
 import 'dart:async';
 import 'dart:math';
